@@ -17,9 +17,7 @@ export default function Home() {
       <title>Personal Portfilio of Dr. Greg Chism</title>
         <meta
           name="description"
-          content="Explore CodeBucks's Next.js developer portfolio and 
-        discover the latest webapp projects and software engineering articles. 
-        Showcase your skills as a full-stack developer and software engineer."
+          content="Stories are an important component of human evolution, I help researchers tell stories through their data."
         />
       </Head>
       <TransitionEffect />
