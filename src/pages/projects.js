@@ -163,7 +163,7 @@ const projects = () => {
               <FeaturedProject
                 type="Featured Project"
                 title="Nest shape influences colony organization in ants."
-                summary="How the shape of a nest can impact the behavior of the ant colony that inhabits it. We examined the spatial organization of rock ants in two artificial nests with different internal shapes, and found that overall distributions of colony members were influenced by nest shape. However, individual spatial fidelity zone size was not affected by nest shape, despite varying as a function of distance from the nest entrance and brood center. We conclude that physical properties of nests can influence the in-nest spatial organization of ant colonies, and highlights the need to explore nest shape as a direct influence on the organization, movement, and communication of the inhabiting ant colony."
+                summary="How the design of an ant home can change the way the ant colonies behaves inside. We looked at how rock ants live in two artificial nests with different layouts, and found that the way ants spread out inside was affected by the nest's design. But, the space each ant stays in didn't change because of the nest's design, even though it did change based on how far they were from the entrance and the area where the young live. We learned that the features of ant nests can change how ants are arranged inside, and it's important to study how the nest's design can directly impact how ants organize, move, and communicate."
                 img={project1}
                 link="https://www.biorxiv.org/content/biorxiv/early/2022/07/02/2022.06.30.498314.full.pdf"
                 github="https://github.com/Gchism94/NestArchOrg"
@@ -192,7 +192,7 @@ const projects = () => {
               <FeaturedProject
                 type="Software Development"
                 title="ABCTracker: an easy-to-use, cloud-based application for tracking multiple objects"
-                summary="Visual multi-object tracking has the potential to accelerate many forms of quantitative analyses, especially in research communities investigating the motion, behavior, or social interactions within groups of animals. Despite its potential for increasing analysis throughput, complications related to accessibility, adaptability, accuracy, or scalable application arise with existing tracking systems. Several iterations of prototyping and testing have led us to a multiobject tracking system – ABCTracker – that is: accessible in both system as well as technical knowledge requirements, easily adaptable to new videos, and capable of producing accurate tracking data through a mixture of automatic and semi-automatic tracking features."
+                summary="Visual tracking of multiple objects can speed up many types of research, especially when studying how groups of animals move, behave, or interact with each other. However, current tracking systems can be difficult to use, adapt, ensure accuracy, or apply to larger projects. After several rounds of designing and testing, we've created a new tracking system called ABCTracker. This system is easy to access and use, even for those with limited technical knowledge. It can easily adapt to new videos and provide accurate tracking data by combining automatic and semi-automatic tracking features."
                 img={project4}
                 link="https://www.abctracker.org/"
                 github=""
