@@ -1,120 +1,153 @@
-<form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mayzapll" method="post">
-    <fieldset id="fs-frm-inputs">
-        <h1>Please provide the information below and I will get back to you ASAP!</h1>
-      <label for="full-name">Full Name</label>
-      <input type="text" name="name" id="full-name" placeholder="First and Last" required="">
-      <label for="email-address">Email Address</label>
-      <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="">
-      <label for="message">Message</label>
-      <textarea rows="5" name="message" id="message" placeholder="Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla nullam quis risus." required=""></textarea>
-      <input type="hidden" name="_subject" id="email-subject" value="Contact Form Submission">
-    </fieldset>
-    <input type="submit" value="Submit">
-  </form><style>/* reset */
-  #fs-frm input,
-  #fs-frm select,
-  #fs-frm textarea,
-  #fs-frm fieldset,
-  #fs-frm optgroup,
-  #fs-frm label,
-  #fs-frm #card-element:disabled {
-    font-family: "Montserrat";
-    font-size: 100%;
-    color: inherit;
-    border: none;
-    border-radius: 0;
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-  #fs-frm label,
-  #fs-frm legend,
-  #fs-frm ::placeholder {
-    font-size: 1rem;
-    margin-bottom: .5rem;
-    padding-top: .2rem;
-    display: flex;
-    align-items: baseline;
-  }
+<div class="formbold-main-wrapper">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    <div class="formbold-form-wrapper">
+      <form action="https://formbold.com/s/3LyAw" method="POST">
+        <div class="formbold-mb-5">
+          <label for="name" class="formbold-form-label"> Full Name </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Full Name"
+            class="formbold-form-input"
+          />
+        </div>
   
-  /* border, padding, margin, width */
-  #fs-frm input,
-  #fs-frm select,
-  #fs-frm textarea,
-  #fs-frm #card-element {
-    border: 1.5px solid rgba(0,0,0,0.2);
-    background-color: rgba(255,255,255,0.9);
-    padding: .75em 1rem;
-    margin-bottom: 1.5rem;
-  }
-  #fs-frm input:focus,
-  #fs-frm select:focus,
-  #fs-frm textarea:focus {
-    background-color: white;
-    outline-style: solid;
-    outline-width: thin;
-    outline-color: gray;
-    outline-offset: -1px;
-  }
-  #fs-frm [type="text"],
-  #fs-frm [type="email"] {
-    width: 100%;
-  }
-  #fs-frm [type="button"],
-  #fs-frm [type="submit"],
-  #fs-frm [type="reset"] {
-    width: auto;
-    cursor: pointer;
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-  }
-  #fs-frm [type="button"]:focus,
-  #fs-frm [type="submit"]:focus,
-  #fs-frm [type="reset"]:focus {
-    outline: none;
-  }
-  #fs-frm [type="submit"],
-  #fs-frm [type="reset"] {
-    margin-bottom: 0;
-  }
-  #fs-frm select {
-    text-transform: none;
-  }
+        <div class="formbold-mb-5">
+          <label for="email" class="formbold-form-label"> Email Address </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            class="formbold-form-input"
+          />
+        </div>
   
-  #fs-frm [type="checkbox"] {
-    -webkit-appearance: checkbox;
-    -moz-appearance: checkbox;
-    appearance: checkbox;
-    display: inline-block;
-    width: auto;
-    margin: 0 .5em 0 0 !important;
-  }
+        <div class="formbold-mb-5">
+          <label for="subject" class="formbold-form-label"> Subject </label>
+          <input
+            type="text"
+            name="subject"
+            id="subject"
+            placeholder="Enter your subject"
+            class="formbold-form-input"
+          />
+        </div>
   
-  #fs-frm [type="radio"] {
-    -webkit-appearance: radio;
-    -moz-appearance: radio;
-    appearance: radio;
-  }
+        <div class="formbold-mb-5">
+          <label for="message" class="formbold-form-label"> Message </label>
+          <textarea
+            rows="6"
+            name="message"
+            id="message"
+            placeholder="Type your message"
+            class="formbold-form-input"
+          ></textarea>
+        </div>
   
-  /* address, locale */
-  #fs-frm fieldset.locale input[name="city"],
-  #fs-frm fieldset.locale select[name="state"],
-  #fs-frm fieldset.locale input[name="postal-code"] {
-    display: inline;
-  }
-  #fs-frm fieldset.locale input[name="city"] {
-    width: 52%;
-  }
-  #fs-frm fieldset.locale select[name="state"],
-  #fs-frm fieldset.locale input[name="postal-code"] {
-    width: 20%;
-  }
-  #fs-frm fieldset.locale input[name="city"],
-  #fs-frm fieldset.locale select[name="state"] {
-    margin-right: 3%;
-  }
+        <div>
+          <button class="formbold-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Montserrat";
+    }
+    .formbold-mb-5 {
+      margin-bottom: 20px;
+    }
+    .formbold-pt-3 {
+      padding-top: 12px;
+    }
+    .formbold-main-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+  
+    .formbold-form-wrapper {
+      margin: 0 auto;
+      max-width: 550px;
+      width: 100%;
+      background: white;
+    }
+    .formbold-form-label {
+      display: block;
+      font-weight: 500;
+      font-size: 16px;
+      color: #07074d;
+      margin-bottom: 12px;
+    }
+    .formbold-form-label-2 {
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+  
+    .formbold-form-input {
+      width: 100%;
+      padding: 12px 24px;
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+      background: white;
+      font-family: "Montserrat";
+      font-weight: 500;
+      font-size: 16px;
+      color: #6b7280;
+      outline: none;
+      resize: none;
+    }
+    .formbold-form-input:focus {
+      border-color: #38678f;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+  
+    .formbold-btn {
+      text-align: center;
+      font-family: "Montserrat";
+      font-size: 16px;
+      border-radius: 6px;
+      padding: 14px 32px;
+      border: none;
+      font-weight: 600;
+      background-color: #38678f;
+      color: white;
+      cursor: pointer;
+    }
+    .formbold-btn:hover {
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+  
+    .formbold--mx-3 {
+      margin-left: -12px;
+      margin-right: -12px;
+    }
+    .formbold-px-3 {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .flex {
+      display: flex;
+    }
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+    .w-full {
+      width: 100%;
+    }
+    @media (min-width: 540px) {
+      .sm\:w-half {
+        width: 50%;
+      }
+    }
   </style>
