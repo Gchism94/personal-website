@@ -29,7 +29,7 @@ md:w-12 md:h-12 md:text-[10px]
 
 "
         >
-          Say Hi
+          Say Hi!
         </Link>
       </div>
     </div>
