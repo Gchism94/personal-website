@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { CircularText } from "./Icons";
 
+
 const HireMe = () => {
   return (
     <div
