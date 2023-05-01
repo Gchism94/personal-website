@@ -94,6 +94,10 @@ export const DribbbleIcon = ({ className, ...rest }) => (
 );
 
 export const SunIcon = ({ className, ...rest }) => (
+  <div
+    className={`w-6 h-6 ${className}`} // Change w-full h-auto to w-6 h-6 or desired size
+    {...rest}
+  >
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -269,9 +273,14 @@ export const SunIcon = ({ className, ...rest }) => (
       />
     </circle>
   </svg>
+  </div>
 );
 
 export const MoonIcon = ({ className, ...rest }) => (
+  <div
+    className={`w-6 h-6 ${className}`} // Change w-full h-auto to w-6 h-6 or desired size
+    {...rest}
+  >
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -425,6 +434,7 @@ export const MoonIcon = ({ className, ...rest }) => (
       />
     </circle>
   </svg>
+  </div>
 );
 
 export const CircularText = ({ className, ...rest }) => (
@@ -441,6 +451,10 @@ export const CircularText = ({ className, ...rest }) => (
 );
 
 export const LinkArrow = ({ className, ...rest }) => (
+  <div
+    className={`w-6 h-6 ${className}`} // Change w-full h-auto to w-6 h-6 or desired size
+    {...rest}
+  >
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
@@ -459,5 +473,6 @@ export const LinkArrow = ({ className, ...rest }) => (
       d="M11 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-5m-7 1L20 4m-5 0h5v5"
     />
   </svg>
+  </div>
 );
 

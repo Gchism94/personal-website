@@ -38,7 +38,7 @@ const about = () => {
   return (
     <>
       <Head>
-        <title>Personal Portfolio of Dr. Greg Chism | Articles Page</title>
+        <title>Personal Portfolio of Dr. Greg Chism | Teaching Page</title>
         <meta
           name="description"
           content="Stories are an important component of human evolution, I help researchers tell stories through their data."
