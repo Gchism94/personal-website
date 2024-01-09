@@ -5,7 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import project1 from "../../public/images/projects/2022_Chism_TemnoNestArch_featured.png";
+import project1 from "../../public/images/projects/2022_Chism_TemnoNestArch_featured.jpg";
 import project2 from "../../public/images/projects/2022_Chism_TemnoPerf_featured.png";
 import project3 from "../../public/images/projects/2022_Chism_HumidityTemno_featured.png";
 import project4 from "../../public/images/projects/2020_Rice_ABCTracker_featured.png";

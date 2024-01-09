@@ -5,12 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
-import article1 from "../../public/images/articles/EDA_Plot.jpg";
-import article2 from "../../public/images/articles/EDA_Python_Plot.png";
-import article3 from "../../public/images/articles/rrtools_repro-research.jpeg";
-import article4 from "../../public/images/articles/KEYS-featured.jpg";
-import article5 from "../../public/images/articles/unix-featured.png";
-import article6 from "../../public/images/articles/SQL-featured.png";
+import article1 from "../../public/images/articles/info526Logo.png";
+import article2 from "../../public/images/articles/info523Logo.png";
+import article3 from "../../public/images/articles/EDA_Plot.jpg";
+import article4 from "../../public/images/articles/EDA_Python_Plot.png";
+import article5 from "../../public/images/articles/rrtools_repro-research.jpeg";
+import article6 from "../../public/images/articles/KEYS-featured.jpg";
+import article7 from "../../public/images/articles/unix-featured.png";
+import article8 from "../../public/images/articles/SQL-featured.png";
 import TransitionEffect from "@/components/TransitionEffect";
 
 const FramerImage = motion(Image);
@@ -135,18 +137,18 @@ const articles = () => {
           <ul className="grid grid-cols-2 gap-16 lg:gap-8 md:grid-cols-1 md:gap-y-16">
             <FeaturedArticle
               img={article1}
-              title="Data7 Exploratory Data Analysis in R Workshop Series"
+              title="INFO 526: Data Analysis and Visualization"
               time=""
-              summary="Exploratory data analysis (EDA) is crucial towards determining the validity of data and how it is often performed too late or not at all. The R programming language, specifically through the RStudio IDE, is a widely used open source platform for data analysis and visualization due to the variety of packages available. The dlookr package is introduced as a tool for conducting preliminary EDA to diagnose issues with imported data sets, including data outliers, missing data, and summary statistical reports."
-              link="https://gchism94.github.io/Data7_EDA_In_R_Workshops/"
+              summary="INFO 526 Data Analysis and Visualization - This course provides an overview of the various concepts and skills required for effective data visualization. It presents principles of graphic design, programming skills, and statistical knowledge required to build compelling visualizations that communicate effectively to target audiences."
+              link="https://datavizaz.org/"
             />
 
             <FeaturedArticle
               img={article2}
-              title="Data7 Exploratory Data Analysis in Python Materials"
+              title="INFO 523: Data Mining and Discovery"
               time=""
-              summary="Exploratory data analysis (EDA) is important throughout the data pipeline. I utilize the Python programming language and the pandas and pandas-profiling libraries to conduct preliminary EDA to diagnose any major issues with an imported data set, such as data outliers and missing data."
-              link="https://gchism94.github.io/Data7_EDA_In_Python_Book/"
+              summary="INFO 523 Data Mining and Discovery- This course will introduce students to the concepts and techniques of data mining for knowledge discovery. It includes methods developed in the fields of statistics, large-scale data analytics, machine learning, pattern recognition, database technology and artificial intelligence for automatic or semi-automatic analysis of large quantities of data to extract previously unknown patterns."
+              link="https://datamineaz.org/"
             />
           </ul>
           <h2 className="font-bold text-4xl w-full text-center my-16 mt-32">
@@ -154,26 +156,38 @@ const articles = () => {
           </h2>
           <ul className="flex flex-col items-center relative">
             <Article
-              title="Data7 Reproducible Research with GitHub and RStudio Workshop Series"
+              title="Exploratory Data Analysis in R Book"
               img={article3}
+              date=""
+              link="https://gchism94.github.io/Data7_EDA_In_R_Workshops/"
+            />
+            <Article
+              title="Exploratory Data Analysis in Python Book"
+              img={article4}
+              date=""
+              link="https://gchism94.github.io/Data7_EDA_In_Python_Book/"
+            />
+            <Article
+              title="Data7 Reproducible Research with GitHub and RStudio Workshop Series"
+              img={article5}
               date=""
               link="https://gchism94.github.io/Data7-rrtools-repro-research/"
             />
             <Article
               title="Data7 KEYS Internship Open Science and Machine Learning materials"
-              img={article4}
+              img={article6}
               date=""
               link="https://github.com/Gchism94/DSI-KEYS2022-DataSci/"
             />
             <Article
               title="Data7 Exploratory Data Analysis in SQL"
-              img={article6}
+              img={article7}
               date=""
               link="https://gchism94.github.io/Data7_EDA_In_SQL/"
             />
             <Article
               title="Data7 Exploratory Data Analysis in Unix Shell"
-              img={article5}
+              img={article8}
               date=""
               link="https://gchism94.github.io/Data7_EDA_In_Shell/"
             />

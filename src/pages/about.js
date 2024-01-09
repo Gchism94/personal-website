@@ -57,15 +57,15 @@ const about = () => {
                 Biography
               </h2>
               <p className="font-medium">
-              Dr. Greg Chism is a data scientist, educator, and behavioral ecologist with a passion for open access data science and democratizing education. As a Data Scientist at the University of Arizona Data Science Institute, he develops open source statistics and reproducible research curriculum, while measuring their educational impact.
+              Dr. Greg Chism is a data scientist, educator, and behavioral ecologist with a passion for open access data science and democratizing education. As an Assistant Professor of Practice at the University of Arizona iSchool, he develops open source statistics and reproducible research curriculum, while measuring their educational impact.
               </p>
 
               <p className="my-4 font-medium">
-              With extensive experience in image and video analysis, data analytics, and data ethics, Dr. Chism is dedicated to helping others harness the power of data for compelling storytelling and informed decision-making. An advocate for education for all, he bridges the gap between data analysis and real-world applications.
+              With extensive experience in data visualization, data analytics, and data ethics, Dr. Chism is dedicated to helping others harness the power of data for compelling storytelling and informed decision-making. An advocate for education for all, he bridges the gap between data analysis and real-world applications.
               </p>
 
               <p className="font-medium">
-              An advocate for education for all, Dr. Chism is dedicated to equipping individuals with the tools and knowledge necessary to harness the power of data in their respective fields. Through his work, he has successfully helped over twenty individuals leverage data to tell compelling stories and make informed decisions.
+              Dr. Chism is dedicated to equipping individuals with the tools and knowledge necessary to harness the power of data in their respective fields. Through his work, he has successfully helped over twenty individuals leverage data to tell compelling stories and make informed decisions.
               </p>
             </div>
 
@@ -89,31 +89,31 @@ bg-light p-8 dark:bg-dark dark:border-light xl:col-span-4 md:order-1 md:col-span
             <div className="col-span-2 flex flex-col items-end justify-between xl:col-span-8 xl:flex-row xl:items-center md:order-3">
               <div className="flex flex-col items-end justify-center xl:items-center">
                 <span className="inline-block text-7xl font-bold md:text-6xl sm:text-5xl xs:text-4xl">
-                  <AnimatedNumbers value={20} />+
+                  <AnimatedNumbers value={3} />+
                 </span>
                 <h2
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
                 xs:text-sm"
                 >
-                  Consultations
+                  Courses developed
                 </h2>
               </div>
 
               <div className="flex flex-col items-end justify-center xl:items-center">
                 <span className="inline-block text-7xl font-bold md:text-6xl sm:text-5xl xs:text-4xl">
-                  <AnimatedNumbers value={4} />+
+                  <AnimatedNumbers value={12} />+
                 </span>
                 <h2
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
                 xs:text-sm"
                 >
-                  projects completed
+                  student projects mentores
                 </h2>
               </div>
 
               <div className="flex flex-col items-end justify-center xl:items-center">
                 <span className="inline-block text-7xl font-bold md:text-6xl sm:text-5xl xs:text-4xl">
-                  <AnimatedNumbers value={8} />+
+                  <AnimatedNumbers value={9} />+
                 </span>
                 <h2
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
