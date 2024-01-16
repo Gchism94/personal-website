@@ -107,7 +107,7 @@ bg-light p-8 dark:bg-dark dark:border-light xl:col-span-4 md:order-1 md:col-span
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
                 xs:text-sm"
                 >
-                  student projects mentores
+                  student projects mentored
                 </h2>
               </div>
 
