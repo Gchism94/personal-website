@@ -5,6 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import project0 from "../../public/images/projects/jupyterquest-logo.png"
 import project1 from "../../public/images/projects/2022_Chism_TemnoNestArch_featured.jpg";
 import project2 from "../../public/images/projects/2022_Chism_TemnoPerf_featured.png";
 import project3 from "../../public/images/projects/2022_Chism_HumidityTemno_featured.png";
@@ -162,17 +163,28 @@ const projects = () => {
             <div className="col-span-12">
               <FeaturedProject
                 type="Featured Project"
-                title="Nest shape influences colony organization in ants."
+                title="JupyterQuest"
+                summary="JupyterQuest streamlines code and documentation quality in .ipynb files, integrating seamlessly with GitHub Actions. It automates reviews of code style, organization, commit clarity, and repo structure, fostering coding excellence in educational and collaborative projects."
+                img={project0}
+                link="https://jupyterquest.netlify.app/"
+                github="https://github.com/Gchism94/jupyterquest"
+              />
+            </div>
+            <div className="col-span-6 sm:col-span-12">
+              <Project
+                type="Research Project"
+                title="Nest shape influences colony organization in ants"
                 summary="How the design of an ant home can change the way the ant colonies behaves inside. We looked at how rock ants live in two artificial nests with different layouts, and found that the way ants spread out inside was affected by the nest's design. But, the space each ant stays in didn't change because of the nest's design, even though it did change based on how far they were from the entrance and the area where the young live. We learned that the features of ant nests can change how ants are arranged inside, and it's important to study how the nest's design can directly impact how ants organize, move, and communicate."
                 img={project1}
                 link="https://www.biorxiv.org/content/biorxiv/early/2022/07/02/2022.06.30.498314.full.pdf"
-                github="https://github.com/Gchism94/NestArchOrg"
+                github="https://github.com/Gchism94/AntColonyPerformance"
               />
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
                 type="Research Project"
                 title="Nest shape does not affect ant colony performance against a nest invader"
+                summary=""
                 img={project2}
                 link="https://zenodo.org/record/6872019#.ZDMgL0LMKnA"
                 github="https://github.com/Gchism94/AntColonyPerformance"
@@ -181,7 +193,7 @@ const projects = () => {
             <div className="col-span-6 sm:col-span-12">
               <Project
                 type="Research Project"
-                title="Temnothorax rugatulus ants do not change their nest walls in response to environmental humidity"
+                title="<i>Temnothorax rugatulus</i> ants do not change their nest walls in response to environmental humidity"
                 img={project3}
                 link="https://www.biorxiv.org/content/10.1101/2022.06.30.497551v1"
                 github="https://github.com/Gchism94/HumidityProject"

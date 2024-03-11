@@ -56,6 +56,15 @@ style={{scaleY: scrollYProgress}}
 
         <ul className="w-full flex flex-col items-start justify-between ml-4 xs:ml-2">
         <Details
+              position="Assistant Professor of Practice"
+              company="UArizona"
+              companyLink="https://ischool.arizona.edu/person/greg-chism"
+              time="2022-Present"
+              address="Tucson, AZ"
+              work="Developing and executing innovative project-based learning courses in data vizualization data mining, and MS capstones."
+            />
+
+        <Details
               position="Data Science Educator"
               company="UArizona"
               companyLink="https://datascience.arizona.edu/"
