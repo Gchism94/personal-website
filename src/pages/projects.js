@@ -170,7 +170,7 @@ const projects = () => {
                 github="https://github.com/Gchism94/jupyterquest"
               />
             </div>
-            <div className="col-span-6 sm:col-span-12">
+            <div className="col-span-12">
               <FeaturedProject
                 type="Featured Project"
                 title="Nest shape influences colony organization in ants"
