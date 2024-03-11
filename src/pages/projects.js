@@ -172,7 +172,7 @@ const projects = () => {
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                type="Research Project"
+                type="Featured Project"
                 title="Nest shape influences colony organization in ants"
                 summary="How the design of an ant home can change the way the ant colonies behaves inside. We looked at how rock ants live in two artificial nests with different layouts, and found that the way ants spread out inside was affected by the nest's design. But, the space each ant stays in didn't change because of the nest's design, even though it did change based on how far they were from the entrance and the area where the young live. We learned that the features of ant nests can change how ants are arranged inside, and it's important to study how the nest's design can directly impact how ants organize, move, and communicate."
                 img={project1}
@@ -193,7 +193,7 @@ const projects = () => {
             <div className="col-span-6 sm:col-span-12">
               <Project
                 type="Research Project"
-                title="<i>Temnothorax rugatulus</i> ants do not change their nest walls in response to environmental humidity"
+                title="Temnothorax rugatulus ants do not change their nest walls in response to environmental humidity"
                 img={project3}
                 link="https://www.biorxiv.org/content/10.1101/2022.06.30.497551v1"
                 github="https://github.com/Gchism94/HumidityProject"
