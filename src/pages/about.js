@@ -49,7 +49,7 @@ const about = () => {
         <Layout className="pt-16">
           <AnimatedText
             text="Turning evidence into clear, decision-relevant insight under uncertainty."
-            className="mb-16 !leading-tight lg:!text-7xl sm:!text-6xl xs:!text-4xl sm:mb-8"
+            className="mb-16 !leading-tight lg:!text-5xl sm:!text-4xl xs:!text-2xl sm:mb-8"
           />
           <div className="grid w-full grid-cols-8 gap-16 sm:gap-8">
             <div className="col-span-3 flex flex-col items-start justify-start xl:col-span-4 md:order-2 md:col-span-8">
@@ -145,5 +145,6 @@ bg-light p-8 dark:bg-dark dark:border-light xl:col-span-4 md:order-1 md:col-span
     </>
   );
 };
+
 
 export default about;
