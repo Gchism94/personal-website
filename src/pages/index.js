@@ -36,7 +36,7 @@ export default function Home() {
                 xl:!text-5xl lg:!text-center lg:!text=6xl md:!text-5xl sm:!text-3xl
                 '/>
                 <p className='my-4 text-base font-medium md:text-sm sm:text-xs'>
-                I am a data scientist, educator, and behavioral ecologist. I am passionate about telling stories through data. I accomplish this by leveraging my interdisciplinary background to provide an innovative approach to answering complex questions.
+                I am a methodologically oriented researcher who applies quantitative and empirical approaches across data science, education, and behavioral ecology. Drawing on an interdisciplinary background, I focus on evaluating evidence critically and using data to inform clear, decision-relevant insights about complex questions.
                 </p>
                 <div className='flex items-center self-start mt-2 lg:self-center'>
                   <Link href="/resume/index.html" target={"_blank"}

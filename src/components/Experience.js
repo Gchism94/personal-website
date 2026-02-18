@@ -49,47 +49,48 @@ const Experience = () => {
       <div ref={ref} className="w-[75%] mx-auto relative lg:w-[90%] md:w-full">
 
 <motion.div
-style={{scaleY: scrollYProgress}}
+  style={{ scaleY: scrollYProgress }}
   className="absolute left-9 top-0 w-[4px] h-full bg-dark origin-top 
   md:w-[2px] md:left-[30px] xs:left-[20px] dark:bg-primaryDark dark:shadow-3xl
-  "  />
+  "
+/>
 
         <ul className="w-full flex flex-col items-start justify-between ml-4 xs:ml-2">
-        <Details
-              position="Assistant Professor of Practice"
-              company="UArizona"
-              companyLink="https://ischool.arizona.edu/person/greg-chism"
-              time="2022-Present"
-              address="Tucson, AZ"
-              work="Developing and executing innovative project-based learning courses in data vizualization data mining, and MS capstones."
-            />
+          <Details
+            position="Assistant Professor of Practice"
+            company="UArizona"
+            companyLink="https://ischool.arizona.edu/person/greg-chism"
+            time="2023–Present"
+            address="Tucson, AZ"
+            work="Evaluate empirical evidence and methodological approaches to guide research design and decision-oriented data science initiatives. Lead applied, project-based work emphasizing reproducibility, uncertainty-aware interpretation, and clear communication of findings for practical decisions."
+          />
 
-        <Details
-              position="Data Science Educator"
-              company="UArizona"
-              companyLink="https://datascience.arizona.edu/"
-              time="2022-Present"
-              address="Tucson, AZ"
-              work="Worked on a team responsible for establishing the UArizona Data Science Institute's education efforts, including mentoring over 40 graduate students and post docs in open, reproducible science."
-            />
+          <Details
+            position="Data Science Educator"
+            company="UArizona"
+            companyLink="https://datascience.arizona.edu/"
+            time="2022–2023"
+            address="Tucson, AZ"
+            work="Supported the University of Arizona Data Science Institute’s education and research enablement efforts by mentoring researchers in evidence-driven analytical methods, reproducible workflows, and careful interpretation under uncertainty. Advised 40+ graduate students and postdocs on strengthening research quality and decision relevance."
+          />
 
-            <Details
-              position="Research Scientist"
-              company="UArizona"
-              companyLink="https://socialinsectlab.arizona.edu/"
-              time="2017-2022"
-              address="Tucson, AZ"
-              work="Completed a novel interdisciplinary dissertation which led to three manuscript and three reproducible Binder containers via GitHub actions."
-            />
+          <Details
+            position="Research Scientist"
+            company="UArizona"
+            companyLink="https://socialinsectlab.arizona.edu/"
+            time="2017–2022"
+            address="Tucson, AZ"
+            work="Designed and executed interdisciplinary empirical research aimed at generating robust, decision-relevant evidence. Built reproducible analysis pipelines (including Binder containers via GitHub Actions) to improve transparency, reliability, and collaboration."
+          />
 
-            <Details
-              position="Research Assistant"
-              company="UC Santa Barbara"
-              companyLink="https://parasitology.msi.ucsb.edu/"
-              time="2014-2017"
-              address="Santa Barbara, CA"
-              work="Authored 3 scientific publications, built and maintained 5 reproducible novel data sets."
-            />
+          <Details
+            position="Research Assistant"
+            company="UC Santa Barbara"
+            companyLink="https://parasitology.msi.ucsb.edu/"
+            time="2014–2017"
+            address="Santa Barbara, CA"
+            work="Contributed to applied research projects, including a Red Cross–facing initiative in Central America, using empirically driven data collection to support humanitarian decision-making. Co-authored peer-reviewed publications and maintained reproducible datasets to ensure reliable downstream analysis."
+          />
         </ul>
       </div>
     </div>

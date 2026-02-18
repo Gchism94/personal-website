@@ -38,17 +38,17 @@ const about = () => {
   return (
     <>
       <Head>
-        <title>Personal Portfolio of Dr. Greg Chism | Teaching Page</title>
+        <title>Personal Portfolio of Dr. Greg Chism | Research</title>
         <meta
           name="description"
-          content="Stories are an important component of human evolution, I help researchers tell stories through their data."
+          content="Methodologically oriented researcher focused on evidence synthesis, uncertainty-aware analysis, and decision-relevant empirical work across health sciences, data science, and animal behavior."
         />
       </Head>
       <TransitionEffect />
       <main className="flex w-full flex-col items-center justify-center dark:text-light">
         <Layout className="pt-16">
           <AnimatedText
-            text="Transforming curiosity into knowledge through data-driven discovery."
+            text="Turning evidence into clear, decision-relevant insight under uncertainty."
             className="mb-16 !leading-tight lg:!text-7xl sm:!text-6xl xs:!text-4xl sm:mb-8"
           />
           <div className="grid w-full grid-cols-8 gap-16 sm:gap-8">
@@ -56,16 +56,28 @@ const about = () => {
               <h2 className="mb-4 text-lg font-bold uppercase text-dark/75 dark:text-light/75">
                 Biography
               </h2>
+
               <p className="font-medium">
-              Dr. Greg Chism is a data scientist, educator, and behavioral ecologist with a passion for open access data science and democratizing education. As an Assistant Professor of Practice at the University of Arizona iSchool, he develops open source statistics and reproducible research curriculum, while measuring their educational impact.
+                Dr. Greg Chism is a methodologically oriented researcher who applies quantitative
+                and empirical approaches to complex, real-world questions. His work emphasizes
+                evidence synthesis, reproducible workflows, and careful interpretation of results
+                under uncertainty—aimed at improving decisions in interdisciplinary settings,
+                including health sciences and data science.
               </p>
 
               <p className="my-4 font-medium">
-              With extensive experience in data visualization, data analytics, and data ethics, Dr. Chism is dedicated to helping others harness the power of data for compelling storytelling and informed decision-making. An advocate for education for all, he bridges the gap between data analysis and real-world applications.
+                As an Assistant Professor of Practice at the University of Arizona iSchool, he
+                leads research-informed initiatives that integrate rigorous analysis with problem
+                framing and transparent reasoning. He collaborates with interdisciplinary teams on
+                empirical studies, contributing quantitative expertise, research design support,
+                and an emphasis on communicating uncertainty clearly.
               </p>
 
               <p className="font-medium">
-              Dr. Chism is dedicated to equipping individuals with the tools and knowledge necessary to harness the power of data in their respective fields. Through his work, he has successfully helped over twenty individuals leverage data to tell compelling stories and make informed decisions.
+                In addition to research and collaboration, Dr. Chism mentors students and
+                researchers in strengthening analytical rigor, reproducibility, and evidence
+                evaluation. He is particularly interested in environments that value truth-seeking,
+                intellectual humility, and decision-relevant research.
               </p>
             </div>
 
@@ -77,7 +89,7 @@ bg-light p-8 dark:bg-dark dark:border-light xl:col-span-4 md:order-1 md:col-span
               <div className="absolute top-0 -right-3 -z-10 w-[102%] h-[103%] rounded-[2rem] bg-dark dark:bg-light" />
               <Image
                 src={profilePic}
-                alt="Codebucks"
+                alt="Dr. Greg Chism"
                 className="w-full h-auto rounded-2xl"
                 priority
                 sizes="(max-width: 768px) 100vw,
@@ -89,37 +101,37 @@ bg-light p-8 dark:bg-dark dark:border-light xl:col-span-4 md:order-1 md:col-span
             <div className="col-span-2 flex flex-col items-end justify-between xl:col-span-8 xl:flex-row xl:items-center md:order-3">
               <div className="flex flex-col items-end justify-center xl:items-center">
                 <span className="inline-block text-7xl font-bold md:text-6xl sm:text-5xl xs:text-4xl">
-                  <AnimatedNumbers value={3} />+
+                  <AnimatedNumbers value={11} />+
                 </span>
                 <h2
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
                 xs:text-sm"
                 >
-                  Courses developed
+                  years empirical research
                 </h2>
               </div>
 
               <div className="flex flex-col items-end justify-center xl:items-center">
                 <span className="inline-block text-7xl font-bold md:text-6xl sm:text-5xl xs:text-4xl">
-                  <AnimatedNumbers value={12} />+
+                  <AnimatedNumbers value={2} />+
                 </span>
                 <h2
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
                 xs:text-sm"
                 >
-                  student projects mentored
+                  health science collaborations
                 </h2>
               </div>
 
               <div className="flex flex-col items-end justify-center xl:items-center">
                 <span className="inline-block text-7xl font-bold md:text-6xl sm:text-5xl xs:text-4xl">
-                  <AnimatedNumbers value={9} />+
+                  <AnimatedNumbers value={100} />+
                 </span>
                 <h2
                   className="text-xl font-medium capitalize text-dark/75 dark:text-light/75 xl:text-center md:text-lg sm:text-base
                 xs:text-sm"
                 >
-                  years of experience
+                  researchers mentored
                 </h2>
               </div>
             </div>
