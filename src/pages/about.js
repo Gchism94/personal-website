@@ -48,7 +48,7 @@ const about = () => {
       <main className="flex w-full flex-col items-center justify-center dark:text-light">
         <Layout className="pt-16">
           <AnimatedText
-            text="Turning evidence into clear, decision-relevant insight under uncertainty."
+            text="Clear Insight from Evidence."
             className="mb-16 !leading-tight lg:!text-5xl sm:!text-4xl xs:!text-2xl sm:mb-8"
           />
           <div className="grid w-full grid-cols-8 gap-16 sm:gap-8">
