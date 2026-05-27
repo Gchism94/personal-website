@@ -312,7 +312,7 @@ export default function HeroLight() {
 
     /* ── INIT ── */
     function revealUI(){
-      const tree=treeRef.current;if(tree)setTimeout(()=>{tree.style.opacity='.36'},3000)
+      const tree=treeRef.current;if(tree)setTimeout(()=>{tree.style.opacity='.52'},3000)
       const eyebrow=eyebrowRef.current;if(eyebrow)setTimeout(()=>{eyebrow.style.animation='fadeUp .35s ease forwards'},0)
       nameSpansRef.current.forEach((s,i)=>setTimeout(()=>{if(s){s.style.opacity='1';s.style.transform='translateY(0)'}},i*80))
       const tagline=taglineRef.current;if(tagline)setTimeout(()=>{tagline.style.animation='fadeUp .4s ease forwards'},180)
@@ -337,7 +337,7 @@ export default function HeroLight() {
       requestAnimationFrame(ts=>{
         introStartTs=ts
         revealUI()
-        setTimeout(()=>{const t=treeRef.current;if(t)t.style.opacity='0.52'},RIV_DUR+900+SHADE_DUR+2500)
+        setTimeout(()=>{const t=treeRef.current;if(t)t.style.opacity='0.72'},RIV_DUR+900+SHADE_DUR+2500)
       })
     }
 
