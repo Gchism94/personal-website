@@ -44,7 +44,7 @@ const CSS = `
   mix-blend-mode: multiply;
   opacity: 0;
   transition: opacity 3.8s cubic-bezier(.4,0,.2,1);
-  filter: saturate(.86) brightness(1.04) contrast(.94);
+  filter: saturate(.95) brightness(1.04) contrast(.94);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.94) 0%, rgba(0,0,0,.90) 34%, rgba(0,0,0,.58) 54%, rgba(0,0,0,.14) 70%, rgba(0,0,0,0) 82%);
   mask-image: linear-gradient(to bottom, rgba(0,0,0,.94) 0%, rgba(0,0,0,.90) 34%, rgba(0,0,0,.58) 54%, rgba(0,0,0,.14) 70%, rgba(0,0,0,0) 82%);
 }
@@ -73,7 +73,7 @@ const CSS = `
   color: #3B2F2F;
 }
 .hero-name .line { display: block; overflow: hidden; padding-right: 0.15em; }
-.hero-name .line span { display: inline-block; opacity: 0; transform: translateY(106%); transition: opacity 2.0s ease, transform 1.8s cubic-bezier(.16,1,.3,1); }
+.hero-name .line span { display: inline-block; opacity: 0; transform: translateY(106%); transition: opacity 1.1s ease, transform 0.9s cubic-bezier(.16,1,.3,1); }
 .hero-name em { font-style: italic; color: #4A7C6F; }
 .hero-tagline {
   margin-top: 30px;
@@ -313,12 +313,12 @@ export default function HeroLight() {
     /* ── INIT ── */
     function revealUI(){
       const tree=treeRef.current;if(tree)setTimeout(()=>{tree.style.opacity='.36'},3000)
-      const eyebrow=eyebrowRef.current;if(eyebrow)setTimeout(()=>{eyebrow.style.animation='fadeUp .45s ease forwards'},260)
-      const tagline=taglineRef.current;if(tagline)setTimeout(()=>{tagline.style.animation='fadeUp .5s ease forwards'},520)
-      const ctas=ctasRef.current;if(ctas)setTimeout(()=>{ctas.style.animation='fadeUp .5s ease forwards'},760)
+      const eyebrow=eyebrowRef.current;if(eyebrow)setTimeout(()=>{eyebrow.style.animation='fadeUp .35s ease forwards'},0)
+      nameSpansRef.current.forEach((s,i)=>setTimeout(()=>{if(s){s.style.opacity='1';s.style.transform='translateY(0)'}},i*80))
+      const tagline=taglineRef.current;if(tagline)setTimeout(()=>{tagline.style.animation='fadeUp .4s ease forwards'},180)
+      const ctas=ctasRef.current;if(ctas)setTimeout(()=>{ctas.style.animation='fadeUp .4s ease forwards'},320)
       const label=labelRef.current;if(label)label.style.animation='fadeIn 1.8s ease 4s forwards'
-      const scroll=scrollRef.current;if(scroll)setTimeout(()=>{scroll.style.animation='fadeIn .8s ease forwards'},1200)
-      nameSpansRef.current.forEach((s,i)=>setTimeout(()=>{if(s){s.style.opacity='1';s.style.transform='translateY(0)'}},i*140))
+      const scroll=scrollRef.current;if(scroll)setTimeout(()=>{scroll.style.animation='fadeIn .8s ease forwards'},600)
     }
 
     async function init(){
