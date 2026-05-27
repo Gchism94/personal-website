@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #F5EFE6;
+  }
+
+  html.dark {
+    background-color: #02040a;
+  }
+
+  body {
+    @apply bg-linen text-bark font-dm-sans font-light antialiased min-h-screen;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  html.dark body {
+    @apply bg-midnight text-cream;
+  }
+
+  a:not([class]) {
+    @apply text-juniper dark:text-teal transition-colors duration-150;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #B5532A;
+    outline-offset: 2px;
+  }
+
+  .dark *:focus-visible {
+    outline-color: #9fd0c2;
+  }
+
+  ::selection {
+    background-color: #B5532A;
+    color: #F5EFE6;
+  }
+}

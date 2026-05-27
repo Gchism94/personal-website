@@ -1,224 +1,122 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import {
-  TwitterIcon,
-  DribbbleIcon,
-  GithubIcon,
-  LinkedInIcon,
-  PinterestIcon,
-  SunIcon,
-  MoonIcon,
-} from "./Icons";
-import Logo from "./Logo";
-import { motion } from "framer-motion";
-import useThemeSwitcher from "./hooks/useThemeSwitcher";
+'use client'
 
-const CustomLink = ({ href, title, className = "" }) => {
-  const router = useRouter();
+import { useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useTheme } from './ThemeProvider'
+
+const LINKS = [
+  { href: '/work',     label: 'Work' },
+  { href: '/research', label: 'Research' },
+  { href: '/contact',  label: 'Contact' },
+]
+
+function SunIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" />
+      <line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" />
+      <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" /><line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+      <line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" />
+      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" /><line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+    </svg>
+  )
+}
+
+function MoonIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  )
+}
+
+export default function NavBar() {
+  const pathname = usePathname()
+  const { isDark, toggle } = useTheme()
+  const [open, setOpen] = useState(false)
+
+  const isHome = pathname === '/'
+
+  // On home, nav floats over the hero with no background
+  // On other pages, fixed with blur/border
+  const navBase = isHome
+    ? 'absolute top-0 left-0 right-0 z-50'
+    : 'fixed top-0 left-0 right-0 z-50 bg-linen/95 dark:bg-midnight/95 backdrop-blur-sm border-b border-sand/40 dark:border-white/5'
+
+  const textColor = isHome
+    ? 'text-bark/60 dark:text-cream/60'
+    : 'text-bark/55 dark:text-cream/55'
+
+  const activeColor = 'text-juniper dark:text-teal'
 
   return (
-    <Link href={href} className={`${className} relative group`}>
-      {title}
-
-      <span
-        className={`
-          h-[1px] inline-block  bg-dark
-          absolute left-0 -bottom-0.5
-          group-hover:w-full transition-[width] ease duration-300
-          ${router.asPath === href ? "w-full" : "w-0"}
-          dark:bg-light`}
-      >
-        &nbsp;
-      </span>
-    </Link>
-  );
-};
-
-const CustomMobileLink = ({ href, title, className = "", toggle }) => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    toggle();
-    router.push(href);
-  };
-
-  return (
-    <button
-      href={href}
-      className={`${className} relative group text-light dark:text-dark my-2`}
-      onClick={handleClick}
-    >
-      {title}
-
-      <span
-        className={`
-          h-[1px] inline-block  bg-light
-          absolute left-0 -bottom-0.5
-          group-hover:w-full transition-[width] ease duration-300
-          ${router.asPath === href ? "w-full" : "w-0"}
-          dark:bg-dark`}
-      >
-        &nbsp;
-      </span>
-    </button>
-  );
-};
-
-const NavBar = () => {
-  const [mode, setMode] = useThemeSwitcher();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <header
-      className="w-full px-32 py-8 font-medium flex items-center justify-between
-    dark:text-light relative z-10 lg:px-16 md:px-12 sm:px-8
-    "
-    >
-      <button
-        className=" flex-col justify-center items-center hidden lg:flex"
-        onClick={handleClick}
-      >
-        <span
-          className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm  ${
-            isOpen ? "rotate-45 translate-y-1" : "-translate-y-0.5"
-          }`}
-        ></span>
-        <span
-          className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${
-            isOpen ? "opacity-0" : "opacity-100"
-          } `}
-        ></span>
-        <span
-          className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${
-            isOpen ? "-rotate-45 -translate-y-1" : "translate-y-0.5"
-          } `}
-        ></span>
-      </button>
-
-      <div className="w-full flex justify-between items-center lg:hidden">
-        <nav className="flex items-center justify-center">
-          <CustomLink href="/" title="Home" className="mr-4" />
-          <CustomLink href="/about" title="About" className="mx-4" />
-          <CustomLink href="/projects" title="Projects" className="mx-4" />
-          <CustomLink href="/articles" title="Teaching" className="ml-4" />
-          <CustomLink href="/cv/gchism_cv.pdf" title="CV" className="ml-4" />
-        </nav>
-
-        <nav className="flex items-center justify-center flex-wrap"> 
-          <motion.a
-            href="https://github.com/Gchism94"
-            target={"_blank"}
-            className="w-6 mx-3"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.9 }}
+    <>
+      <header className={navBase}>
+        <div className="flex items-center justify-between px-14 py-7 md:px-7 md:py-5">
+          {/* Wordmark */}
+          <Link
+            href="/"
+            className="font-mono text-[11px] tracking-[0.18em] uppercase text-bark/62 dark:text-cream/62 hover:text-bark dark:hover:text-cream transition-colors"
           >
-            <GithubIcon />
-          </motion.a>
-          <motion.a
-            href="https://www.linkedin.com/in/greg-chism/"
-            target={"_blank"}
-            className="w-6 mx-3"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <LinkedInIcon />
-          </motion.a>
-          <button
-            onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            className={`ml-3 flex items-center justify-center rounded-full p-1 ease
-      ${mode === "light" ? "bg-dark text-light" : "bg-light text-dark"}
-      `}
-          >
-            {mode === "light" ? (
-              <SunIcon className={"fill-dark"} />
-            ) : (
-              <MoonIcon className={"fill-dark"} />
-            )}
-          </button>
-        </nav>
-      </div>
+            Greg T. Chism
+          </Link>
 
-      {isOpen ? (
-        <motion.div
-          initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="min-w-[70vw] sm:min-w-[90vw] flex flex-col justify-between z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-      bg-dark/90 dark:bg-light/75 rounded-lg backdrop-blur-md py-32
-      "
-        >
-          <nav className="flex items-center flex-col justify-center">
-            <CustomMobileLink
-              href="/"
-              title="Home"
-              className=""
-              toggle={handleClick}
-            />
-            <CustomMobileLink
-              href="/about"
-              title="About"
-              className=""
-              toggle={handleClick}
-            />
-            <CustomMobileLink
-              href="/projects"
-              title="Projects"
-              className=""
-              toggle={handleClick}
-            />
-            <CustomMobileLink
-              href="/articles"
-              title="Teaching"
-              className=""
-              toggle={handleClick}
-            />
-          </nav>
-
-          <nav className="flex items-center justify-center flex-wrap mt-2">
-          <motion.a
-            href="https://github.com/Gchism94"
-            target={"_blank"}
-            className="w-6 mx-3"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <GithubIcon />
-          </motion.a>
-          <motion.a
-            href="https://www.linkedin.com/in/greg-chism/"
-            target={"_blank"}
-            className="w-6 mx-3"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <LinkedInIcon />
-            </motion.a>
-
+          {/* Desktop links */}
+          <nav className="flex items-center gap-9 lg:hidden" aria-label="Primary">
+            {LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`font-mono text-[10px] tracking-[0.14em] uppercase transition-colors duration-150
+                  ${pathname === href ? activeColor : textColor + ' hover:text-bark dark:hover:text-cream'}`}
+              >
+                {label}
+              </Link>
+            ))}
             <button
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
-              className={`ml-3 flex items-center justify-center rounded-full p-1
-      ${mode === "light" ? "bg-dark text-light" : "bg-light text-dark"}
-      `}
+              onClick={toggle}
+              className={`${textColor} hover:text-bark dark:hover:text-cream transition-colors ml-2`}
+              aria-label="Toggle dark mode"
             >
-              {mode === "light" ? (
-            <SunIcon className={"fill-dark"} />
-          ) : (
-            <MoonIcon className={"fill-dark"} />
-          )}
+              {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
           </nav>
-        </motion.div>
-      ) : null}
 
-      <div className="absolute left-[50%] top-2 translate-x-[-50%]">
-        <Logo />
-      </div>
-    </header>
-  );
-};
+          {/* Mobile controls */}
+          <div className="hidden lg:flex items-center gap-4">
+            <button onClick={toggle} className={`${textColor}`} aria-label="Toggle dark mode">
+              {isDark ? <SunIcon /> : <MoonIcon />}
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              className="flex flex-col gap-1.5 w-5 text-bark/60 dark:text-cream/60"
+              aria-label="Toggle menu"
+            >
+              <span className={`block h-px bg-current transition-all duration-200 ${open ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`block h-px bg-current transition-all duration-200 ${open ? 'opacity-0' : ''}`} />
+              <span className={`block h-px bg-current transition-all duration-200 ${open ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
+          </div>
+        </div>
+      </header>
 
-export default NavBar;
+      {/* Mobile overlay */}
+      {open && (
+        <div className="hidden lg:flex fixed inset-0 z-40 bg-linen dark:bg-midnight flex-col items-center justify-center gap-10">
+          {LINKS.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className={`font-mono text-sm tracking-[0.2em] uppercase transition-colors
+                ${pathname === href ? activeColor : 'text-bark/60 dark:text-cream/60 hover:text-bark dark:hover:text-cream'}`}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </>
+  )
+}
