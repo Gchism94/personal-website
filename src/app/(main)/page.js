@@ -12,7 +12,7 @@ const recentWork = [
   {
     title: 'Three Canyon Consulting',
     desc: 'AI and data strategy consulting for universities, health systems, and mission-driven organizations.',
-    href: 'https://threecanyonconsulting.com',
+    href: 'https://threecanyonconsult.com',
     external: true,
     label: 'Consulting',
   },
@@ -49,7 +49,7 @@ function HomeContent() {
             <p className="font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed mb-5">
               I help organizations stop drowning in data and start making decisions with it. Through Three Canyon Consulting, I work with universities, health systems, and mission-driven organizations to design better data systems, evaluate AI applications, and build insight pipelines that actually get used.
             </p>
-            <Button href="https://threecanyonconsulting.com" variant="ghost" external>
+            <Button href="https://threecanyonconsult.com" variant="ghost" external>
               Three Canyon Consulting →
             </Button>
           </div>

@@ -153,8 +153,8 @@ export default function Work() {
         </div>
 
         <div className="flex flex-col items-start gap-4">
-          <Button href="https://threecanyonconsulting.com" variant="primary" external>
-            threecanyonconsulting.com
+          <Button href="https://threecanyonconsult.com" variant="primary" external>
+            threecanyonconsult.com
           </Button>
           <div className="rounded border border-dashed border-sand/60 dark:border-white/15 bg-sand/10 dark:bg-white/[0.03] px-5 py-3">
             <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-stone/45 dark:text-cream/35">

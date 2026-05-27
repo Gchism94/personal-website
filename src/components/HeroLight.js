@@ -337,7 +337,7 @@ export default function HeroLight() {
       requestAnimationFrame(ts=>{
         introStartTs=ts
         revealUI()
-        setTimeout(()=>{const t=treeRef.current;if(t)t.style.opacity='0.72'},RIV_DUR+900+SHADE_DUR+2500)
+        setTimeout(()=>{const t=treeRef.current;if(t)t.style.opacity='0.9'},RIV_DUR+900+SHADE_DUR+2500)
       })
     }
 

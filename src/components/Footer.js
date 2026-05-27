@@ -9,7 +9,7 @@ export default function Footer() {
         </p>
         <nav className="flex items-center gap-6 flex-wrap justify-center">
           {[
-            { label: 'Three Canyon Consulting', href: 'https://threecanyonconsulting.com', external: true },
+            { label: 'Three Canyon Consulting', href: 'https://threecanyonconsult.com', external: true },
             { label: 'High Desert', href: 'https://highdesert.community', external: true },
             { label: 'GitHub', href: 'https://github.com/Gchism94', external: true },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/greg-chism/', external: true },
