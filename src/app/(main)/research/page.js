@@ -1,9 +1,7 @@
-import Image from 'next/image'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
-import info526 from '../../../../public/images/articles/info526Logo.png'
-import info523 from '../../../../public/images/articles/info523Logo.png'
+import { DataMiningAnim, DataVizAnim, FundamentalsAnim } from '@/components/CourseAnimations'
 
 export const metadata = {
   title: 'Research & Teaching — Greg Chism',
@@ -80,6 +78,30 @@ const publications = [
   },
 ]
 
+const courses = [
+  {
+    Anim: DataVizAnim,
+    num: 'INFO 526',
+    title: 'Data Analysis & Visualization',
+    desc: 'Covers principles of graphic design, programming, and statistical knowledge required to build visualizations that communicate effectively. Students produce publication-ready figures in R and Python.',
+    href: 'https://datavizaz.org/',
+  },
+  {
+    Anim: DataMiningAnim,
+    num: 'INFO 523',
+    title: 'Data Mining & Discovery',
+    desc: 'Introduces data mining concepts from statistics, machine learning, and AI for knowledge discovery from large datasets. Emphasizes hands-on reproducible workflows and real-world applications.',
+    href: 'https://datamineaz.org/',
+  },
+  {
+    Anim: FundamentalsAnim,
+    num: 'INFO 511',
+    title: 'Fundamentals of Data Science',
+    desc: 'End-to-end introduction to the data science lifecycle: collection, cleaning, exploration, modeling, and communication. Python-first, with emphasis on reproducible workflows and real-world datasets.',
+    href: 'https://datasciaz.netlify.app/',
+  },
+]
+
 function PubTitle({ title, boldChism }) {
   if (!boldChism) return <>{title}</>
   const parts = title.split('Chism')
@@ -129,24 +151,15 @@ export default function Research() {
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/55 dark:text-cream/40 mb-2">Current Courses</p>
         <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/55 mb-8">University of Arizona · iSchool</p>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
-          {[
-            {
-              img: info526, num: 'INFO 526', title: 'Data Analysis & Visualization',
-              desc: 'Covers principles of graphic design, programming, and statistical knowledge required to build visualizations that communicate effectively. Students produce publication-ready figures in R and Python.',
-              href: 'https://datavizaz.org/',
-            },
-            {
-              img: info523, num: 'INFO 523', title: 'Data Mining & Discovery',
-              desc: 'Introduces data mining concepts from statistics, machine learning, and AI for knowledge discovery from large datasets. Emphasizes hands-on reproducible workflows and real-world applications.',
-              href: 'https://datamineaz.org/',
-            },
-          ].map(({ img, num, title, desc, href }) => (
+
+        <div className="grid grid-cols-3 gap-6 xl:grid-cols-2 md:grid-cols-1">
+          {courses.map(({ Anim, num, title, desc, href }) => (
             <div key={num} className="border border-sand/60 dark:border-white/8 rounded-lg overflow-hidden">
-              <div className="bg-sand/15 dark:bg-white/[0.04] p-5">
-                <Image src={img} alt={title} className="w-full h-auto rounded" />
+              {/* Animation thumbnail */}
+              <div className="relative h-44 bg-linen dark:bg-midnight overflow-hidden">
+                <Anim className="absolute inset-0 w-full h-full" />
               </div>
-              <div className="p-6">
+              <div className="p-6 border-t border-sand/40 dark:border-white/6">
                 <Tag className="mb-3">{num}</Tag>
                 <h3 className="font-serif text-lg font-bold text-bark dark:text-cream mb-3">{title}</h3>
                 <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed mb-4">{desc}</p>
