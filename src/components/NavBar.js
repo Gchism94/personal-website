@@ -11,9 +11,9 @@ const LINKS = [
   { href: '/contact',  label: 'Contact' },
 ]
 
-function SunIcon() {
+function SunIcon({ className = '' }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
       <circle cx="12" cy="12" r="4" />
       <line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" />
       <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" /><line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
@@ -23,9 +23,9 @@ function SunIcon() {
   )
 }
 
-function MoonIcon() {
+function MoonIcon({ className = '' }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   )
@@ -33,7 +33,7 @@ function MoonIcon() {
 
 export default function NavBar() {
   const pathname = usePathname()
-  const { isDark, toggle } = useTheme()
+  const { toggle } = useTheme()
   const [open, setOpen] = useState(false)
 
   const isHome = pathname === '/'
@@ -79,14 +79,16 @@ export default function NavBar() {
               className={`${textColor} hover:text-bark dark:hover:text-cream transition-colors ml-2`}
               aria-label="Toggle dark mode"
             >
-              {isDark ? <SunIcon /> : <MoonIcon />}
+              <SunIcon className="hidden dark:block" />
+              <MoonIcon className="block dark:hidden" />
             </button>
           </nav>
 
           {/* Mobile controls */}
           <div className="hidden lg:flex items-center gap-4">
             <button onClick={toggle} className={`${textColor}`} aria-label="Toggle dark mode">
-              {isDark ? <SunIcon /> : <MoonIcon />}
+              <SunIcon className="hidden dark:block" />
+              <MoonIcon className="block dark:hidden" />
             </button>
             <button
               onClick={() => setOpen(!open)}
