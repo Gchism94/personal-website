@@ -196,9 +196,11 @@ export default function Work() {
 
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/high-desert" variant="primary">Read the overview →</Button>
+          {/* ── FIX ONCE LIVE, ALSO UPDATE LINK TO OVERVIEW PAGE
           <Button href="https://highdesert.community" variant="secondary" external>
             highdesert.community →
           </Button>
+          ── */}
         </div>
       </section>
 
