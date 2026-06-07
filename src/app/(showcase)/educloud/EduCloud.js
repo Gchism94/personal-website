@@ -52,7 +52,7 @@ const TIERS = {
   planning:{ accent:'rose', cards:[
     {id:'planner',icon:'planner',title:'Course planner',meta:'syllabus → term plan',
       kicker:'Planning · Agent',
-      summary:'An offline agent that reads the course’s syllabus, topic schedule, and assignment descriptions, then plans resource allocation across the whole term. It runs ahead of the term on the inference layer EduCloud already has (Bedrock or the JS2 vLLM service), and works human-in-the-loop — it drafts, the instructor approves. It is the epistēmic pole of the system, and is built to be overruled.',
+      summary:'An offline agent that reads the course\'s syllabus, topic schedule, and assignment descriptions, then plans resource allocation across the whole term. It runs ahead of the term on the inference layer EduCloud already has (Bedrock or the JS2 vLLM service), and works human-in-the-loop — it drafts, the instructor approves. It is the epistēmic pole of the system, and is built to be overruled.',
       points:['Reads: syllabus, schedule of topics, assignment descriptions, cohort size','For each assignment: infers task type, GPU/data needs, wall-time, Model A/B shape','Estimates per-assignment cost as a range, with a confidence level','Reserves budget slack; the plan is held provisionally and revised as the term unfolds','Drafts everything for instructor review — never auto-applies'],
       chips:['offline · ahead-of-term','accent|runs on inference layer','human-in-the-loop']},
     {id:'budget',icon:'budget',title:'Budget & allocation plan',meta:'per-term credits · P10/P50/P90',
@@ -62,8 +62,8 @@ const TIERS = {
       chips:['per-term credits','accent|cold-start prior','feeds ACCESS sizing']},
     {id:'calendar',icon:'calendar',title:'Demand calendar',meta:'peaks · overlaps · pre-warming',
       kicker:'Planning · Output',
-      summary:'A term-long demand map: when compute peaks occur, where assignments overlap, and what to pre-warm before each surge. This turns the forecaster’s deadline-spike model into an actionable capacity schedule the broker and provisioner can act on.',
-      points:['Places each assignment’s expected demand on the term calendar','Flags overlapping deadlines and combined peaks across courses','Drives the broker / provisioner pre-warming schedule before surges','Advisory only — pre-warming stays demand-bounded, never a hard reservation'],
+      summary:'A term-long demand map: when compute peaks occur, where assignments overlap, and what to pre-warm before each surge. This turns the forecaster\'s deadline-spike model into an actionable capacity schedule the broker and provisioner can act on.',
+      points:['Places each assignment\'s expected demand on the term calendar','Flags overlapping deadlines and combined peaks across courses','Drives the broker / provisioner pre-warming schedule before surges','Advisory only — pre-warming stays demand-bounded, never a hard reservation'],
       chips:['demand peaks','accent|pre-warming schedule','advisory only']}
   ]},
 
@@ -71,12 +71,12 @@ const TIERS = {
     {id:'learner',icon:'dash',title:'Learner dashboard',meta:'sessions · tasks · live cost',
       kicker:'Interface · Tier 1',
       summary:'The student-facing home. Start a session, work in an inline environment, and watch cost accrue in real time — without ever touching infrastructure, unless you want to. Seamless by default, transparent on request.',
-      points:['Start-session flow: assignment picker → cost preview → confirm','Inline session frame; never leaves the EduCloud shell','Live SU ticker with calm budget states — cost is a signal, never a verdict','Optional “under the hood” view: see why a task routed where, and override it','Task-level cost printout + downloadable session summary'],
+      points:['Start-session flow: assignment picker → cost preview → confirm','Inline session frame; never leaves the EduCloud shell','Live SU ticker with calm budget states — cost is a signal, never a verdict','Optional "under the hood" view: see why a task routed where, and override it','Task-level cost printout + downloadable session summary'],
       chips:['React + TS','accent|progressive disclosure','WCAG 2.1 AA']},
     {id:'instructor',icon:'console',title:'Instructor console',meta:'planning · analytics · quotas',
       kicker:'Interface · Tier 1',
       summary:'Where instructors govern an entire cohort — and where they drive the planning agent: upload the syllabus, review the drafted plan, adjust, and approve. The instructor is the holder of mētis, and their judgment is the final authority.',
-      points:['Upload syllabus → review the agent’s drafted assignment profiles','Corrections override the agent and are weighted above it — and retrain it','Roster with per-student usage bars and risk flags','Locks are rare and escapable; the default is propose-and-override','Plan vs actual tracking with the P10/P50/P90 forecast band'],
+      points:['Upload syllabus → review the agent\'s drafted assignment profiles','Corrections override the agent and are weighted above it — and retrain it','Roster with per-student usage bars and risk flags','Locks are rare and escapable; the default is propose-and-override','Plan vs actual tracking with the P10/P50/P90 forecast band'],
       chips:['accent|corrections outrank the model','plan review','quota view']},
     {id:'admin',icon:'admin',title:'Admin panel',meta:'policy · allocation · billing',
       kicker:'Interface · Tier 1',
@@ -89,7 +89,7 @@ const TIERS = {
     {id:'classifier',icon:'classifier',title:'Task classifier',meta:'rules → NLP → predictive',
       kicker:'Orchestration · Tier 2',
       summary:'The brain. Takes a task submission and returns a routing decision — backend, tier, estimated cost, and confidence. Stage 1 reads the assignment profiles the planning agent drafted, so it is accurate from day one. It proposes; it never dictates.',
-      points:['Stage 1 — rule engine from the planner’s drafted assignment profiles','Stage 2 — NLP intent extraction (JS2 vLLM or Bedrock)','Stage 3 — predictive model from historical telemetry','Every routing decision is a default — any student or instructor can override it','Overrides are captured as signal and reweight the models (mētis in)'],
+      points:['Stage 1 — rule engine from the planner\'s drafted assignment profiles','Stage 2 — NLP intent extraction (JS2 vLLM or Bedrock)','Stage 3 — predictive model from historical telemetry','Every routing decision is a default — any student or instructor can override it','Overrides are captured as signal and reweight the models (mētis in)'],
       chips:['3-stage','accent|proposes, never dictates','feedback loop']},
     {id:'broker',icon:'broker',title:'Resource broker',meta:'weighted scoring · fallback',
       kicker:'Orchestration · Tier 2',
@@ -103,7 +103,7 @@ const TIERS = {
       chips:['CACAO','Open OnDemand','accent|dual-path']},
     {id:'telemetry',icon:'telemetry',title:'Telemetry + cost',meta:'SU metering · live reporting',
       kicker:'Orchestration · Tier 2',
-      summary:'Normalizes incommensurable backend units into ACCESS credits and dollars, then surfaces them live to learners and in aggregate to instructors. Protects “inefficient” exploration — burning SUs down a dead end is usually learning, not failure.',
+      summary:'Normalizes incommensurable backend units into ACCESS credits and dollars, then surfaces them live to learners and in aggregate to instructors. Protects "inefficient" exploration — burning SUs down a dead end is usually learning, not failure.',
       points:['Dual write: Postgres (durable) + Redis (live total)','Charged by wall-clock time, not utilization','Failed provisions never charged — protects the model','Actuals flow back to the planner and classifier — closing the plan→run→learn loop'],
       chips:['SU → USD','accent|<1s display','forecast engine']}
   ]},
@@ -147,12 +147,12 @@ const TIERS = {
   data:{ accent:'cyan', cards:[
     {id:'globus',icon:'transfer',title:'Globus transfer',meta:'cross-backend staging · ACCESS-ID auth',
       kicker:'Data · Movement',
-      summary:'The data fabric spanning the backends. Transparent routing means an assignment can land on HPC today and Jetstream2 tomorrow — so data can’t assume one filesystem. Globus stages data to wherever a task runs, persists results, and moves data to and from campus or personal machines, all with ACCESS-ID auth.',
+      summary:'The data fabric spanning the backends. Transparent routing means an assignment can land on HPC today and Jetstream2 tomorrow — so data can\'t assume one filesystem. Globus stages data to wherever a task runs, persists results, and moves data to and from campus or personal machines, all with ACCESS-ID auth.',
       points:['Stages course datasets onto whichever backend a task is routed to','Moves student outputs to durable storage and back between sessions','Browser upload/download with ACCESS IDs (Globus Auth = OAuth2 / OIDC)','Enabled on nearly all ACCESS resource providers','Pairs with Pegasus data staging for batch workflows'],
       chips:['cross-backend','accent|ACCESS-native','OAuth2 / OIDC','dataset-scale']},
     {id:'store',icon:'store',title:'Persistent store',meta:'snapshots · resumable sessions',
       kicker:'Data · Persistence',
-      summary:'The durable home for student work. Because environments are ephemeral and routing is dynamic, a session’s filesystem is snapshotted to persistent storage — bounding worst-case loss to minutes and letting the next session resume where the last ended.',
+      summary:'The durable home for student work. Because environments are ephemeral and routing is dynamic, a session\'s filesystem is snapshotted to persistent storage — bounding worst-case loss to minutes and letting the next session resume where the last ended.',
       points:['Periodic filesystem snapshots during active sessions','Survives wall-time limits, evictions, and backend switches','Next session restores from the last snapshot','Globus moves data in and out of this store'],
       chips:['snapshots','accent|resumable','cross-session']}
   ]},
@@ -184,12 +184,12 @@ const TIERS = {
     {id:'generator',icon:'generator',title:'Assignment generator',meta:'verification-gated · a source',
       kicker:'Optional · uses inference',
       summary:'Turns an instructor prompt into artifacts the platform already understands — a template repo + grading.json. It is one source beside hand-authored and import-from-pool, and never enters the trusted core. The gate is executable: the generated solution must pass its own generated tests in a sandbox, and an instructor must approve before any student sees it.',
-      points:['Emits the autogradable artifact, validates it in the sandbox, repairs on failure','Instructor-approved before publish — generation never auto-applies','Calls the resource plane’s inference layer (JS2 vLLM / Bedrock)','Off by default; the core runs identically without it'],
+      points:['Emits the autogradable artifact, validates it in the sandbox, repairs on failure','Instructor-approved before publish — generation never auto-applies','Calls the resource plane\'s inference layer (JS2 vLLM / Bedrock)','Off by default; the core runs identically without it'],
       chips:['accent|verification-gated','instructor-approved','off by default']},
     {id:'tutor',icon:'tutor',title:'Peer-tutor (Sol)',meta:'pkg/tutor · never a full solution',
       kicker:'Optional · uses inference + workspace',
-      summary:'A companion behind a thin Apache-2.0 interface, built not to be the authoritative oracle. A per-turn loop — Planner, Peer-Reasoner, Self-Evaluation, Governance, Memory — where “never hands over a full solution” is an executable gate, not a prompt instruction. Stance (peer / oracle / no-loop) is config.',
-      points:['Governance compiles+runs the tutor’s code and strips solution-meeting output','Attaches to a workspace session; reads/writes the append-only trace','Concept-level learner model — student-viewable, exportable, deletable','Runs on open-weight models on the resource plane’s inference service'],
+      summary:'A companion behind a thin Apache-2.0 interface, built not to be the authoritative oracle. A per-turn loop — Planner, Peer-Reasoner, Self-Evaluation, Governance, Memory — where "never hands over a full solution" is an executable gate, not a prompt instruction. Stance (peer / oracle / no-loop) is config.',
+      points:['Governance compiles+runs the tutor\'s code and strips solution-meeting output','Attaches to a workspace session; reads/writes the append-only trace','Concept-level learner model — student-viewable, exportable, deletable','Runs on open-weight models on the resource plane\'s inference service'],
       chips:['accent|executable no-solution gate','stance is config','off by default']},
     {id:'aigrade',icon:'aigrade',title:'AI-assisted grading',meta:'open-ended only · uncertainty-gated',
       kicker:'Optional · uses inference',
@@ -198,7 +198,7 @@ const TIERS = {
       chips:['accent|assistive, never authoritative','human-review gate','off by default']},
     {id:'governance',icon:'governance',title:'Governance gate',meta:'pkg/governance · the keystone',
       kicker:'Optional · safety seam',
-      summary:'The fifth thin seam, beside adapter / workspace / tutor / gradingspec. One auditable gate sits between every AI surface above and any consequential effect, so “never hands a full solution” and “untrusted data, never instructions” are specified once, not three times.',
+      summary:'The fifth thin seam, beside adapter / workspace / tutor / gradingspec. One auditable gate sits between every AI surface above and any consequential effect, so "never hands a full solution" and "untrusted data, never instructions" are specified once, not three times.',
       points:['Four actions: allow / revise / abstain / escalate','Fail-closed (error → abstain/escalate, never allow); human-authoritative (routes to the human path, never decides)','Reuses the §8 sandbox to compile-and-run model code — owns policy, not isolation','Enabled only after passing a conformance corpus in CI: injection canaries, leakage probes, calibration fixtures','Incident friction is process-only (mandatory review) — never a grade'],
       chips:['accent|executable, not prompt','fail-closed','human-authoritative']}
   ]},
@@ -211,7 +211,7 @@ const TIERS = {
       chips:['accent|commons','quota-bounded','free baseline']},
     {id:'quota',icon:'quota',title:'Quota & budget',meta:'per-user / per-course slice',
       kicker:'Funding · Routing input',
-      summary:'Each user and course gets a budget slice, seeded by the planning agent’s P10/P50/P90 estimate before any telemetry exists. The broker reads remaining quota as one more routing input — alongside fit, availability, and cost — so allocation is a scored decision, not a hard wall.',
+      summary:'Each user and course gets a budget slice, seeded by the planning agent\'s P10/P50/P90 estimate before any telemetry exists. The broker reads remaining quota as one more routing input — alongside fit, availability, and cost — so allocation is a scored decision, not a hard wall.',
       points:['Seeded cold-start by the planner; re-forecast as actuals arrive','Read by the resource broker alongside fit / availability / cost','Metered against host_username / roster_entry_id — never against identity','Nested: course pool ⊂ institutional pool ⊂ public commons'],
       chips:['accent|broker routing input','privacy-preserving meter','nested pools']},
     {id:'thresholds',icon:'thresholds',title:'Graduated thresholds',meta:'warn → throttle → fund',
@@ -234,7 +234,6 @@ function setAccent(el, key) {
   el.style.setProperty('--accent-bg', a.bg)
 }
 
-/* ── diagram HTML (verbatim structure, kicker added to diagram-title) ── */
 const DIAGRAM_HTML = `
 <div class="metis-rail" aria-hidden="true">
   <span class="tip">&#9650;</span>
@@ -263,7 +262,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Plane A</span><span class="tier-name">Coursework — Quad</span>
     <span class="tier-desc">self-hostable · privacy-minimal · standalone</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:4"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="ext-note">
@@ -279,9 +278,9 @@ const DIAGRAM_HTML = `
 <div class="tier optional collapsed" data-tier="pedagogy">
   <div class="tier-head" data-toggle>
     <span class="tier-badge">Optional</span><span class="tier-name">Pedagogy &amp; AI layer</span>
-    <span class="tier-desc">off by default · rides the resource plane’s inference</span><span class="tier-chevron">▾</span>
+    <span class="tier-desc">off by default · rides the resource plane's inference</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:4"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="seam">
@@ -291,7 +290,7 @@ const DIAGRAM_HTML = `
 
 <div class="seam">
   <span class="sic"><svg viewBox="0 0 24 24"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></svg></span>
-  <span class="stx"><b>One seam joins the two planes.</b> Quad’s <code>pkg/workspace</code> → EduCloud’s provisioner (interactive sessions); the autograder runs as a routed compute job; the tutor / generator / AI-grading call EduCloud’s inference layer <b>through the <code>pkg/governance</code> gate</b>; the roster meters cost by <code>host_username</code>, never by identity. Everything below is the resource plane — omit the seam and each plane still stands alone.</span>
+  <span class="stx"><b>One seam joins the two planes.</b> Quad's <code>pkg/workspace</code> → EduCloud's provisioner (interactive sessions); the autograder runs as a routed compute job; the tutor / generator / AI-grading call EduCloud's inference layer <b>through the <code>pkg/governance</code> gate</b>; the roster meters cost by <code>host_username</code>, never by identity. Everything below is the resource plane — omit the seam and each plane still stands alone.</span>
 </div>
 
 <div class="tier planning" data-tier="planning">
@@ -299,7 +298,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Planning</span><span class="tier-name">Course planning agent</span>
     <span class="tier-desc">ahead of term · offline · human-in-the-loop</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:3"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="tier-gap"><div class="connector plan"><span class="pip"></span><span class="line"></span><span class="pip"></span><span class="label">drafts profiles · seeds the forecast · sizes the allocation</span><span class="flow-dot"></span></div></div>
@@ -309,7 +308,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Tier 1</span><span class="tier-name">Interface</span>
     <span class="tier-desc">unified · accessible · cost-transparent</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:3"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="tier-gap"><div class="connector"><span class="pip"></span><span class="line"></span><span class="pip"></span><span class="label">requests routed transparently — every route overridable</span><span class="flow-dot"></span></div></div>
@@ -319,7 +318,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Tier 2</span><span class="tier-name">Orchestration</span>
     <span class="tier-desc">classify · broker · provision · meter</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:4"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="tier-gap"><div class="connector"><span class="pip"></span><span class="line"></span><span class="pip"></span><span class="label">provisioner forks by task shape</span><span class="flow-dot" style="animation-delay:.8s"></span></div></div>
@@ -329,7 +328,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Routing</span><span class="tier-name">Execution</span>
     <span class="tier-desc">path chosen by task shape — interactive vs batch</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:2"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="tier-gap"><div class="connector"><span class="pip"></span><span class="line"></span><span class="pip"></span><span class="label">both paths run on the shared compute pool</span><span class="flow-dot" style="animation-delay:1.5s"></span></div></div>
@@ -339,7 +338,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Tier 3</span><span class="tier-name">Compute</span>
     <span class="tier-desc">pluggable pool · uniform provider interface</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:4"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="tier-gap"><div class="connector"><span class="pip"></span><span class="line"></span><span class="pip"></span><span class="label">datasets staged in · results persisted out</span><span class="flow-dot" style="animation-delay:2.2s"></span></div></div>
@@ -349,7 +348,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Data</span><span class="tier-name">Data movement</span>
     <span class="tier-desc">cross-backend fabric · ACCESS-ID auth</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:2"></div>
+  <div class="tier-cards"></div>
 </div>
 
 <div class="ext-note">
@@ -364,7 +363,7 @@ const DIAGRAM_HTML = `
     <span class="tier-badge">Funding</span><span class="tier-name">Allocation &amp; funding model</span>
     <span class="tier-desc">free pool → quota → paid / donations</span><span class="tier-chevron">▾</span>
   </div>
-  <div class="tier-cards" style="--cols:4"></div>
+  <div class="tier-cards"></div>
 </div>
 `
 
@@ -445,6 +444,7 @@ html body:has(.ec){ background:#02040a !important; }
   pointer-events:none;
 }
 .ec .top-left { display:flex; align-items:center; gap:14px; pointer-events:auto; }
+.ec .top-right { display:flex; align-items:center; gap:10px; pointer-events:auto; }
 .ec .back-link {
   font-family:var(--ff-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
   color:var(--txt-2); text-decoration:none;
@@ -459,8 +459,8 @@ html body:has(.ec){ background:#02040a !important; }
 }
 .ec .wordmark-link:hover { color:var(--teal); }
 .ec .legend {
-  display:flex; gap:14px; pointer-events:auto;
-  flex-wrap:wrap; justify-content:flex-end; max-width:700px;
+  display:flex; gap:14px;
+  flex-wrap:wrap; justify-content:flex-end; max-width:560px;
 }
 .ec .legend .item {
   display:flex; align-items:center; gap:6px;
@@ -475,13 +475,22 @@ html body:has(.ec){ background:#02040a !important; }
 .ec .dot-dt{background:var(--cyan)}
 .ec .dot-q{background:var(--gold)}
 
+/* ── expand-all toggle (topbar) ── */
+.ec .ctrl-btn {
+  width:30px; height:30px; border-radius:7px; border:none;
+  background:rgba(255,255,255,.06); color:var(--txt-2); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s, color .2s; flex-shrink:0;
+}
+.ec .ctrl-btn:hover { background:var(--panel-3); color:var(--txt); }
+.ec .ctrl-btn svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.7; }
+
 /* ── scrollable diagram wrapper ── */
 .ec .diagram-wrap {
   position:relative; z-index:10;
   max-width:1180px; margin:0 auto;
-  padding:80px 24px 100px;
+  padding:80px 24px 120px;
 }
-
 .ec .diagram {
   position:relative; display:flex; flex-direction:column; gap:0;
 }
@@ -599,8 +608,14 @@ html body:has(.ec){ background:#02040a !important; }
   position:relative; border:1px solid var(--line); border-radius:12px;
   background:var(--panel); padding:14px 15px 15px;
   cursor:pointer; overflow:hidden;
-  transition:transform .25s cubic-bezier(.22,.61,.36,1), border-color .25s, background .25s, box-shadow .25s;
+  /* opacity starts at 0; reveals when parent tier gets .visible */
+  opacity:0;
+  transition:
+    opacity .4s ease calc(var(--i, 0) * 55ms),
+    transform .25s cubic-bezier(.22,.61,.36,1),
+    border-color .25s, background .25s, box-shadow .25s;
 }
+.ec .tier.visible .card { opacity:1; }
 .ec .card::before {
   content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
   background:var(--accent); opacity:.6; transition:opacity .25s, width .25s;
@@ -711,47 +726,35 @@ html body:has(.ec){ background:#02040a !important; }
 .ec .ext-note .ext-txt b { color:var(--gold); font-weight:400; }
 .ec .ext-note code { font-family:var(--ff-mono); font-size:11px; }
 
-
-/* ── controls ── */
-.ec .controls {
-  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-  z-index:30; display:flex; align-items:center; gap:6px;
-  background:rgba(11,14,22,.9); backdrop-filter:blur(12px);
-  border:1px solid var(--line); border-radius:13px;
-  padding:7px 8px; box-shadow:var(--shadow);
+/* ── scroll reveal ── */
+.ec .reveal {
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .55s cubic-bezier(.2,.8,.3,1), transform .55s cubic-bezier(.2,.8,.3,1);
 }
-.ec .ctrl-btn {
-  width:34px; height:34px; border-radius:8px; border:none;
-  background:transparent; color:var(--txt-2); cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--ff-mono); font-size:15px; transition:all .2s;
+.ec .reveal.visible {
+  opacity:1;
+  transform:none;
 }
-.ec .ctrl-btn:hover { background:var(--panel-3); color:var(--txt); }
-.ec .ctrl-btn svg { width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.7; }
-
-/* ── hint ── */
-.ec .hint {
-  position:fixed; bottom:24px; right:24px; z-index:25;
-  font-family:var(--ff-mono); font-size:11px; color:var(--txt-3);
-  display:flex; flex-direction:column; gap:5px; align-items:flex-end;
-  pointer-events:none; opacity:.8;
-}
+/* tiers use .reveal for themselves; cards fade in separately once tier is visible */
+.ec .tier.reveal { transition:opacity .55s cubic-bezier(.2,.8,.3,1), transform .55s cubic-bezier(.2,.8,.3,1), border-color .35s, background .35s; }
 
 /* ── responsive ── */
 @media (max-width:760px){
   .ec .legend{display:none}
-  .ec .hint{display:none}
   .ec .metis-rail{display:none}
   .ec .tier-cards{grid-template-columns:1fr}
   .ec .tier-desc{display:none}
+  .ec .connector .label{display:none}
 }
 
 /* ── reduced motion ── */
 @media (prefers-reduced-motion:reduce){
-  .ec,.ec *{transition:none !important;}
+  .ec,.ec *{transition:none !important; animation:none !important;}
   .ec{opacity:1 !important;}
-  .ec-grain{animation:none !important;}
-  .ec .flow-dot{animation:none !important;}
+  .ec .reveal{opacity:1 !important; transform:none !important;}
+  .ec .card{opacity:1 !important;}
+  .ec .flow-dot{display:none;}
 }
 `
 
@@ -762,7 +765,7 @@ export default function EduCloud() {
     const root = rootRef.current
     if (!root) return
 
-    /* build cards with inline expandable detail */
+    /* ── build cards with inline expandable detail ── */
     Object.entries(TIERS).forEach(([tierKey, tier]) => {
       const tierEl = root.querySelector(`.tier[data-tier="${tierKey}"]`)
       if (!tierEl) return
@@ -770,11 +773,12 @@ export default function EduCloud() {
       const wrap = tierEl.querySelector('.tier-cards')
       if (!wrap) return
       wrap.innerHTML = ''
-      tier.cards.forEach(c => {
+      tier.cards.forEach((c, idx) => {
         const el = document.createElement('div')
         el.className = 'card'
         el.dataset.card = c.id
         el.dataset.tier = tierKey
+        el.style.setProperty('--i', idx)
         setAccent(el, c.accent || tier.accent)
         const chips = c.chips.map(ch =>
           ch.startsWith('accent|')
@@ -796,32 +800,48 @@ export default function EduCloud() {
       })
     })
 
-    /* event delegation — card click toggles inline detail, tier-head collapses tier */
+    /* ── scroll reveal: add class then observe ── */
+    const REVEAL_SELECTORS = ['.diagram-title', '.stance', '.seam', '.ext-note', '.tier', '.tier-gap']
+    REVEAL_SELECTORS.forEach(sel =>
+      root.querySelectorAll(sel).forEach(el => el.classList.add('reveal'))
+    )
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible')
+          io.unobserve(e.target)
+        }
+      })
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' })
+
+    root.querySelectorAll('.reveal').forEach(el => io.observe(el))
+
+    /* ── event delegation ── */
     function handleRootClick(e) {
       const card = e.target.closest('.card')
-      if (card) {
-        card.classList.toggle('open')
-        return
-      }
+      if (card) { card.classList.toggle('open'); return }
       const toggle = e.target.closest('[data-toggle]')
-      if (toggle) {
-        toggle.closest('.tier').classList.toggle('collapsed')
-      }
+      if (toggle) toggle.closest('.tier').classList.toggle('collapsed')
     }
     root.addEventListener('click', handleRootClick)
 
+    /* ── expand-all toggle ── */
     let allExpanded = true
-    root.querySelector('#ec-expand-all').addEventListener('click', () => {
-      allExpanded = !allExpanded
-      root.querySelectorAll('.tier').forEach(t => t.classList.toggle('collapsed', !allExpanded))
-    })
+    const expandBtn = root.querySelector('#ec-expand-all')
+    if (expandBtn) {
+      expandBtn.addEventListener('click', () => {
+        allExpanded = !allExpanded
+        root.querySelectorAll('.tier').forEach(t => t.classList.toggle('collapsed', !allExpanded))
+      })
+    }
 
     const raf = requestAnimationFrame(() => root.classList.add('ec-ready'))
 
     return () => {
       cancelAnimationFrame(raf)
-      window.removeEventListener('keydown', onKeyDown)
       root.removeEventListener('click', handleRootClick)
+      io.disconnect()
     }
   }, [])
 
@@ -840,39 +860,24 @@ export default function EduCloud() {
           <div className="sep" aria-hidden="true" />
           <Link href="/" className="wordmark-link">Greg T. Chism</Link>
         </div>
-        <div className="legend" aria-hidden="true">
-          <div className="item"><span className="dot dot-pl"></span>Planning</div>
-          <div className="item"><span className="dot dot-p"></span>Interface</div>
-          <div className="item"><span className="dot dot-g"></span>Orchestration</div>
-          <div className="item"><span className="dot dot-b"></span>Compute</div>
-          <div className="item"><span className="dot dot-c"></span>Pegasus</div>
-          <div className="item"><span className="dot dot-dt"></span>Data</div>
-          <div className="item"><span className="dot dot-q"></span>Coursework (Quad)</div>
+        <div className="top-right">
+          <div className="legend" aria-hidden="true">
+            <div className="item"><span className="dot dot-pl"></span>Planning</div>
+            <div className="item"><span className="dot dot-p"></span>Interface</div>
+            <div className="item"><span className="dot dot-g"></span>Orchestration</div>
+            <div className="item"><span className="dot dot-b"></span>Compute</div>
+            <div className="item"><span className="dot dot-c"></span>Pegasus</div>
+            <div className="item"><span className="dot dot-dt"></span>Data</div>
+            <div className="item"><span className="dot dot-q"></span>Coursework</div>
+          </div>
+          <button className="ctrl-btn" id="ec-expand-all" title="Expand / collapse all tiers">
+            <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" /></svg>
+          </button>
         </div>
       </header>
 
       <div className="diagram-wrap">
         <div className="diagram" dangerouslySetInnerHTML={{ __html: DIAGRAM_HTML }} />
-      </div>
-
-      <aside className="detail" id="ec-detail">
-        <div className="detail-head">
-          <div className="detail-accent" id="ec-d-accent" />
-          <div className="detail-kicker" id="ec-d-kicker">Component</div>
-          <h2 className="detail-title" id="ec-d-title">Title</h2>
-          <button className="detail-close" id="ec-d-close">&#x2715;</button>
-        </div>
-        <div className="detail-body" id="ec-d-body" />
-      </aside>
-
-      <div className="controls">
-        <button className="ctrl-btn" id="ec-expand-all" title="Expand / collapse all tiers">
-          <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" /></svg>
-        </button>
-      </div>
-
-      <div className="hint" aria-hidden="true">
-        <div>click a tier to collapse &middot; click a card for detail</div>
       </div>
     </div>
   )
