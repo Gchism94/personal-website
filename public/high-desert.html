@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High Desert — An Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ecdd;
+    --paper-2:#efe5d2;
+    --ink:#23201a;
+    --ink-2:#4f4738;
+    --ink-3:#766b57;
+    --sage:#6e7d5b;
+    --sage-deep:#46523a;
+    --juniper:#2c3626;
+    --rust:#a9542f;
+    --rust-deep:#8a4426;
+    --sky:#9ab2bd;
+    --line:#d8cab1;
+    --line-soft:#e3d7c2;
+    /* dark ground */
+    --dark:#212a1d;
+    --dark-2:#27311f;
+    --paper-dim:rgba(244,236,221,.66);
+    --sage-light:#aeba8f;
+    --rust-light:#d88450;
+    /* landscape */
+    --sun:#e7c79e;
+    --ridge-far:#a9bcc2;
+    --ridge-mid:#8f9f86;
+    --ridge-near:#6e7d5b;
+    --ridge-fore:#36412c;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"DM Sans",Georgia,"Times New Roman",serif;
+    font-size:19px;
+    line-height:1.68;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* paper grain */
+  .grain{
+    position:fixed;inset:0;z-index:60;pointer-events:none;
+    opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+
+  /* eyebrow / section labels */
+  .eyebrow{
+    font-family:"DM Mono",ui-monospace,monospace;
+    font-size:12px;font-weight:500;
+    letter-spacing:.26em;text-transform:uppercase;
+    color:var(--ink-2);
+    display:flex;align-items:center;gap:.85em;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--rust);display:inline-block;}
+  .dark .eyebrow{color:var(--paper-dim);}
+  .dark .eyebrow::before{background:var(--rust-light);}
+
+  /* layout */
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  section{padding:clamp(72px,10vw,128px) 0;}
+  .col{max-width:760px;margin:0 auto;}
+  .col-wide{max-width:880px;margin:0 auto;}
+
+  h2{
+    font-family:"Playfair Display",Georgia,serif;
+    font-optical-sizing:auto;
+    font-weight:500;
+    font-size:clamp(2rem,4.6vw,3.2rem);
+    line-height:1.06;
+    letter-spacing:-.012em;
+    margin:.55em 0 .7em;
+  }
+  .lede{
+    font-size:clamp(1.18rem,2.1vw,1.42rem);
+    line-height:1.5;
+    color:var(--ink-2);
+    font-weight:300;
+  }
+  p + p{margin-top:1.05em;}
+  .body p{color:var(--ink-2);}
+  .dark .body p{color:var(--paper-dim);}
+  em,i{font-style:italic;}
+  strong{font-weight:500;color:var(--ink);}
+  .dark strong{color:var(--paper);}
+
+  /* ---------- header bar ---------- */
+  header.top{
+    border-bottom:1px solid var(--line);
+    background:rgba(244,236,221,.72);
+    backdrop-filter:saturate(120%) blur(4px);
+  }
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 28px;max-width:1120px;margin:0 auto;
+  }
+  .brand{
+    font-family:"DM Mono",monospace;
+    font-weight:500;font-size:13px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--ink);
+  }
+  .brand span{color:var(--rust);}
+  a.brand{text-decoration:none;display:inline-flex;align-items:center;gap:.5em;transition:opacity .2s ease;}
+  a.brand:hover{opacity:.6;}
+  a.brand .back-arrow{color:var(--rust);font-size:1.1em;line-height:1;transform:translateY(-1px);}
+  .top-right{
+    font-family:"DM Mono",monospace;
+    font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:90vh;
+    display:flex;flex-direction:column;justify-content:flex-start;
+    background:linear-gradient(180deg,#f4ecdd 0%,#e6ebe2 34%,#d6ddd8 55%,#e7d8bd 100%);
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .hero-inner{
+    max-width:1120px;width:100%;margin:0 auto;padding:clamp(48px,8vw,96px) 28px 0;
+    position:relative;z-index:3;
+  }
+  .hero .eyebrow{margin-bottom:26px;}
+  .wordmark{
+    font-family:"Playfair Display",Georgia,serif;
+    font-weight:600;
+    font-size:clamp(3.6rem,15vw,11rem);
+    line-height:.9;
+    letter-spacing:-.03em;
+    color:var(--ink);
+    margin:0;
+  }
+  .wordmark .amp{color:var(--rust);font-style:italic;font-weight:400;}
+  .tagline{
+    font-family:"Playfair Display",Georgia,serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.25rem,2.7vw,1.85rem);
+    color:var(--sage-deep);
+    margin-top:.7em;max-width:24ch;
+  }
+  .towns{
+    margin-top:34px;
+    font-family:"DM Mono",monospace;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);
+    display:flex;flex-wrap:wrap;gap:.55em 1.1em;align-items:center;
+  }
+  .towns .dot{color:var(--rust);}
+
+  .landscape{
+    position:absolute;left:0;right:0;bottom:-1px;width:100%;height:46%;
+    z-index:1;display:block;
+  }
+
+  /* hero load animation */
+  .fx{opacity:0;transform:translateY(20px);}
+  .hero.loaded .fx{animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;}
+  .hero.loaded .fx:nth-child(1){animation-delay:.05s;}
+  .hero.loaded .fx:nth-child(2){animation-delay:.18s;}
+  .hero.loaded .fx:nth-child(3){animation-delay:.32s;}
+  .hero.loaded .fx:nth-child(4){animation-delay:.46s;}
+  @keyframes rise{to{opacity:1;transform:translateY(0);}}
+
+  /* ---------- quick facts grid ---------- */
+  .facts{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:1px;background:var(--line-soft);
+    border:1px solid var(--line-soft);
+    margin-top:2.4em;
+  }
+  .fact{background:var(--paper);padding:24px 26px;}
+  .fact .k{
+    font-family:"DM Mono",monospace;font-size:11px;font-weight:500;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--rust-deep);
+    display:block;margin-bottom:9px;
+  }
+  .fact .v{font-size:1.05rem;line-height:1.4;color:var(--ink);font-weight:400;}
+
+  /* ---------- dark philosophy section ---------- */
+  .dark{background:var(--dark);color:var(--paper);}
+  .dark h2{color:var(--paper);}
+  .dark .lede{color:var(--paper-dim);}
+
+  .ideas{margin-top:3.2em;}
+  .idea{
+    padding:2.2em 0;
+    border-top:1px solid rgba(244,236,221,.13);
+  }
+  .idea:last-child{border-bottom:1px solid rgba(244,236,221,.13);}
+  .idea-head{display:flex;align-items:baseline;gap:.7em;flex-wrap:wrap;}
+  .idx{
+    font-family:"Playfair Display",serif;font-weight:500;font-style:italic;
+    font-size:1.5rem;color:var(--rust-light);line-height:1;
+    transition:color .3s ease;
+  }
+  .idea-name{
+    font-family:"Playfair Display",serif;font-weight:500;
+    font-size:clamp(1.45rem,3vw,1.95rem);line-height:1.1;color:var(--paper);
+    letter-spacing:-.01em;
+  }
+  .idea-tag{
+    font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--sage-light);
+    border:1px solid rgba(174,186,143,.4);border-radius:100px;
+    padding:4px 11px;margin-left:auto;align-self:center;white-space:nowrap;
+  }
+  .idea p{color:var(--paper-dim);margin-top:1em;max-width:62ch;}
+  .consequence{
+    margin-top:1.2em;padding-left:1.1em;border-left:2px solid var(--rust-light);
+    color:var(--paper);
+  }
+  .consequence .lbl{
+    font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--rust-light);display:block;margin-bottom:.4em;
+  }
+  .consequence p{color:var(--paper);margin-top:0;font-weight:400;}
+  .idea:hover .idx{color:var(--sage-light);}
+
+  /* ---------- support / community section ---------- */
+  .pillars{margin-top:2.8em;display:grid;gap:0;}
+  .pillar{
+    display:grid;grid-template-columns:auto 1fr;gap:1.4em;
+    padding:1.7em 0;border-top:1px solid var(--line);
+  }
+  .pillar:last-child{border-bottom:1px solid var(--line);}
+  .pillar .mark{
+    font-family:"Playfair Display",serif;font-style:italic;font-weight:500;font-size:1.35rem;
+    color:var(--rust);line-height:1.1;padding-top:.05em;min-width:1.4em;
+  }
+  .pillar h3{
+    font-family:"Playfair Display",serif;font-weight:500;font-size:1.3rem;line-height:1.2;
+    color:var(--ink);margin-bottom:.35em;letter-spacing:-.005em;
+  }
+  .pillar p{color:var(--ink-2);font-size:1.04rem;line-height:1.55;}
+
+  .note-warmsprings{
+    margin-top:2.6em;padding:1.7em 1.9em;
+    background:var(--paper-2);border:1px solid var(--line);
+    border-left:3px solid var(--sage);
+  }
+  .note-warmsprings .lbl{
+    font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--sage-deep);display:block;margin-bottom:.6em;
+  }
+  .note-warmsprings p{color:var(--ink-2);font-size:1.02rem;}
+
+  /* ---------- commitments ---------- */
+  .commitments{margin-top:2.8em;border-top:1px solid var(--line);}
+  .commit{
+    display:grid;grid-template-columns:200px 1fr;gap:1.6em;
+    padding:1.25em 0;border-bottom:1px solid var(--line-soft);align-items:baseline;
+  }
+  .commit .term{
+    font-family:"DM Mono",monospace;font-size:12px;font-weight:500;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--rust-deep);
+  }
+  .commit .desc{color:var(--ink-2);font-size:1.05rem;line-height:1.5;}
+  .commit .desc strong{color:var(--ink);font-weight:500;}
+
+  /* ---------- timeline ---------- */
+  .timeline{margin-top:2.8em;position:relative;padding-left:30px;}
+  .timeline::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--line);}
+  .tl{position:relative;padding:0 0 2em 0;}
+  .tl:last-child{padding-bottom:0;}
+  .tl::before{
+    content:"";position:absolute;left:-29px;top:7px;width:11px;height:11px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--sage);
+  }
+  .tl.now::before{background:var(--rust);border-color:var(--rust);}
+  .tl .when{
+    font-family:"DM Mono",monospace;font-size:11.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--rust-deep);display:block;margin-bottom:.25em;
+  }
+  .tl .what{font-size:1.08rem;color:var(--ink);line-height:1.45;}
+  .tl .what span{color:var(--ink-3);}
+
+  /* ---------- pullquote ---------- */
+  .pull{
+    text-align:center;padding:clamp(56px,9vw,104px) 0;
+  }
+  .pull blockquote{
+    font-family:"Playfair Display",serif;font-weight:400;font-style:italic;
+    font-size:clamp(1.7rem,4.2vw,2.7rem);line-height:1.22;letter-spacing:-.012em;
+    color:var(--ink);max-width:18ch;margin:0 auto;
+  }
+  .pull .src{
+    margin-top:1.4em;font-family:"DM Mono",monospace;font-size:11px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--juniper);color:var(--paper);
+    padding:clamp(64px,9vw,112px) 0 56px;
+  }
+  footer .eyebrow{color:var(--paper-dim);}
+  footer .eyebrow::before{background:var(--rust-light);}
+  footer h2{color:var(--paper);}
+  .closing p{color:var(--paper-dim);max-width:60ch;font-size:1.12rem;}
+  .signoff{
+    margin-top:3em;padding-top:1.7em;border-top:1px solid rgba(244,236,221,.16);
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.2em;
+  }
+  .signoff .who{font-family:"Playfair Display",serif;font-size:1.25rem;color:var(--paper);}
+  .signoff .who small{display:block;font-family:"DM Mono",monospace;font-size:11px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--paper-dim);margin-top:.5em;font-weight:400;}
+  .signoff .place{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--paper-dim);text-align:right;}
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:640px){
+    body{font-size:18px;}
+    .facts{grid-template-columns:1fr;}
+    .commit{grid-template-columns:1fr;gap:.4em;}
+    .commit .term{color:var(--rust);}
+    .idea-tag{margin-left:0;}
+    .pillar{grid-template-columns:1fr;gap:.5em;}
+    .pillar .mark{display:none;}
+    .topbar .top-right{display:none;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .fx,.reveal{opacity:1!important;transform:none!important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="topbar">
+    <a class="brand" href="/work"><span class="back-arrow">&larr;</span>Greg<span>·</span>Chism</a>
+    <div class="top-right">Work / High Desert &middot; Central Oregon</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="eyebrow fx">Community-owned · Central Oregon</div>
+    <h1 class="wordmark fx">High&nbsp;Desert</h1>
+    <p class="tagline fx">A place online that belongs to the people who live here.</p>
+    <div class="towns fx">
+      Bend <span class="dot">/</span> Redmond <span class="dot">/</span> Sisters <span class="dot">/</span> La&nbsp;Pine <span class="dot">/</span> Madras <span class="dot">/</span> Prineville
+    </div>
+  </div>
+  <svg class="landscape" viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <circle cx="1086" cy="248" r="56" fill="var(--sun)" opacity="0.85"/>
+    <path fill="var(--ridge-far)" d="M0,300 L120,252 L210,286 L300,212 L362,252 L470,152 L560,250 L660,206 L760,270 L880,236 L980,276 L1120,242 L1240,286 L1340,256 L1440,290 L1440,460 L0,460 Z"/>
+    <path fill="var(--ridge-mid)" d="M0,342 C180,302 320,360 520,332 C720,304 860,360 1040,336 C1200,314 1320,350 1440,332 L1440,460 L0,460 Z"/>
+    <path fill="var(--ridge-near)" d="M0,382 C200,356 360,396 600,376 C820,358 980,400 1180,382 C1300,370 1380,388 1440,380 L1440,460 L0,460 Z"/>
+    <path fill="var(--ridge-fore)" d="M0,420 C240,406 420,432 680,418 C900,406 1080,436 1280,420 C1360,414 1410,424 1440,420 L1440,460 L0,460 Z"/>
+    <g fill="#2b3522" opacity="0.9">
+      <ellipse cx="220" cy="426" rx="9" ry="13"/><ellipse cx="238" cy="428" rx="7" ry="10"/>
+      <ellipse cx="1015" cy="430" rx="10" ry="14"/><ellipse cx="1032" cy="432" rx="7" ry="10"/>
+      <ellipse cx="640" cy="436" rx="8" ry="11"/>
+    </g>
+  </svg>
+</div>
+
+<!-- 01 PREMISE -->
+<section>
+  <div class="wrap">
+    <div class="col body">
+      <div class="eyebrow reveal">01 — The premise</div>
+      <h2 class="reveal">A town deserves a gathering place that belongs to the town.</h2>
+      <p class="reveal">The platforms most of us use every day were never built for us. They were built to gather our attention and sell it, and so they follow a familiar arc — more ads, more noise, more outrage, and steadily less of the people we actually came to find. Cory Doctorow has a name for that slow rot. High Desert begins by refusing it.</p>
+      <p class="reveal">The question underneath the whole project is simple. What if the place where Central Oregon gathers online were owned by Central Oregon — not by shareholders, not by advertisers, but by the neighbors who use it every day?</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 WHAT IT IS -->
+<section style="background:var(--paper-2);">
+  <div class="wrap">
+    <div class="col body">
+      <div class="eyebrow reveal">02 — What it is</div>
+      <h2 class="reveal">Local civic infrastructure, owned in common.</h2>
+      <p class="reveal">High Desert is a set of local social spaces — one for each of six Central Oregon towns — built as shared community infrastructure rather than a product. It is small on purpose, honest by design, and accountable to its members instead of to a market.</p>
+      <div class="facts reveal">
+        <div class="fact"><span class="k">Who owns it</span><span class="v">Residents do, collectively, with a real vote on how it runs.</span></div>
+        <div class="fact"><span class="k">Who's here</span><span class="v">Verified neighbors — you join by confirming you live in the region.</span></div>
+        <div class="fact"><span class="k">How it's funded</span><span class="v">No ads, ever. A flat $2 / month that can't rise without a vote.</span></div>
+        <div class="fact"><span class="k">Where it's headed</span><span class="v">A Public Benefit Corporation now, on a path to becoming a nonprofit.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 THE IDEAS (DARK) -->
+<section class="dark">
+  <div class="wrap">
+    <div class="col-wide">
+      <div class="eyebrow reveal">03 — The ideas underneath</div>
+      <h2 class="reveal">It isn't a startup hunting a market. It's an argument.</h2>
+      <p class="lede reveal">High Desert is built from a small shelf of books — a belief that a healthier digital commons is genuinely possible, if you design for it from the very first decision. Five ideas do most of the work.</p>
+
+      <div class="ideas">
+        <div class="idea reveal">
+          <div class="idea-head">
+            <span class="idx">i.</span>
+            <span class="idea-name">Cory Doctorow</span>
+            <span class="idea-tag">Platform decay</span>
+          </div>
+          <p>Platforms rot when their incentive is to extract — first they're good to users, then they squeeze users to please advertisers, then they squeeze everyone to please themselves. The decline isn't a failure of the model; it <em>is</em> the model.</p>
+          <div class="consequence">
+            <span class="lbl">In High Desert</span>
+            <p>No advertising, ever, and a flat price that cannot climb without the community's consent. Remove the incentive to get worse, and the place is free to stay good.</p>
+          </div>
+        </div>
+
+        <div class="idea reveal">
+          <div class="idea-head">
+            <span class="idx">ii.</span>
+            <span class="idea-name">Donella Meadows</span>
+            <span class="idea-tag">Systems thinking</span>
+          </div>
+          <p>You cannot improve a system you don't understand. Real change comes from finding a system's leverage points — not from chasing its symptoms or imposing a plan from outside.</p>
+          <div class="consequence">
+            <span class="lbl">In High Desert</span>
+            <p>Before a single feature ships, we study the community as it actually is — who lives here, what's under strain (housing, water, wildfire), how people already find one another. We listen before we build.</p>
+          </div>
+        </div>
+
+        <div class="idea reveal">
+          <div class="idea-head">
+            <span class="idx">iii.</span>
+            <span class="idea-name">Elinor Ostrom</span>
+            <span class="idea-tag">The commons</span>
+          </div>
+          <p>Ostrom won a Nobel Prize for showing what economists had assumed impossible: ordinary communities can steward a shared resource well, for generations, without a corporation or a government in charge — provided a handful of design principles are in place.</p>
+          <div class="consequence">
+            <span class="lbl">In High Desert</span>
+            <p>Genuine self-governance. Members set the rules by vote; longer-tenured neighbors carry a little more weight; consequences are graduated and fair, always with a path back. The whole design is being audited against her eight principles, one by one.</p>
+          </div>
+        </div>
+
+        <div class="idea reveal">
+          <div class="idea-head">
+            <span class="idx">iv.</span>
+            <span class="idea-name">Albert O. Hirschman</span>
+            <span class="idea-tag">Voice &amp; exit</span>
+          </div>
+          <p>When something you belong to begins to slip, you have two options: leave it, or speak up to mend it. Most platforms only ever let you leave. The capacity to stay and improve a thing has to be built deliberately.</p>
+          <div class="consequence">
+            <span class="lbl">In High Desert</span>
+            <p>Voice is designed in from the start, so members shape the place rather than abandon it. Because they own it, staying and improving becomes the rational choice — not just the loyal one.</p>
+          </div>
+        </div>
+
+        <div class="idea reveal">
+          <div class="idea-head">
+            <span class="idx">v.</span>
+            <span class="idea-name">Mehrsa Baradaran</span>
+            <span class="idea-tag">Structure is destiny</span>
+          </div>
+          <p>Who owns a thing — and how it is financed — quietly decides who it will ultimately serve. Values stated in a mission statement rarely survive an ownership structure that points the other way.</p>
+          <div class="consequence">
+            <span class="lbl">In High Desert</span>
+            <p>Ownership and economics are settled on day one: below-market founder pay, surplus that flows to local causes, and a built-in trigger to convert into a nonprofit. The structure isn't paperwork — it's the promise.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PULLQUOTE -->
+<div class="pull wrap">
+  <blockquote class="reveal">Connection with roots, on infrastructure the community holds.</blockquote>
+  <div class="src reveal">The whole idea, in one line</div>
+</div>
+
+<!-- 04 SUPPORT ONE ANOTHER -->
+<section style="background:var(--paper-2);">
+  <div class="wrap">
+    <div class="col body">
+      <div class="eyebrow reveal">04 — A community that supports one another</div>
+      <h2 class="reveal">Built so people can actually show up for each other.</h2>
+      <p class="reveal">A platform can corrode a community or it can knit one together. The difference is almost entirely in the design choices. High Desert is shaped, end to end, around mutual support.</p>
+
+      <div class="pillars">
+        <div class="pillar reveal">
+          <div class="mark">&mdash;</div>
+          <div>
+            <h3>Neighbors, not strangers</h3>
+            <p>Residency verification means the people you meet here genuinely share your place. A favor asked, a tool borrowed, a recommendation given — it all has roots, because it's all local.</p>
+          </div>
+        </div>
+        <div class="pillar reveal">
+          <div class="mark">&mdash;</div>
+          <div>
+            <h3>No algorithm deciding for you</h3>
+            <p>The feed is chronological and honest. You follow what you choose; nothing is engineered to enrage you, addict you, or keep you scrolling past the point of usefulness. Your attention is yours.</p>
+          </div>
+        </div>
+        <div class="pillar reveal">
+          <div class="mark">&mdash;</div>
+          <div>
+            <h3>Everyone gets a real seat</h3>
+            <p>Every genuine community event is welcome, across the political and religious spectrum — the test is whether something serves the community, never whether we happen to agree with it. And the founding group is built to actually resemble Central Oregon, not just its newest arrivals.</p>
+          </div>
+        </div>
+        <div class="pillar reveal">
+          <div class="mark">&mdash;</div>
+          <div>
+            <h3>What it earns, it gives back</h3>
+            <p>Once the work is sustainably paid for, the surplus goes to local causes the community itself chooses. The platform is a means to a stronger town — never an end in itself.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-warmsprings reveal">
+        <span class="lbl">On the long horizon</span>
+        <p>Further out, we hope to build a peer partnership with the Confederated Tribes of Warm Springs — beginning with questions rather than plans, and grounded firmly in tribal sovereignty and genuine co-ownership. It is an aspiration to earn slowly and on their terms, not a feature to announce.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 COMMITMENTS -->
+<section>
+  <div class="wrap">
+    <div class="col body">
+      <div class="eyebrow reveal">05 — Commitments, in writing</div>
+      <h2 class="reveal">The philosophy, made concrete and binding.</h2>
+      <p class="reveal">Principles are easy to state and easy to abandon. These are the decisions that are already locked — the ones that turn the ideas above into promises a member can hold us to.</p>
+
+      <div class="commitments reveal">
+        <div class="commit"><span class="term">No ads</span><span class="desc"><strong>Ever.</strong> Attention is never the product, and never for sale.</span></div>
+        <div class="commit"><span class="term">$2 / month, flat</span><span class="desc">The price cannot rise without a community vote.</span></div>
+        <div class="commit"><span class="term">A real voice</span><span class="desc">Tenure-weighted voting (1× to 3×), with a 15% quorum to decide.</span></div>
+        <div class="commit"><span class="term">Fair consequences</span><span class="desc">Automated moderation with human review by volunteers; a three-month maximum ban, and a right to appeal.</span></div>
+        <div class="commit"><span class="term">Surplus to community</span><span class="desc">Donations to local charities once the operator earns a modest salary.</span></div>
+        <div class="commit"><span class="term">A path to nonprofit</span><span class="desc">Convert to a 501(c)3 once ≥30% of revenue has gone to charity for a full year — by 60% supermajority.</span></div>
+        <div class="commit"><span class="term">Founder pay, in public</span><span class="desc">Deliberately set <strong>below</strong> an academic salary, as a signal of good faith.</span></div>
+        <div class="commit"><span class="term">Bounded by design</span><span class="desc">Six towns to start; expansion only by resident petition; a hard cap of twelve.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TIMELINE -->
+<section style="background:var(--paper-2);">
+  <div class="wrap">
+    <div class="col body">
+      <div class="eyebrow reveal">06 — Where it's going</div>
+      <h2 class="reveal">Slowly, in the open, and never bigger than it should be.</h2>
+      <div class="timeline reveal">
+        <div class="tl now">
+          <span class="when">Now → Fall 2026</span>
+          <div class="what">Listening and fieldwork across the six towns. <span>Understanding the community before building for it.</span></div>
+        </div>
+        <div class="tl">
+          <span class="when">Fall 2026</span>
+          <div class="what">A closed beta. <span>Small, careful, and shaped by early members.</span></div>
+        </div>
+        <div class="tl">
+          <span class="when">End of 2026</span>
+          <div class="what">Public launch. <span>Open to verified residents of all six regions.</span></div>
+        </div>
+        <div class="tl">
+          <span class="when">Beyond</span>
+          <div class="what">Community-gated growth. <span>Each new town by petition; never past the cap.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CLOSE -->
+<footer>
+  <div class="wrap">
+    <div class="col closing">
+      <div class="eyebrow reveal">In closing</div>
+      <h2 class="reveal">None of this works alone.</h2>
+      <p class="reveal">The web that holds a community together is woven by a lot of hands — the people highlighting local businesses, the ones organizing the markets and the meet-ups, the ones who simply keep showing up. High Desert is one thread among many. We would far rather build it alongside the others than apart from them.</p>
+      <div class="signoff reveal">
+        <div class="who">Greg Chism, Ph.D.
+          <small>Founder, High Desert · Asst. Professor of Practice, University of Arizona</small>
+        </div>
+        <div class="place">High Desert<br>Central Oregon</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // hero load-in
+  window.addEventListener('load', function(){
+    document.getElementById('hero').classList.add('loaded');
+  });
+  // scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(e){e.classList.add('in');});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+</script>
+</body>
+</html>

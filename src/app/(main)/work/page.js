@@ -187,6 +187,13 @@ export default function Work() {
         <Button href="https://highdesert.community" variant="secondary" external>
           highdesert.community →
         </Button>
+
+        <div className="flex flex-wrap items-center gap-4">
+          <Button href="/high-desert" variant="primary">Read the overview →</Button>
+          <Button href="https://highdesert.community" variant="secondary" external>
+            highdesert.community →
+          </Button>
+        </div>
       </section>
 
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
@@ -279,6 +286,42 @@ export default function Work() {
       </section>
 
       {/* ── SECTION 5: RESEARCH PUBLICATIONS ── */}
+      <hr className="border-sand/40 dark:border-white/8 mb-20" />
+
+      {/* ── SECTION: EDUCLOUD × QUAD ── */}
+      <section className="mb-20">
+        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Research Infrastructure</p>
+
+        <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
+          EduCloud × Quad
+        </h2>
+        <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal mb-8">
+          Federated system architecture · ACCESS · NAIRR · JS2
+        </p>
+
+        <div className="space-y-4 mb-8 max-w-2xl">
+          <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
+            A modular, federated architecture for educational research computing: two planes joined
+            at a single seam — a self-hostable, privacy-minimal coursework plane (Quad) and a
+            pluggable resource plane (EduCloud) that routes, meters, and runs compute across ACCESS,
+            HPC, and cloud backends.
+          </p>
+          <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
+            Free-by-default, governed as a commons, and designed so the people inside the system
+            always keep the final word over the machine.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2 mb-7">
+          {['Systems Design', 'Federated Compute', 'ACCESS / NAIRR', 'Privacy by Design'].map((t) => (
+            <Tag key={t}>{t}</Tag>
+          ))}
+        </div>
+
+        <Button href="/educloud" variant="primary">Explore the architecture →</Button>
+      </section>
+
+      {/* ── SECTION 6: RESUME ── */}
       <section>
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-8">Research Publications</p>
         <div className="mb-8">
