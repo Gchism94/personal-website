@@ -1,6 +1,5 @@
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
-import Card from '@/components/ui/Card'
 
 export const metadata = {
   title: 'Work — Greg Chism',
@@ -206,36 +205,9 @@ export default function Work() {
 
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
 
-      {/* ── SECTION 3: JUPYTERQUEST ── */}
+      {/* ── SECTION 3: EDUCLOUD × QUAD ── */}
       <section className="mb-20">
-        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-8">Open Source Tool</p>
-        <Card>
-          <div className="flex items-start justify-between gap-8 sm:flex-col">
-            <div className="flex-1">
-              <h3 className="font-serif text-xl font-bold text-bark dark:text-cream mb-2">JupyterQuest</h3>
-              <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/75 leading-relaxed mb-4">
-                Gamified, interactive Jupyter notebook environment for teaching reproducible data science.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {['Education', 'Python', 'Jupyter', 'Open Source'].map((t) => (
-                  <Tag key={t}>{t}</Tag>
-                ))}
-              </div>
-            </div>
-            <div className="flex-shrink-0">
-              <Button href="https://github.com/Gchism94/jupyterquest" variant="ghost" external>
-                View on GitHub →
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </section>
-
-      <hr className="border-sand/40 dark:border-white/8 mb-20" />
-
-      {/* ── SECTION 4: EDUCLOUD × QUAD ── */}
-      <section className="mb-20">
-        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Research Infrastructure</p>
+        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Education Infrastructure</p>
 
         <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
           EduCloud × Quad
@@ -264,6 +236,33 @@ export default function Work() {
         </div>
 
         <Button href="/educloud" variant="primary">Explore the architecture →</Button>
+      </section>
+
+      <hr className="border-sand/40 dark:border-white/8 mb-20" />
+
+      {/* ── SECTION 4: JUPYTERQUEST ── */}
+      <section className="mb-20">
+        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-8">Open Source Tool</p>
+        <div className="border border-sand/40 dark:border-white/8 rounded-lg p-6">
+          <div className="flex items-start justify-between gap-8 sm:flex-col">
+            <div className="flex-1">
+              <h3 className="font-serif text-xl font-bold text-bark dark:text-cream mb-2">JupyterQuest</h3>
+              <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/75 leading-relaxed mb-4">
+                Gamified, interactive Jupyter notebook environment for teaching reproducible data science.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {['Education', 'Python', 'Jupyter', 'Open Source'].map((t) => (
+                  <Tag key={t}>{t}</Tag>
+                ))}
+              </div>
+            </div>
+            <div className="flex-shrink-0">
+              <Button href="https://github.com/Gchism94/jupyterquest" variant="ghost" external>
+                View on GitHub →
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── SECTION 5: RESEARCH PUBLICATIONS ── */}

@@ -390,19 +390,19 @@ const CSS = `
   --shadow:0 8px 28px rgba(0,0,0,.42);
   --shadow-lg:0 24px 64px rgba(0,0,0,.58);
 
-  position:fixed; inset:0; overflow:hidden;
+  position:relative; min-height:100vh; overflow-x:hidden;
   background:var(--bg); color:var(--txt);
   font-family:var(--ff-sans);
   -webkit-font-smoothing:antialiased;
   opacity:0; transition:opacity .6s ease;
 }
 .ec.ec-ready { opacity:1; }
-html body:has(.ec){ overflow:hidden; background:#02040a !important; }
+html body:has(.ec){ background:#02040a !important; }
 .ec *{ box-sizing:border-box; margin:0; padding:0; }
 
 /* ── atmosphere ── */
 .ec-bg {
-  position:absolute; inset:0; z-index:0; pointer-events:none;
+  position:fixed; inset:0; z-index:0; pointer-events:none;
   background:
     radial-gradient(120% 90% at 72% 6%, rgba(48,58,110,.18), transparent 60%),
     radial-gradient(90% 80% at 10% 96%, rgba(12,44,62,.18), transparent 60%),
@@ -410,7 +410,7 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
     linear-gradient(180deg,#06091a 0%,#04060f 52%,#02040a 100%);
 }
 .ec .bg-grid {
-  position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.4;
+  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.4;
   background-image:
     linear-gradient(var(--bg-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
@@ -419,7 +419,7 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
   -webkit-mask-image:radial-gradient(ellipse 100% 95% at 50% 45%, #000 35%, transparent 100%);
 }
 .ec-grain {
-  position:absolute; inset:0; z-index:11; pointer-events:none;
+  position:fixed; inset:0; z-index:11; pointer-events:none;
   opacity:.028; mix-blend-mode:screen;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.54'/%3E%3C/svg%3E");
   animation:ec-grain 1.5s steps(2) infinite;
@@ -430,7 +430,7 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
   66%{transform:translate(1%,-1%);}
 }
 .ec-vignette {
-  position:absolute; inset:0; z-index:12; pointer-events:none;
+  position:fixed; inset:0; z-index:12; pointer-events:none;
   background:
     radial-gradient(ellipse 120% 120% at 50% 50%, transparent 40%, rgba(2,4,10,.66) 100%),
     linear-gradient(90deg, rgba(2,4,10,.22) 0%, transparent 15%, transparent 85%, rgba(2,4,10,.22) 100%);
@@ -438,7 +438,7 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
 
 /* ── topbar ── */
 .ec .topbar {
-  position:absolute; top:0; left:0; right:0; z-index:30;
+  position:fixed; top:0; left:0; right:0; z-index:30;
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 22px;
   background:linear-gradient(180deg, rgba(2,4,10,.92) 0%, rgba(2,4,10,0) 100%);
@@ -475,18 +475,15 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
 .ec .dot-dt{background:var(--cyan)}
 .ec .dot-q{background:var(--gold)}
 
-/* ── stage / world ── */
-#ec-stage { position:absolute; inset:0; z-index:10; cursor:grab; }
-#ec-stage.grabbing { cursor:grabbing; }
-#ec-world {
-  position:absolute; top:50%; left:50%; transform-origin:center center;
-  transition:transform .55s cubic-bezier(.22,.61,.36,1); will-change:transform;
+/* ── scrollable diagram wrapper ── */
+.ec .diagram-wrap {
+  position:relative; z-index:10;
+  max-width:1180px; margin:0 auto;
+  padding:80px 24px 100px;
 }
-#ec-world.dragging { transition:none; }
 
 .ec .diagram {
-  position:relative; width:1180px; margin-left:-590px; margin-top:-805px;
-  padding:8px; display:flex; flex-direction:column; gap:0;
+  position:relative; display:flex; flex-direction:column; gap:0;
 }
 
 /* ── diagram title ── */
@@ -681,7 +678,7 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
 
 /* ── detail panel ── */
 .ec .detail {
-  position:absolute; top:0; right:0; bottom:0; z-index:40;
+  position:fixed; top:0; right:0; bottom:0; z-index:40;
   width:430px; max-width:90vw;
   background:linear-gradient(180deg, var(--panel-2), var(--panel));
   border-left:1px solid var(--line); box-shadow:var(--shadow-lg);
@@ -719,7 +716,7 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
 
 /* ── controls ── */
 .ec .controls {
-  position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
   z-index:30; display:flex; align-items:center; gap:6px;
   background:rgba(11,14,22,.9); backdrop-filter:blur(12px);
   border:1px solid var(--line); border-radius:13px;
@@ -733,12 +730,10 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
 }
 .ec .ctrl-btn:hover { background:var(--panel-3); color:var(--txt); }
 .ec .ctrl-btn svg { width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.7; }
-.ec .ctrl-sep { width:1px; height:22px; background:var(--line); margin:0 3px; }
-.ec .ctrl-zoom { font-family:var(--ff-mono); font-size:11.5px; color:var(--txt-3); min-width:46px; text-align:center; user-select:none; }
 
 /* ── hint ── */
 .ec .hint {
-  position:absolute; bottom:24px; right:24px; z-index:25;
+  position:fixed; bottom:24px; right:24px; z-index:25;
   font-family:var(--ff-mono); font-size:11px; color:var(--txt-3);
   display:flex; flex-direction:column; gap:5px; align-items:flex-end;
   pointer-events:none; opacity:.8;
@@ -754,7 +749,8 @@ html body:has(.ec){ overflow:hidden; background:#02040a !important; }
 
 /* ── reduced motion ── */
 @media (prefers-reduced-motion:reduce){
-  .ec{opacity:1 !important;transition:none !important;}
+  .ec,.ec *{transition:none !important;}
+  .ec{opacity:1 !important;}
   .ec-grain{animation:none !important;}
   .ec .flow-dot{animation:none !important;}
 }
@@ -851,75 +847,11 @@ export default function EduCloud() {
     }
     root.addEventListener('click', handleRootClick)
 
-    /* pan / zoom */
-    const stage = root.querySelector('#ec-stage')
-    const world = root.querySelector('#ec-world')
-    const zoomLabel = root.querySelector('#ec-zoom-level')
-    let scale = 1, panX = 0, panY = 0
-    let isDown = false, startX = 0, startY = 0, baseX = 0, baseY = 0
-    const MIN = 0.4, MAX = 2.2
-
-    function applyTransform() {
-      world.style.transform = `translate(${panX}px,${panY}px) scale(${scale})`
-      if (zoomLabel) zoomLabel.textContent = Math.round(scale * 100) + '%'
-    }
-
-    function setScale(s, cx, cy) {
-      s = Math.min(MAX, Math.max(MIN, s))
-      if (cx !== undefined) {
-        const r = stage.getBoundingClientRect()
-        const ox = cx - r.width / 2, oy = cy - r.height / 2
-        panX = ox - (ox - panX) * (s / scale)
-        panY = oy - (oy - panY) * (s / scale)
-      }
-      scale = s
-      applyTransform()
-    }
-
-    function onMouseDown(e) {
-      if (e.target.closest('.card') || e.target.closest('[data-toggle]') || e.target.closest('.detail')) return
-      isDown = true
-      world.classList.add('dragging')
-      stage.classList.add('grabbing')
-      startX = e.clientX; startY = e.clientY
-      baseX = panX; baseY = panY
-    }
-    function onMouseMove(e) {
-      if (!isDown) return
-      panX = baseX + (e.clientX - startX)
-      panY = baseY + (e.clientY - startY)
-      applyTransform()
-    }
-    function onMouseUp() {
-      isDown = false
-      world.classList.remove('dragging')
-      stage.classList.remove('grabbing')
-    }
-    function onWheel(e) {
-      e.preventDefault()
-      setScale(scale * (1 - e.deltaY * 0.0016), e.clientX, e.clientY)
-    }
+    /* keyboard shortcut — Esc closes detail */
     function onKeyDown(e) {
-      if (e.key === '+' || e.key === '=') setScale(scale * 1.2)
-      if (e.key === '-') setScale(scale / 1.2)
-      if (e.key === '0') { scale = 1; panX = 0; panY = 0; applyTransform() }
       if (e.key === 'Escape') closeDetail()
     }
-
-    stage.addEventListener('mousedown', onMouseDown)
-    stage.addEventListener('wheel', onWheel, { passive: false })
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup', onMouseUp)
     window.addEventListener('keydown', onKeyDown)
-
-    root.querySelector('#ec-zoom-in').addEventListener('click', () => setScale(scale * 1.2))
-    root.querySelector('#ec-zoom-out').addEventListener('click', () => setScale(scale / 1.2))
-    root.querySelector('#ec-reset').addEventListener('click', () => {
-      scale = 1; panX = 0; panY = 0
-      world.style.transition = 'transform .55s cubic-bezier(.22,.61,.36,1)'
-      applyTransform()
-      setTimeout(() => { world.style.transition = '' }, 600)
-    })
 
     let allExpanded = true
     root.querySelector('#ec-expand-all').addEventListener('click', () => {
@@ -927,14 +859,10 @@ export default function EduCloud() {
       root.querySelectorAll('.tier').forEach(t => t.classList.toggle('collapsed', !allExpanded))
     })
 
-    applyTransform()
-
     const raf = requestAnimationFrame(() => root.classList.add('ec-ready'))
 
     return () => {
       cancelAnimationFrame(raf)
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseup', onMouseUp)
       window.removeEventListener('keydown', onKeyDown)
       root.removeEventListener('click', handleRootClick)
     }
@@ -966,10 +894,8 @@ export default function EduCloud() {
         </div>
       </header>
 
-      <div id="ec-stage">
-        <div id="ec-world">
-          <div className="diagram" dangerouslySetInnerHTML={{ __html: DIAGRAM_HTML }} />
-        </div>
+      <div className="diagram-wrap">
+        <div className="diagram" dangerouslySetInnerHTML={{ __html: DIAGRAM_HTML }} />
       </div>
 
       <aside className="detail" id="ec-detail">
@@ -983,25 +909,13 @@ export default function EduCloud() {
       </aside>
 
       <div className="controls">
-        <button className="ctrl-btn" id="ec-zoom-out" title="Zoom out (-)">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14" /></svg>
-        </button>
-        <span className="ctrl-zoom" id="ec-zoom-level">100%</span>
-        <button className="ctrl-btn" id="ec-zoom-in" title="Zoom in (+)">
-          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
-        </button>
-        <span className="ctrl-sep" />
-        <button className="ctrl-btn" id="ec-reset" title="Reset view (0)">
-          <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8" /><path d="M3 3v5h5" /></svg>
-        </button>
-        <button className="ctrl-btn" id="ec-expand-all" title="Expand / collapse all">
+        <button className="ctrl-btn" id="ec-expand-all" title="Expand / collapse all tiers">
           <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" /></svg>
         </button>
       </div>
 
       <div className="hint" aria-hidden="true">
-        <div>drag to pan &middot; scroll to zoom</div>
-        <div>click a layer to collapse &middot; click a node for detail</div>
+        <div>click a tier to collapse &middot; click a card for detail</div>
       </div>
     </div>
   )
