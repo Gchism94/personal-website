@@ -17,6 +17,19 @@ const lerp  = (a, b, t) => a + (b - a) * t
 const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x))
 const ease  = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
 
+/* Size the canvas backing store for the device pixel ratio, but keep the
+   drawing coordinate system in CSS pixels via a base transform. Returns the
+   CSS-pixel [W, H] so existing draw code is unchanged. */
+function fitCanvas(canvas, ctx) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2)
+  const w = canvas.offsetWidth || 1
+  const h = canvas.offsetHeight || 1
+  canvas.width  = Math.round(w * dpr)
+  canvas.height = Math.round(h * dpr)
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  return [w, h]
+}
+
 /* ══════════════════════════════════════════════════════
    1. DATA MINING
    Concept: scattered points that slowly coalesce into
@@ -48,10 +61,7 @@ export function DataMiningAnim({ className = '' }) {
       phase: lcg(i * 557) * Math.PI * 2,
     }))
 
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth
-      H = canvas.height = canvas.offsetHeight
-    }
+    function resize() { [W, H] = fitCanvas(canvas, ctx) }
     resize()
 
     const CYCLE = 5200 // ms per full cycle
@@ -180,10 +190,7 @@ export function DataVizAnim({ className = '' }) {
     ]
     const LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
 
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth
-      H = canvas.height = canvas.offsetHeight
-    }
+    function resize() { [W, H] = fitCanvas(canvas, ctx) }
     resize()
 
     const CYCLE = 6000
@@ -344,10 +351,7 @@ export function FundamentalsAnim({ className = '' }) {
 
     const STEPS = ['Collect', 'Clean', 'Analyze', 'Visualize', 'Communicate']
 
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth
-      H = canvas.height = canvas.offsetHeight
-    }
+    function resize() { [W, H] = fitCanvas(canvas, ctx) }
     resize()
 
     function nodePos(i) {
@@ -489,6 +493,370 @@ export function FundamentalsAnim({ className = '' }) {
     raf = requestAnimationFrame(frame)
     window.addEventListener('resize', resize)
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
+  }, [])
+
+  return (
+    <canvas
+      ref={ref}
+      className={className}
+      style={{ display: 'block', width: '100%', height: '100%' }}
+      aria-hidden="true"
+    />
+  )
+}
+
+/* ══════════════════════════════════════════════════════
+   4. NEURAL NETWORKS (INFO 557)
+   Concept: feed-forward network (4→5→3→2), a forward
+   pass pulse sweeps left→right activating edges and
+   nodes, then a rust backprop sweep returns right→left.
+   ══════════════════════════════════════════════════════ */
+export function NeuralNetAnim({ className = '' }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const canvas = ref.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    let raf, W, H
+
+    const SIZES  = [4, 5, 3, 2]
+    const LABELS = ['input', 'hidden', 'hidden', 'output']
+    const L = SIZES.length
+
+    function resize() { [W, H] = fitCanvas(canvas, ctx) }
+    resize()
+
+    function nodePos(layer, node) {
+      const n = SIZES[layer]
+      const x = lerp(W * .11, W * .89, layer / (L - 1))
+      const span = H * .64
+      const top  = (H - span) / 2
+      return {
+        x,
+        y: n === 1 ? H / 2 : top + node * span / (n - 1),
+      }
+    }
+
+    function draw(fp, bp) {
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = C.linen
+      ctx.fillRect(0, 0, W, H)
+
+      const R = Math.min(W, H) * .038
+
+      // ── Edges ──
+      for (let l = 0; l < L - 1; l++) {
+        const segW = 1 / (L - 1)
+        const fEdge = clamp((fp - l * segW) / segW, 0, 1)
+        // Backprop goes right→left: layer L-2 → L-3 → ... → 0
+        const bpSeg = L - 2 - l
+        const bEdge = bp > 0 ? clamp((bp - bpSeg * segW) / segW, 0, 1) : 0
+
+        for (let i = 0; i < SIZES[l]; i++) {
+          for (let j = 0; j < SIZES[l + 1]; j++) {
+            const a = nodePos(l, i)
+            const b = nodePos(l + 1, j)
+            if (bEdge > 0) {
+              ctx.strokeStyle = C.rust
+              ctx.lineWidth = .7
+              ctx.globalAlpha = bEdge * .55
+            } else if (fEdge > 0) {
+              ctx.strokeStyle = C.juniper
+              ctx.lineWidth = .7
+              ctx.globalAlpha = fEdge * .45
+            } else {
+              ctx.strokeStyle = C.ashLt
+              ctx.lineWidth = .4
+              ctx.globalAlpha = .15
+            }
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke()
+            ctx.globalAlpha = 1
+          }
+        }
+      }
+
+      // ── Nodes ──
+      for (let l = 0; l < L; l++) {
+        const segW = 1 / (L - 1)
+        // Input layer (l=0) starts active immediately; others after their segment begins
+        const fNode = l === 0
+          ? clamp(fp * 4, 0, 1)
+          : clamp((fp - l * segW) / (segW * .9), 0, 1)
+        // Backprop arrives right→left: output (L-1) first, input (0) last
+        const bpLayer = L - 1 - l
+        const bNode = bp > 0 ? clamp((bp - bpLayer * segW) / (segW * .9), 0, 1) : 0
+
+        const isF = fNode > .05
+        const isB = bNode > .05
+        const nodeColor = isB ? C.rust : (isF ? C.juniper : C.ashLt)
+        const glow = isB ? bNode : fNode
+
+        for (let n = 0; n < SIZES[l]; n++) {
+          const { x, y } = nodePos(l, n)
+
+          // Glow halo
+          if (glow > .1) {
+            const g = ctx.createRadialGradient(x, y, 0, x, y, R * 2.8)
+            g.addColorStop(0, nodeColor + Math.round(glow * 55).toString(16).padStart(2, '0'))
+            g.addColorStop(1, nodeColor + '00')
+            ctx.fillStyle = g
+            ctx.beginPath(); ctx.arc(x, y, R * 2.8, 0, Math.PI * 2); ctx.fill()
+          }
+
+          // Node ring
+          ctx.strokeStyle = nodeColor
+          ctx.lineWidth = glow > .3 ? 1.5 : .8
+          ctx.globalAlpha = lerp(.28, 1, glow)
+          ctx.fillStyle = C.linen
+          ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.fill(); ctx.stroke()
+          ctx.globalAlpha = 1
+
+          // Output node fill when forward pass arrives
+          if (l === L - 1 && fNode > .4) {
+            ctx.fillStyle = C.juniper
+            ctx.globalAlpha = ((fNode - .4) / .6) * .6
+            ctx.beginPath(); ctx.arc(x, y, R * .42, 0, Math.PI * 2); ctx.fill()
+            ctx.globalAlpha = 1
+          }
+        }
+
+        // Layer caption at bottom
+        ctx.font = `300 ${Math.round(Math.min(W, H) * .048)}px "DM Mono", monospace`
+        ctx.textAlign = 'center'
+        ctx.fillStyle = isB ? C.rust : (isF ? C.juniper : C.ashLt)
+        ctx.globalAlpha = isF || isB ? .85 : .42
+        ctx.fillText(LABELS[l], nodePos(l, 0).x, H * .94)
+        ctx.globalAlpha = 1
+      }
+    }
+
+    const FORWARD = 3600, BACKPROP = 1100, HOLD = 500
+    const CYCLE = FORWARD + BACKPROP + HOLD
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let t0 = null
+
+    function frame(ts) {
+      if (!t0) t0 = ts
+      const e = (ts - t0) % CYCLE
+      let fp, bp
+      if (e < FORWARD) {
+        fp = ease(e / FORWARD); bp = 0
+      } else if (e < FORWARD + BACKPROP) {
+        fp = 1; bp = ease((e - FORWARD) / BACKPROP)
+      } else {
+        fp = 1; bp = 1
+      }
+      draw(fp, bp)
+      raf = requestAnimationFrame(frame)
+    }
+
+    const onResize = () => { resize(); if (reduced) draw(.5, 0) }
+    if (reduced) { draw(.5, 0) } else { raf = requestAnimationFrame(frame) }
+    window.addEventListener('resize', onResize)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize) }
+  }, [])
+
+  return (
+    <canvas
+      ref={ref}
+      className={className}
+      style={{ display: 'block', width: '100%', height: '100%' }}
+      aria-hidden="true"
+    />
+  )
+}
+
+/* ══════════════════════════════════════════════════════
+   5. DATA SCIENCE CAPSTONE (INFO 698)
+   Concept: four inbound streams (sponsor, students,
+   computing, mentorship) flow from the left edge and
+   converge into a single keystone node on the right.
+   Phase labels (Scope · Build · Deliver) at the top
+   highlight as the animation progresses.
+   ══════════════════════════════════════════════════════ */
+export function CapstoneAnim({ className = '' }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const canvas = ref.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    let raf, W, H
+
+    // Staggered start: each stream departs at delay * TRAVEL_MS
+    const STREAMS = [
+      { label: 'sponsor',    color: C.juniper, delay: 0    },
+      { label: 'students',   color: C.sand,    delay: .18  },
+      { label: 'computing',  color: C.rust,    delay: .34  },
+      { label: 'mentorship', color: C.ash,     delay: .50  },
+    ]
+    const PHASES = ['Scope', 'Build', 'Deliver']
+
+    function resize() { [W, H] = fitCanvas(canvas, ctx) }
+    resize()
+
+    function srcPos(i) {
+      return { x: W * .14, y: lerp(H * .20, H * .80, i / (STREAMS.length - 1)) }
+    }
+    function keystonePos() { return { x: W * .80, y: H * .50 } }
+
+    // streamT: 0→1 over the travel window for this stream
+    function streamProgress(delay, elapsedMs, travelMs) {
+      if (elapsedMs < delay * travelMs) return 0
+      return clamp((elapsedMs - delay * travelMs) / ((1 - delay) * travelMs), 0, 1)
+    }
+
+    const TRAVEL = 2800, HOLD = 700
+    const CYCLE = TRAVEL + HOLD
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let t0 = null
+
+    function draw(elapsedMs) {
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = C.linen
+      ctx.fillRect(0, 0, W, H)
+
+      const KP = keystonePos()
+      const KR = Math.min(W, H) * .062
+      const SR = Math.min(W, H) * .030
+
+      // Phase of cycle: 0=travel, 1=hold
+      const inHold = elapsedMs >= TRAVEL
+      // Phase label progress (0→3 over travel)
+      const phaseProg = Math.min(elapsedMs / TRAVEL, 1)
+
+      // ── Phase labels at top ──
+      ctx.font = `300 ${Math.round(Math.min(W, H) * .048)}px "DM Mono", monospace`
+      ctx.textAlign = 'center'
+      const phaseSpacing = W / (PHASES.length + 1)
+      PHASES.forEach((ph, pi) => {
+        // Active phase bracket: 0→0.33 = Scope, 0.33→0.67 = Build, 0.67→1.0 = Deliver
+        const phaseActive = phaseProg >= pi / PHASES.length
+        ctx.fillStyle = phaseActive ? C.juniper : C.ashLt
+        ctx.globalAlpha = phaseActive ? .85 : .35
+        ctx.fillText(ph, phaseSpacing * (pi + 1), H * .10)
+        // Separator dot between phases
+        if (pi < PHASES.length - 1) {
+          ctx.fillStyle = C.ashLt
+          ctx.globalAlpha = .3
+          ctx.fillText('·', phaseSpacing * (pi + 1) + phaseSpacing / 2, H * .10)
+        }
+      })
+      ctx.globalAlpha = 1
+
+      // ── Stream progress values ──
+      const sProgress = STREAMS.map(s => streamProgress(s.delay, elapsedMs, TRAVEL))
+      const avgProgress = sProgress.reduce((a, b) => a + b, 0) / STREAMS.length
+      const allArrived = inHold
+
+      // ── Faint guide lines ──
+      STREAMS.forEach((s, i) => {
+        const sp = srcPos(i)
+        ctx.strokeStyle = s.color
+        ctx.lineWidth = .4
+        ctx.globalAlpha = .10
+        ctx.setLineDash([3, 5])
+        ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(KP.x, KP.y); ctx.stroke()
+        ctx.setLineDash([])
+        ctx.globalAlpha = 1
+      })
+
+      // ── Keystone glow and fill ──
+      const keystoneAlpha = allArrived ? 1 : avgProgress
+      if (keystoneAlpha > 0.05) {
+        const holdE = inHold ? (elapsedMs - TRAVEL) / HOLD : 0
+        const pulse = allArrived ? .75 + .25 * Math.sin(holdE * Math.PI * 4) : avgProgress * .5
+        const g = ctx.createRadialGradient(KP.x, KP.y, 0, KP.x, KP.y, KR * 3.2)
+        g.addColorStop(0, C.juniper + Math.round(pulse * 70).toString(16).padStart(2, '0'))
+        g.addColorStop(1, C.juniper + '00')
+        ctx.fillStyle = g
+        ctx.beginPath(); ctx.arc(KP.x, KP.y, KR * 3.2, 0, Math.PI * 2); ctx.fill()
+      }
+
+      ctx.strokeStyle = C.juniper
+      ctx.lineWidth = allArrived ? 2 : 1.2
+      ctx.fillStyle = allArrived ? C.juniper : C.linen
+      ctx.globalAlpha = lerp(.35, 1, keystoneAlpha)
+      ctx.beginPath(); ctx.arc(KP.x, KP.y, KR, 0, Math.PI * 2); ctx.fill(); ctx.stroke()
+      ctx.globalAlpha = 1
+
+      // Inner ring indicator
+      if (avgProgress > .05) {
+        ctx.fillStyle = allArrived ? C.linen : C.juniper
+        ctx.globalAlpha = allArrived ? .85 : avgProgress * .55
+        ctx.beginPath(); ctx.arc(KP.x, KP.y, KR * .40, 0, Math.PI * 2); ctx.fill()
+        ctx.globalAlpha = 1
+      }
+
+      // Keystone label
+      ctx.font = `300 ${Math.round(Math.min(W, H) * .048)}px "DM Mono", monospace`
+      ctx.textAlign = 'center'
+      ctx.fillStyle = allArrived ? C.linen : C.juniper
+      ctx.globalAlpha = .80
+      ctx.fillText('capstone', KP.x, KP.y + KR + H * .10)
+      ctx.globalAlpha = 1
+
+      // ── Stream source nodes + particles ──
+      STREAMS.forEach((s, i) => {
+        const sp = srcPos(i)
+        const st = sProgress[i]
+        const arrived = st >= 1
+
+        // Source node
+        ctx.strokeStyle = s.color
+        ctx.lineWidth = .9
+        ctx.fillStyle = C.linen
+        ctx.globalAlpha = arrived ? .25 : lerp(.38, .88, ease(st))
+        ctx.beginPath(); ctx.arc(sp.x, sp.y, SR, 0, Math.PI * 2); ctx.fill(); ctx.stroke()
+        ctx.globalAlpha = 1
+
+        // Source label (right of node)
+        ctx.font = `300 ${Math.round(Math.min(W, H) * .046)}px "DM Mono", monospace`
+        ctx.textAlign = 'left'
+        ctx.fillStyle = arrived ? C.ashLt : s.color
+        ctx.globalAlpha = arrived ? .30 : lerp(.45, .85, ease(st))
+        ctx.fillText(s.label, sp.x + SR + W * .015, sp.y + Math.min(W, H) * .016)
+        ctx.globalAlpha = 1
+
+        // Particle in transit
+        if (st > 0 && st < 1) {
+          const px = lerp(sp.x, KP.x, ease(st))
+          const py = lerp(sp.y, KP.y, ease(st))
+
+          // Trail
+          for (let t = 1; t <= 6; t++) {
+            const tBack = Math.max(0, st - t * .045)
+            const tx = lerp(sp.x, KP.x, ease(tBack))
+            const ty = lerp(sp.y, KP.y, ease(tBack))
+            ctx.fillStyle = s.color
+            ctx.globalAlpha = ((6 - t) / 6) * .38
+            ctx.beginPath(); ctx.arc(tx, ty, lerp(1.2, 3.5, (6 - t) / 6), 0, Math.PI * 2); ctx.fill()
+          }
+          ctx.globalAlpha = 1
+
+          // Head
+          ctx.fillStyle = s.color
+          ctx.globalAlpha = .92
+          ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2); ctx.fill()
+          ctx.fillStyle = C.linen
+          ctx.globalAlpha = .80
+          ctx.beginPath(); ctx.arc(px, py, 1.8, 0, Math.PI * 2); ctx.fill()
+          ctx.globalAlpha = 1
+        }
+      })
+    }
+
+    function frame(ts) {
+      if (!t0) t0 = ts
+      draw((ts - t0) % CYCLE)
+      raf = requestAnimationFrame(frame)
+    }
+
+    const onResize = () => { resize(); if (reduced) draw(TRAVEL) }
+    if (reduced) { draw(TRAVEL) } else { raf = requestAnimationFrame(frame) }
+    window.addEventListener('resize', onResize)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize) }
   }, [])
 
   return (

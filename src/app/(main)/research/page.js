@@ -1,7 +1,7 @@
 import SectionHeader from '@/components/ui/SectionHeader'
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
-import { DataMiningAnim, DataVizAnim, FundamentalsAnim } from '@/components/CourseAnimations'
+import { DataMiningAnim, DataVizAnim, FundamentalsAnim, NeuralNetAnim, CapstoneAnim } from '@/components/CourseAnimations'
 
 export const metadata = {
   title: 'Research & Teaching — Greg Chism',
@@ -80,11 +80,11 @@ const publications = [
 
 const courses = [
   {
-    Anim: DataVizAnim,
-    num: 'INFO 526',
-    title: 'Data Analysis & Visualization',
-    desc: 'Covers principles of graphic design, programming, and statistical knowledge required to build visualizations that communicate effectively. Students produce publication-ready figures in R and Python.',
-    href: 'https://datavizaz.org/',
+    Anim: FundamentalsAnim,
+    num: 'INFO 511',
+    title: 'Fundamentals of Data Science',
+    desc: 'End-to-end introduction to the data science lifecycle: collection, cleaning, exploration, modeling, and communication. Python-first, with emphasis on reproducible workflows and real-world datasets.',
+    href: 'https://datasciaz.netlify.app/',
   },
   {
     Anim: DataMiningAnim,
@@ -94,11 +94,25 @@ const courses = [
     href: 'https://datamineaz.org/',
   },
   {
-    Anim: FundamentalsAnim,
-    num: 'INFO 511',
-    title: 'Fundamentals of Data Science',
-    desc: 'End-to-end introduction to the data science lifecycle: collection, cleaning, exploration, modeling, and communication. Python-first, with emphasis on reproducible workflows and real-world datasets.',
-    href: 'https://datasciaz.netlify.app/',
+    Anim: DataVizAnim,
+    num: 'INFO 526',
+    title: 'Data Analysis & Visualization',
+    desc: 'Covers principles of graphic design, programming, and statistical knowledge required to build visualizations that communicate effectively. Students produce publication-ready figures in R and Python.',
+    href: 'https://datavizaz.org/',
+  },
+  {
+    Anim: NeuralNetAnim,
+    num: 'INFO 557',
+    title: 'Neural Networks',
+    desc: 'Theory and practice of neural networks and deep learning — feed-forward, convolutional, and sequence models — with backpropagation, optimization, and regularization. Students build, train, and evaluate models in Python, from fundamentals up to modern architectures.',
+    href: 'https://neuralnetworksaz-f25.netlify.app/',
+  },
+  {
+    Anim: CapstoneAnim,
+    num: 'INFO 698',
+    title: 'Data Science Capstone',
+    desc: 'Industry-sponsored capstone projects where student teams take a real problem from scoping through delivery. I contribute instructional computing resources, mentored support, and help scope sponsor projects into well-defined, achievable capstones.',
+    href: null,
   },
 ]
 
@@ -163,10 +177,12 @@ export default function Research() {
                 <Tag className="mb-3">{num}</Tag>
                 <h3 className="font-serif text-lg font-bold text-bark dark:text-cream mb-3">{title}</h3>
                 <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed mb-4">{desc}</p>
-                <a href={href} target="_blank" rel="noopener noreferrer"
-                  className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal hover:underline">
-                  View Course →
-                </a>
+                {href && (
+                  <a href={href} target="_blank" rel="noopener noreferrer"
+                    className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal hover:underline">
+                    View Course →
+                  </a>
+                )}
               </div>
             </div>
           ))}
