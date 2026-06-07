@@ -184,15 +184,15 @@ export default function Work() {
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
-        <Button href="https://highdesert.community" variant="secondary" external>
-          highdesert.community →
-        </Button>
 
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/high-desert" variant="primary">Read the overview →</Button>
+         {/* ── High Desert site ──
           <Button href="https://highdesert.community" variant="secondary" external>
             highdesert.community →
           </Button>
+          ─ */}
+          -->
         </div>
       </section>
 
