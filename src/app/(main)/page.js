@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'
 import { useTheme } from '@/components/ThemeProvider'
 import HeroLight from '@/components/HeroLight'
 import HeroDark from '@/components/HeroDark'
-import Card from '@/components/ui/Card'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Button from '@/components/ui/Button'
 import Link from 'next/link'
+import { ConsultingAnim, HighDesertAnim, EduCloudAnim } from '@/components/WorkAnimations'
 
 const recentWork = [
   {
+    Anim: ConsultingAnim,
     title: 'Three Canyon Consulting',
     desc: 'AI and data strategy consulting for universities, health systems, and mission-driven organizations.',
     href: 'https://threecanyonconsult.com',
@@ -18,18 +19,20 @@ const recentWork = [
     label: 'Consulting',
   },
   {
-    title: 'NAIRR AI Sandbox',
-    desc: 'National AI Research Resource–funded sandbox for reproducible AI experimentation in research contexts. 2026.',
-    href: 'https://doi.org/10.5281/zenodo.20074028',
-    external: true,
-    label: 'Research · 2026',
+    Anim: HighDesertAnim,
+    title: 'High Desert',
+    desc: 'A community platform for Central Oregon — no ads, no algorithmic feeds, local residency required.',
+    href: '/high-desert',
+    external: false,
+    label: 'Platform',
   },
   {
-    title: 'PHQ-8 & Chronic Pain',
-    desc: 'Co-authored study on depression screening reliability in adults with chronic pain. Journal of Affective Disorders · 2026.',
-    href: 'https://doi.org/10.1016/j.jad.2026.121496',
-    external: true,
-    label: 'Research · 2026',
+    Anim: EduCloudAnim,
+    title: 'EduCloud × Quad',
+    desc: 'A modular, federated architecture for educational research computing — free-by-default and governed as a commons.',
+    href: '/educloud',
+    external: false,
+    label: 'Education Infrastructure',
   },
 ]
 
@@ -85,13 +88,18 @@ function HomeContent() {
       <section className="max-w-5xl mx-auto px-8 pb-28">
         <SectionHeader label="Recent work" className="mb-10" />
         <div className="grid grid-cols-3 gap-6 lg:grid-cols-1 mb-10">
-          {recentWork.map(({ title, desc, href, external, label }) => (
-            <Card key={title} accent>
-              <p className="font-mono text-[9px] tracking-[0.16em] uppercase text-stone/50 dark:text-cream/40 mb-3">{label}</p>
-              <h3 className="font-serif text-lg font-bold text-bark dark:text-cream mb-3 leading-snug">{title}</h3>
-              <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed mb-5">{desc}</p>
-              <Button href={href} variant="ghost" external={external}>View →</Button>
-            </Card>
+          {recentWork.map(({ Anim, title, desc, href, external, label }) => (
+            <div key={title} className="rounded-lg overflow-hidden border border-sand/60 dark:border-white/10 border-l-2 border-l-juniper dark:border-l-teal bg-linen dark:bg-white/[0.04]">
+              <div className="relative h-44 bg-linen dark:bg-midnight overflow-hidden border-b border-sand/40 dark:border-white/6">
+                <Anim className="absolute inset-0 w-full h-full" />
+              </div>
+              <div className="p-7">
+                <p className="font-mono text-[9px] tracking-[0.16em] uppercase text-stone/50 dark:text-cream/40 mb-3">{label}</p>
+                <h3 className="font-serif text-lg font-bold text-bark dark:text-cream mb-3 leading-snug">{title}</h3>
+                <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed mb-5">{desc}</p>
+                <Button href={href} variant="ghost" external={external}>View →</Button>
+              </div>
+            </div>
           ))}
         </div>
         <div className="text-center">
