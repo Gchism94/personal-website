@@ -588,12 +588,10 @@ html body:has(.ec){ background:#02040a !important; }
 .ec .tier-chevron { color:var(--txt-3); font-size:13px; transition:transform .4s; margin-left:14px; font-family:var(--ff-mono); }
 .ec .tier.collapsed .tier-chevron { transform:rotate(-90deg); }
 .ec .tier-cards {
-  display:grid; gap:13px; grid-template-columns:repeat(var(--cols,4),1fr);
-  overflow:hidden;
-  transition:max-height .45s cubic-bezier(.22,.61,.36,1), opacity .35s, margin .4s;
-  max-height:320px; opacity:1;
+  display:grid; gap:13px;
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
 }
-.ec .tier.collapsed .tier-cards { max-height:0; opacity:0; margin-top:-16px; }
+.ec .tier.collapsed .tier-cards { display:none; }
 .ec .tier:hover { border-color:color-mix(in srgb, var(--accent) 42%, var(--line-soft)); }
 
 /* ── card ── */
@@ -613,11 +611,11 @@ html body:has(.ec){ background:#02040a !important; }
   background:var(--panel-2); box-shadow:var(--shadow);
 }
 .ec .card:hover::before { opacity:1; width:4px; }
-.ec .card.selected {
-  border-color:var(--accent); background:var(--panel-2);
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 60%, transparent), var(--shadow);
+.ec .card.open {
+  border-color:color-mix(in srgb,var(--accent) 55%, var(--line));
+  background:var(--panel-2);
 }
-.ec .card.selected::before { opacity:1; width:4px; }
+.ec .card.open::before { opacity:1; width:4px; }
 .ec .card-icon {
   width:30px; height:30px; border-radius:8px;
   display:flex; align-items:center; justify-content:center;
@@ -627,8 +625,45 @@ html body:has(.ec){ background:#02040a !important; }
 .ec .card-icon svg { width:16px; height:16px; stroke:var(--accent); fill:none; stroke-width:1.6; }
 .ec .card-title { font-size:13.5px; font-weight:400; color:var(--txt); margin-bottom:4px; letter-spacing:-.005em; font-family:var(--ff-sans); }
 .ec .card-meta { font-size:11px; color:var(--txt-3); font-family:var(--ff-mono); line-height:1.5; }
-.ec .card-expand { position:absolute; top:13px; right:13px; font-family:var(--ff-mono); font-size:10px; color:var(--txt-3); opacity:0; transition:opacity .25s; }
-.ec .card:hover .card-expand { opacity:1; }
+.ec .card-expand {
+  position:absolute; top:13px; right:13px;
+  font-family:var(--ff-mono); font-size:12px; color:var(--txt-3);
+  transition:transform .3s, color .2s; line-height:1;
+}
+.ec .card:hover .card-expand { color:var(--accent); }
+.ec .card.open .card-expand { transform:rotate(180deg); color:var(--accent); }
+
+/* ── inline card detail ── */
+.ec .ec-detail {
+  max-height:0; opacity:0; overflow:hidden;
+  transition:max-height .4s cubic-bezier(.2,.6,.3,1), opacity .3s, margin .3s;
+}
+.ec .card.open .ec-detail { max-height:600px; opacity:1; margin-top:11px; }
+.ec .ec-detail-summary {
+  font-size:12.5px; line-height:1.65; color:var(--txt-2);
+  font-family:var(--ff-sans); font-weight:300;
+  border-top:1px solid var(--line-soft); padding-top:10px; margin-bottom:9px;
+}
+.ec .ec-d-list { list-style:none; display:flex; flex-direction:column; gap:5px; margin-bottom:9px; }
+.ec .ec-d-list li {
+  font-size:12px; line-height:1.5; color:var(--txt-2);
+  padding-left:15px; position:relative;
+  font-family:var(--ff-sans); font-weight:300;
+}
+.ec .ec-d-list li::before {
+  content:''; position:absolute; left:0; top:7px;
+  width:5px; height:5px; border-radius:2px; background:var(--accent); opacity:.7;
+}
+.ec .ec-d-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.ec .ec-d-chip {
+  font-family:var(--ff-mono); font-size:10px; color:var(--txt-2);
+  background:var(--panel-3); border:1px solid var(--line); padding:3px 8px; border-radius:5px;
+}
+.ec .ec-d-chip.accent {
+  color:var(--accent);
+  border-color:color-mix(in srgb,var(--accent) 38%,transparent);
+  background:color-mix(in srgb,var(--accent) 11%,transparent);
+}
 
 /* ── tier-gap / connector ── */
 .ec .tier-gap { height:56px; position:relative; }
@@ -676,43 +711,6 @@ html body:has(.ec){ background:#02040a !important; }
 .ec .ext-note .ext-txt b { color:var(--gold); font-weight:400; }
 .ec .ext-note code { font-family:var(--ff-mono); font-size:11px; }
 
-/* ── detail panel ── */
-.ec .detail {
-  position:fixed; top:0; right:0; bottom:0; z-index:40;
-  width:430px; max-width:90vw;
-  background:linear-gradient(180deg, var(--panel-2), var(--panel));
-  border-left:1px solid var(--line); box-shadow:var(--shadow-lg);
-  transform:translateX(100%); transition:transform .5s cubic-bezier(.22,.61,.36,1);
-  display:flex; flex-direction:column; overflow:hidden;
-}
-.ec .detail.open { transform:translateX(0); }
-.ec .detail-head { padding:26px 26px 20px; border-bottom:1px solid var(--line-soft); position:relative; }
-.ec .detail-accent { height:3px; width:46px; border-radius:2px; margin-bottom:16px; background:var(--d-accent,var(--slate)); }
-.ec .detail-kicker { font-family:var(--ff-mono); font-size:11px; color:var(--d-accent,var(--slate)); letter-spacing:.05em; text-transform:uppercase; margin-bottom:9px; }
-.ec .detail-title { font-family:var(--ff-display); font-size:24px; font-weight:700; color:var(--txt); letter-spacing:-.01em; line-height:1.15; }
-.ec .detail-close {
-  position:absolute; top:24px; right:24px; width:30px; height:30px;
-  border-radius:8px; border:1px solid var(--line); background:var(--panel-3);
-  color:var(--txt-2); cursor:pointer; display:flex; align-items:center; justify-content:center;
-  font-size:16px; transition:all .2s; font-family:var(--ff-mono);
-}
-.ec .detail-close:hover { background:var(--line); color:var(--txt); }
-.ec .detail-body { padding:22px 26px 40px; overflow-y:auto; flex:1; }
-.ec .detail-body::-webkit-scrollbar { width:8px; }
-.ec .detail-body::-webkit-scrollbar-thumb { background:var(--line); border-radius:4px; }
-.ec .d-section { margin-bottom:24px; }
-.ec .d-section h4 { font-family:var(--ff-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--txt-3); margin-bottom:10px; }
-.ec .d-section p { font-size:13.5px; line-height:1.65; color:var(--txt-2); font-family:var(--ff-sans); font-weight:300; }
-.ec .d-list { list-style:none; display:flex; flex-direction:column; gap:9px; }
-.ec .d-list li { font-size:13px; line-height:1.5; color:var(--txt-2); padding-left:18px; position:relative; font-family:var(--ff-sans); font-weight:300; }
-.ec .d-list li::before { content:''; position:absolute; left:0; top:8px; width:6px; height:6px; border-radius:2px; background:var(--d-accent,var(--slate)); opacity:.75; }
-.ec .d-chips { display:flex; flex-wrap:wrap; gap:7px; }
-.ec .d-chip { font-family:var(--ff-mono); font-size:11px; color:var(--txt-2); background:var(--panel-3); border:1px solid var(--line); padding:4px 9px; border-radius:6px; }
-.ec .d-chip.accent {
-  color:var(--d-accent,var(--slate));
-  border-color:color-mix(in srgb,var(--d-accent,var(--slate)) 38%,transparent);
-  background:color-mix(in srgb,var(--d-accent,var(--slate)) 11%,transparent);
-}
 
 /* ── controls ── */
 .ec .controls {
@@ -743,8 +741,9 @@ html body:has(.ec){ background:#02040a !important; }
 @media (max-width:760px){
   .ec .legend{display:none}
   .ec .hint{display:none}
-  .ec .diagram{width:680px;margin-left:-340px}
   .ec .metis-rail{display:none}
+  .ec .tier-cards{grid-template-columns:1fr}
+  .ec .tier-desc{display:none}
 }
 
 /* ── reduced motion ── */
@@ -763,7 +762,7 @@ export default function EduCloud() {
     const root = rootRef.current
     if (!root) return
 
-    /* build cards */
+    /* build cards with inline expandable detail */
     Object.entries(TIERS).forEach(([tierKey, tier]) => {
       const tierEl = root.querySelector(`.tier[data-tier="${tierKey}"]`)
       if (!tierEl) return
@@ -777,81 +776,39 @@ export default function EduCloud() {
         el.dataset.card = c.id
         el.dataset.tier = tierKey
         setAccent(el, c.accent || tier.accent)
-        el.innerHTML = `<span class="card-expand">view ↗</span><div class="card-icon">${iconSvg(c.icon)}</div><div class="card-title">${c.title}</div><div class="card-meta">${c.meta}</div>`
+        const chips = c.chips.map(ch =>
+          ch.startsWith('accent|')
+            ? `<span class="ec-d-chip accent">${ch.slice(7)}</span>`
+            : `<span class="ec-d-chip">${ch}</span>`
+        ).join('')
+        const points = c.points.map(p => `<li>${p}</li>`).join('')
+        el.innerHTML = `
+          <span class="card-expand">&#9660;</span>
+          <div class="card-icon">${iconSvg(c.icon)}</div>
+          <div class="card-title">${c.title}</div>
+          <div class="card-meta">${c.meta}</div>
+          <div class="ec-detail">
+            <p class="ec-detail-summary">${c.summary}</p>
+            <ul class="ec-d-list">${points}</ul>
+            <div class="ec-d-chips">${chips}</div>
+          </div>`
         wrap.appendChild(el)
       })
     })
 
-    /* detail panel */
-    const detail = root.querySelector('#ec-detail')
-    const dAccentEl = root.querySelector('#ec-d-accent')
-    const dKicker = root.querySelector('#ec-d-kicker')
-    const dTitle = root.querySelector('#ec-d-title')
-    const dBody = root.querySelector('#ec-d-body')
-    let selectedCard = null
-
-    function resolveColor(varExpr) {
-      const name = varExpr.replace('var(', '').replace(')', '').trim()
-      return getComputedStyle(root).getPropertyValue(name).trim()
-    }
-
-    function openDetail(tierKey, cardId, cardEl) {
-      const tier = TIERS[tierKey]
-      if (!tier) return
-      const c = tier.cards.find(x => x.id === cardId)
-      if (!c) return
-      const accentKey = c.accent || tier.accent
-      const col = resolveColor(ACCENTS[accentKey].c)
-      root.style.setProperty('--d-accent', col)
-      dAccentEl.style.background = col
-      dKicker.style.color = col
-      dKicker.textContent = c.kicker
-      dTitle.textContent = c.title
-      let html = `<div class="d-section"><h4>Overview</h4><p>${c.summary}</p></div>`
-      html += `<div class="d-section"><h4>Key responsibilities</h4><ul class="d-list">`
-      c.points.forEach(p => { html += `<li>${p}</li>` })
-      html += `</ul></div><div class="d-section"><h4>At a glance</h4><div class="d-chips">`
-      c.chips.forEach(ch => {
-        if (ch.startsWith('accent|')) html += `<span class="d-chip accent">${ch.slice(7)}</span>`
-        else html += `<span class="d-chip">${ch}</span>`
-      })
-      html += `</div></div>`
-      dBody.innerHTML = html
-      detail.classList.add('open')
-      if (selectedCard) selectedCard.classList.remove('selected')
-      cardEl.classList.add('selected')
-      selectedCard = cardEl
-    }
-
-    function closeDetail() {
-      detail.classList.remove('open')
-      if (selectedCard) { selectedCard.classList.remove('selected'); selectedCard = null }
-    }
-
-    root.querySelector('#ec-d-close').addEventListener('click', closeDetail)
-
-    /* event delegation */
+    /* event delegation — card click toggles inline detail, tier-head collapses tier */
     function handleRootClick(e) {
       const card = e.target.closest('.card')
       if (card) {
-        e.stopPropagation()
-        if (card === selectedCard) { closeDetail(); return }
-        openDetail(card.dataset.tier, card.dataset.card, card)
+        card.classList.toggle('open')
         return
       }
       const toggle = e.target.closest('[data-toggle]')
       if (toggle) {
-        e.stopPropagation()
         toggle.closest('.tier').classList.toggle('collapsed')
       }
     }
     root.addEventListener('click', handleRootClick)
-
-    /* keyboard shortcut — Esc closes detail */
-    function onKeyDown(e) {
-      if (e.key === 'Escape') closeDetail()
-    }
-    window.addEventListener('keydown', onKeyDown)
 
     let allExpanded = true
     root.querySelector('#ec-expand-all').addEventListener('click', () => {
