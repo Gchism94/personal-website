@@ -74,6 +74,7 @@ function PubTitle({ title, boldChism }) {
 }
 
 function PubList({ pubs }) {
+  // Group by year, descending
   const years = [...new Set(pubs.map(p => p.year))].sort((a, b) => b - a)
   const byYear = years.reduce((acc, y) => {
     acc[y] = pubs.filter(p => p.year === y)
@@ -109,18 +110,21 @@ function PubList({ pubs }) {
 export default function Work() {
   return (
     <div className="max-w-5xl mx-auto px-8 py-20">
+
       <h1 className="font-serif text-4xl xl:text-3xl font-bold text-bark dark:text-cream mb-3 leading-tight">Work</h1>
       <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-stone/50 dark:text-cream/35 mb-20">Selected projects &amp; consulting</p>
 
       {/* ── SECTION 1: THREE CANYON ── */}
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Consulting</p>
+
         <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
           Three Canyon Consulting
         </h2>
         <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-stone/50 dark:text-cream/40 mb-10">
           Co-Founder &amp; Principal Consultant · 2024–Present · Bend, OR
         </p>
+
         <div className="grid grid-cols-2 gap-16 mb-8 lg:grid-cols-1 lg:gap-10">
           <div>
             <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
@@ -141,11 +145,13 @@ export default function Work() {
             </ul>
           </div>
         </div>
+
         <div className="flex flex-wrap gap-2 mb-7">
           {['AI Strategy', 'Data Systems', 'Organizational Consulting', 'LLMs'].map((t) => (
             <Tag key={t} variant="accent">{t}</Tag>
           ))}
         </div>
+
         <div className="flex flex-col items-start gap-4">
           <Button href="https://threecanyonconsult.com" variant="primary" external>
             threecanyonconsult.com
@@ -163,12 +169,14 @@ export default function Work() {
       {/* ── SECTION 2: HIGH DESERT ── */}
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Platform</p>
+
         <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
           High Desert
         </h2>
         <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal mb-8">
           Launching soon · Central Oregon
         </p>
+
         <div className="space-y-4 mb-8 max-w-2xl">
           <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
             A community platform for Central Oregon built around a simple premise: technology
@@ -179,6 +187,7 @@ export default function Work() {
             Built as a public good for a place I live in and love.
           </p>
         </div>
+
         <div className="flex flex-wrap gap-2 mb-7">
           {['Community Tech', 'Central Oregon', 'No Ads', 'Local Residency'].map((t) => (
             <Tag key={t}>{t}</Tag>
@@ -187,80 +196,15 @@ export default function Work() {
 
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/high-desert" variant="primary">Read the overview →</Button>
-         {/* ── High Desert site ──
           <Button href="https://highdesert.community" variant="secondary" external>
             highdesert.community →
           </Button>
-          ─ */}
-          -->
         </div>
       </section>
 
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
 
-      {/* ── SECTION 3: EDUCLOUD ── */}
-      <section className="mb-20">
-        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Research Infrastructure</p>
-        <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
-          EduCloud
-        </h2>
-        <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-stone/50 dark:text-cream/40 mb-8">
-          In development · NSF ACCESS / Jetstream2
-        </p>
-        <div className="grid grid-cols-2 gap-16 mb-8 lg:grid-cols-1 lg:gap-10">
-          <div className="space-y-4">
-            <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-              A federated, modular platform for educational computing built on NSF ACCESS and
-              Jetstream2 infrastructure. Designed so that institutions can use the pieces that
-              work for them without taking on the rest.
-            </p>
-            <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-              Two independent planes: <strong className="font-normal text-bark dark:text-cream">Quad</strong> handles
-              Git-backed assignment distribution, collection, and autograding — self-hostable,
-              privacy-minimal, no cloud account required. The <strong className="font-normal text-bark dark:text-cream">Resource plane</strong> routes,
-              meters, and provisions compute for any task source, with AI-aware scheduling
-              and a free → quota → paid funding model.
-            </p>
-            <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-              Built with strong defaults and weak locks: the system proposes, students and
-              instructors dispose. No proctoring. No surveillance dashboards. No silent cost
-              cutoffs that block required work.
-            </p>
-          </div>
-          <div>
-            <p className="font-mono text-[9px] tracking-[0.18em] uppercase text-stone/45 dark:text-cream/35 mb-5">Architecture</p>
-            <ul className="space-y-3">
-              {[
-                'Quad — coursework plane (self-hostable)',
-                'Resource plane — compute routing &amp; metering',
-                'Pegasus workflow engine integration',
-                'Globus cross-institution data movement',
-                'AI planning layer (off by default)',
-                'Free pool → quota → paid / donations',
-              ].map((s) => (
-                <li key={s}
-                  className="font-dm-sans font-light text-sm text-stone dark:text-cream/75 border-b border-sand/40 dark:border-white/8 pb-3 last:border-0"
-                  dangerouslySetInnerHTML={{ __html: s }}
-                />
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-2 mb-7">
-          {['NSF ACCESS', 'Jetstream2', 'Educational Computing', 'Open Source', 'Python'].map((t) => (
-            <Tag key={t}>{t}</Tag>
-          ))}
-        </div>
-        <div className="rounded border border-dashed border-sand/60 dark:border-white/15 bg-sand/10 dark:bg-white/[0.03] px-5 py-3">
-          <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-stone/45 dark:text-cream/35">
-            Architecture documentation available — public repository coming soon
-          </p>
-        </div>
-      </section>
-
-      <hr className="border-sand/40 dark:border-white/8 mb-20" />
-
-      {/* ── SECTION 4: JUPYTERQUEST ── */}
+      {/* ── SECTION 3: JUPYTERQUEST ── */}
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-8">Open Source Tool</p>
         <Card>
@@ -285,10 +229,9 @@ export default function Work() {
         </Card>
       </section>
 
-      {/* ── SECTION 5: RESEARCH PUBLICATIONS ── */}
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
 
-      {/* ── SECTION: EDUCLOUD × QUAD ── */}
+      {/* ── SECTION 4: EDUCLOUD × QUAD ── */}
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Research Infrastructure</p>
 
@@ -321,7 +264,7 @@ export default function Work() {
         <Button href="/educloud" variant="primary">Explore the architecture →</Button>
       </section>
 
-      {/* ── SECTION 6: RESUME ── */}
+      {/* ── SECTION 5: RESEARCH PUBLICATIONS ── */}
       <section>
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-8">Research Publications</p>
         <div className="mb-8">
