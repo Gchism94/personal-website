@@ -19,6 +19,7 @@ export function ThemeProvider({ children }) {
       document.documentElement.classList.remove('dark')
       localStorage.setItem('theme', 'light')
     }
+    document.documentElement.style.colorScheme = next ? 'dark' : 'light'
     setIsDark(next)
   }
 

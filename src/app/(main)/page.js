@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useTheme } from '@/components/ThemeProvider'
 import HeroLight from '@/components/HeroLight'
 import HeroDark from '@/components/HeroDark'
@@ -34,11 +35,17 @@ const recentWork = [
 
 function HomeContent() {
   const { isDark } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   return (
     <div className="bg-linen dark:bg-midnight text-bark dark:text-cream">
-      {/* Hero */}
-      {isDark ? <HeroDark /> : <HeroLight />}
+      {/* Hero — reserve the viewport with a theme-correct backdrop so the first
+          paint matches the active theme (prevents a light-hero flash in dark mode);
+          the animated hero mounts after hydration and fades in over the same base color. */}
+      <div className="bg-linen dark:bg-midnight min-h-screen">
+        {mounted && (isDark ? <HeroDark /> : <HeroLight />)}
+      </div>
 
       {/* What I Do */}
       <section className="max-w-5xl mx-auto px-8 py-28">

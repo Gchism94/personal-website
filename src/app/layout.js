@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.theme==='dark'||(!('theme' in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(_){}`,
+            __html: `try{var e=document.documentElement;var d=localStorage.theme==='dark'||(!('theme' in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){e.classList.add('dark')}else{e.classList.remove('dark')}e.style.colorScheme=d?'dark':'light'}catch(_){}`,
           }}
         />
       </head>
