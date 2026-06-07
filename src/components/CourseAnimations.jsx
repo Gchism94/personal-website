@@ -868,3 +868,188 @@ export function CapstoneAnim({ className = '' }) {
     />
   )
 }
+
+/* ══════════════════════════════════════════════════════
+   0. INTRO TO MACHINE LEARNING (INFO 521)
+   Concept: juniper scatter around a latent linear trend;
+   a rust best-fit line animates from a deliberately poor
+   starting slope toward the least-squares solution as
+   ash residual segments shrink; "least squares" label
+   appears at convergence, then the line gently flexes
+   into a curve hinting at model refinement, then resets.
+   ══════════════════════════════════════════════════════ */
+export function RegressionAnim({ className = '' }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const canvas = ref.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    let raf, W, H
+
+    const lcg = s => {
+      s = (s ^ (s << 13)) ^ (s >>> 17) ^ (s << 5)
+      return (s & 0x7fffffff) / 0x7fffffff
+    }
+
+    // True line and bad initial line (normalized plot-area coords, y ↓ = screen-down)
+    const M_TRUE = 0.48,  B_TRUE = 0.10
+    const M_BAD  = -0.28, B_BAD  = 0.80
+
+    const N = 26
+    const pts = Array.from({ length: N }, (_, i) => {
+      const xn = 0.04 + lcg(i * 1273 + 7) * 0.92
+      const yn = clamp(M_TRUE * xn + B_TRUE + (lcg(i * 9871 + 3) - 0.5) * 0.26, 0.02, 0.97)
+      return { xn, yn, r: 2.3 + lcg(i * 331) * 1.4 }
+    })
+
+    // Plot-area padding (fractions of canvas dimensions)
+    const PL = 0.13, PR = 0.05, PT = 0.13, PB = 0.20
+
+    function ptX(xn) { return (PL + xn * (1 - PL - PR)) * W }
+    function ptY(yn) { return (PT + yn * (1 - PT - PB)) * H }
+    function lineY(xn, m, b) { return ptY(m * xn + b) }
+
+    function resize() { [W, H] = fitCanvas(canvas, ctx) }
+    resize()
+
+    // Phase durations (ms)
+    const FIT   = 2600   // bad → least-squares convergence
+    const HOLD  = 900    // pause — "least squares" label visible
+    const CRVE  = 780    // gentle model-refinement flex
+    const HOLD2 = 480    // hold curve
+    const FADE  = 440    // fade out before reset
+    const CYCLE = FIT + HOLD + CRVE + HOLD2 + FADE
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let t0 = null
+
+    function draw(e) {
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = C.linen
+      ctx.fillRect(0, 0, W, H)
+
+      // End-of-cycle global fade
+      const fadeAlpha = e > FIT + HOLD + CRVE + HOLD2
+        ? 1 - ease((e - FIT - HOLD - CRVE - HOLD2) / FADE)
+        : 1
+
+      // Current line parameters: lerp from bad → LS
+      const fitProg = clamp(ease(e / FIT), 0, 1)
+      const m = lerp(M_BAD, M_TRUE, fitProg)
+      const b = lerp(B_BAD, B_TRUE, fitProg)
+
+      // Curve flex (0 during FIT/HOLD, rises during CRVE)
+      const curveProg = e > FIT + HOLD
+        ? clamp(ease((e - FIT - HOLD) / CRVE), 0, 1)
+        : 0
+
+      // ── Axes ──
+      ctx.strokeStyle = C.ashLt
+      ctx.lineWidth = .8
+      ctx.globalAlpha = .50 * fadeAlpha
+      ctx.beginPath()
+      ctx.moveTo(ptX(0), ptY(0))
+      ctx.lineTo(ptX(0), ptY(1))
+      ctx.lineTo(ptX(1), ptY(1))
+      ctx.stroke()
+      ctx.globalAlpha = 1
+
+      // ── Residual segments (ash, dashed) — naturally shrink as line approaches LS ──
+      const resAlpha = clamp(1.1 - fitProg, 0.08, 0.55) * fadeAlpha
+      ctx.strokeStyle = C.ash
+      ctx.lineWidth = .6
+      ctx.globalAlpha = resAlpha
+      ctx.setLineDash([2, 3])
+      pts.forEach(p => {
+        ctx.beginPath()
+        ctx.moveTo(ptX(p.xn), ptY(p.yn))
+        ctx.lineTo(ptX(p.xn), lineY(p.xn, m, b))
+        ctx.stroke()
+      })
+      ctx.setLineDash([])
+      ctx.globalAlpha = 1
+
+      // ── Best-fit line (rust, with optional curve flex) ──
+      const x0 = ptX(0), x1 = ptX(1)
+      const y0 = lineY(0, m, b), y1 = lineY(1, m, b)
+      // Control point: midpoint pulled upward for a concave arc at full flex
+      const cpX = (x0 + x1) / 2
+      const cpY = (y0 + y1) / 2 - curveProg * H * 0.12
+
+      ctx.strokeStyle = C.rust
+      ctx.lineWidth = 1.8
+      ctx.lineCap  = 'round'
+      ctx.globalAlpha = (fitProg * .72 + .12) * fadeAlpha
+      ctx.beginPath()
+      if (curveProg > 0.02) {
+        ctx.moveTo(x0, y0)
+        ctx.quadraticCurveTo(cpX, cpY, x1, y1)
+      } else {
+        ctx.moveTo(x0, y0)
+        ctx.lineTo(x1, y1)
+      }
+      ctx.stroke()
+      ctx.globalAlpha = 1
+
+      // ── Data points (juniper) ──
+      ctx.fillStyle = C.juniper
+      ctx.globalAlpha = 0.76 * fadeAlpha
+      pts.forEach(p => {
+        ctx.beginPath()
+        ctx.arc(ptX(p.xn), ptY(p.yn), p.r, 0, Math.PI * 2)
+        ctx.fill()
+      })
+      ctx.globalAlpha = 1
+
+      // ── "least squares" label: fades in near convergence, out when curve starts ──
+      if (e > FIT * 0.85) {
+        const fadeIn  = ease(clamp((e - FIT * 0.85) / (FIT * 0.15), 0, 1))
+        const fadeOut = curveProg > 0 ? ease(Math.min(curveProg * 3, 1)) : 0
+        const lAlpha  = fadeIn * (1 - fadeOut) * fadeAlpha
+        if (lAlpha > 0.01) {
+          ctx.globalAlpha = lAlpha
+          ctx.font = `300 ${Math.round(W * .042)}px "DM Mono", monospace`
+          ctx.textAlign = 'right'
+          ctx.fillStyle = C.rust
+          ctx.fillText('least squares', ptX(0.92), lineY(0.92, M_TRUE, B_TRUE) - H * .044)
+          ctx.globalAlpha = 1
+        }
+      }
+
+      // ── Axis labels ──
+      ctx.font = `300 ${Math.round(W * .038)}px "DM Mono", monospace`
+      ctx.fillStyle = C.ashLt
+      ctx.globalAlpha = .42 * fadeAlpha
+      ctx.textAlign = 'center'
+      ctx.fillText('x', ptX(.5), ptY(1) + H * .10)
+      ctx.save()
+      ctx.translate(W * .055, ptY(.5))
+      ctx.rotate(-Math.PI / 2)
+      ctx.fillText('y', 0, 0)
+      ctx.restore()
+      ctx.globalAlpha = 1
+    }
+
+    function frame(ts) {
+      if (!t0) t0 = ts
+      draw((ts - t0) % CYCLE)
+      raf = requestAnimationFrame(frame)
+    }
+
+    // Reduced motion: static frame at LS convergence with label visible
+    const onResize = () => { resize(); if (reduced) draw(FIT * 0.96 + HOLD * 0.4) }
+    if (reduced) { draw(FIT * 0.96 + HOLD * 0.4) } else { raf = requestAnimationFrame(frame) }
+    window.addEventListener('resize', onResize)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize) }
+  }, [])
+
+  return (
+    <canvas
+      ref={ref}
+      className={className}
+      style={{ display: 'block', width: '100%', height: '100%' }}
+      aria-hidden="true"
+    />
+  )
+}

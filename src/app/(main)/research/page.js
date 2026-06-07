@@ -1,7 +1,8 @@
 import SectionHeader from '@/components/ui/SectionHeader'
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
-import { DataMiningAnim, DataVizAnim, FundamentalsAnim, NeuralNetAnim, CapstoneAnim } from '@/components/CourseAnimations'
+import Link from 'next/link'
+import { DataMiningAnim, DataVizAnim, FundamentalsAnim, NeuralNetAnim, CapstoneAnim, RegressionAnim } from '@/components/CourseAnimations'
 
 export const metadata = {
   title: 'Research & Teaching — Greg Chism',
@@ -87,6 +88,13 @@ const courses = [
     href: 'https://datasciaz.netlify.app/',
   },
   {
+    Anim: RegressionAnim,
+    num: 'INFO 521',
+    title: 'Introduction to Machine Learning',
+    desc: 'Foundations of machine learning built from the mathematics up — regression, classification, clustering, and Bayesian methods implemented from scratch in Python with NumPy and SciPy rather than off-the-shelf libraries. Emphasizes depth and the algorithms beneath modern ML, from least-squares to a full Bayesian treatment.',
+    href: null,
+  },
+  {
     Anim: DataMiningAnim,
     num: 'INFO 523',
     title: 'Data Mining & Discovery',
@@ -106,6 +114,7 @@ const courses = [
     title: 'Neural Networks',
     desc: 'Theory and practice of neural networks and deep learning — feed-forward, convolutional, and sequence models — with backpropagation, optimization, and regularization. Students build, train, and evaluate models in Python, from fundamentals up to modern architectures.',
     href: 'https://neuralnetworksaz-f25.netlify.app/',
+    viz: '/neural-networks',
   },
   {
     Anim: CapstoneAnim,
@@ -167,7 +176,7 @@ export default function Research() {
         <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/55 mb-8">University of Arizona · iSchool</p>
 
         <div className="grid grid-cols-3 gap-6 xl:grid-cols-2 md:grid-cols-1">
-          {courses.map(({ Anim, num, title, desc, href }) => (
+          {courses.map(({ Anim, num, title, desc, href, viz }) => (
             <div key={num} className="border border-sand/60 dark:border-white/8 rounded-lg overflow-hidden">
               {/* Animation thumbnail */}
               <div className="relative h-44 bg-linen dark:bg-midnight overflow-hidden">
@@ -177,12 +186,20 @@ export default function Research() {
                 <Tag className="mb-3">{num}</Tag>
                 <h3 className="font-serif text-lg font-bold text-bark dark:text-cream mb-3">{title}</h3>
                 <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed mb-4">{desc}</p>
-                {href && (
-                  <a href={href} target="_blank" rel="noopener noreferrer"
-                    className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal hover:underline">
-                    View Course →
-                  </a>
-                )}
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                  {href && (
+                    <a href={href} target="_blank" rel="noopener noreferrer"
+                      className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal hover:underline">
+                      View Course →
+                    </a>
+                  )}
+                  {viz && (
+                    <Link href={viz}
+                      className="font-mono text-[9px] tracking-[0.14em] uppercase text-rust dark:text-sand hover:underline">
+                      Visualization →
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           ))}
