@@ -489,6 +489,27 @@
 .reading-list .sky-cap .cap-def { display:block; font-size:0.82rem; line-height:1.5; color:#CFC6B6; max-width:640px; opacity:0; transition:opacity .3s; margin-top:0.15rem; }
 .reading-list .sky-cap.show .cap-name, .reading-list .sky-cap.show .cap-def { opacity:1; transform:none; }
 .reading-list .defs { display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr)); gap:1rem; margin-top:1.5rem; }
+/* ── Motif layout: sticky map + scrolling cards ── */
+.reading-list .motif-layout { margin-top: 1.5rem; }
+.reading-list .motif-layout .sky  { margin-top: 0; }
+.reading-list .motif-layout .defs { margin-top: 1.5rem; }
+
+@media (min-width: 860px) {
+  .reading-list .motif-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 1.5rem;
+    align-items: start;            /* required: lets the sticky cell move within the grid */
+  }
+  .reading-list .motif-layout .sky {
+    position: sticky;
+    top: 4.75rem;                  /* clears the fixed navbar (~4rem); tune if it tucks under */
+  }
+  .reading-list .motif-layout .defs {
+    grid-template-columns: 1fr;    /* single column of cards beside the map */
+    margin-top: 0;
+  }
+}
 .reading-list .defcard { background:white; border-left:3px solid var(--gold); padding:1rem 1.1rem; box-shadow:0 1px 4px rgba(0,0,0,0.06); transition:box-shadow .2s, transform .2s, border-color .2s; cursor:pointer; }
 .reading-list .defcard:hover, .reading-list .defcard.active { box-shadow:0 5px 18px rgba(0,0,0,0.12); transform:translateY(-2px); }
 .reading-list .defcard.active { border-left-color:var(--rust); }
