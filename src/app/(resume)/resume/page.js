@@ -245,6 +245,20 @@ h1.cv-name em, .cv-name em {
   .section-content { border-top: none; padding-top: 0; }
   .print-btn { top: 16px; right: 16px; }
 }
+
+/* ─── Dark mode — screen only (print stays light for PDF/paper) ─── */
+@media screen {
+  html.dark {
+    --linen:   #02040a;
+    --bark:    #F3EADF;
+    --juniper: #9FD0C2;
+    --ash:     #A89F92;
+    --ash-lt:  rgba(243,234,223,0.28);
+    --sand:    rgba(243,234,223,0.20);
+    --rust:    #DE7A50;
+  }
+  html.dark .cv-bullets li { color: #D8D0C4; }
+}
 `
 
 export default function Resume() {

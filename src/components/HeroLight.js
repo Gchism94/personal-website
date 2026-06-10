@@ -89,7 +89,9 @@ const CSS = `
   margin-top: 42px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 22px;
+  row-gap: 14px;
   opacity: 0;
 }
 .btn-solid {
@@ -386,6 +388,7 @@ export default function HeroLight() {
           <div className="hero-ctas" ref={ctasRef}>
             <a className="btn-solid" href="/work">See the work</a>
             <a className="btn-ghost" href="/about">About</a>
+            <a className="btn-ghost" href="/reading">Reading</a>
           </div>
         </div>
         <div className="canyon-label" ref={labelRef}>Deschutes River · Central Oregon</div>

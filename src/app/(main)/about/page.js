@@ -124,6 +124,15 @@ export default function About() {
           </div>
         ))}
       </div>
+
+      {/* Reading List */}
+      <SectionHeader label="Beyond the work" heading="A Working Library" className="mt-24 mb-10" />
+      <div className="rounded-lg border border-sand/60 dark:border-white/8 border-l-2 border-l-rust dark:border-l-teal bg-linen dark:bg-white/[0.04] p-7">
+        <p className="font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed mb-5 max-w-2xl">
+          A reading list on tacit and formal knowledge, the craft of building humane tools, and the systems and commons they live in — forty books across three movements, mapped by the motifs that thread through them.
+        </p>
+        <Button href="/reading" variant="ghost">Open the reading list →</Button>
+      </div>
     </div>
   )
 }
