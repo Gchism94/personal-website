@@ -469,9 +469,9 @@
 .reading-list .constellation .hit { fill:transparent; cursor:pointer; }
 .reading-list .constellation .halo { fill:#E3B24A; opacity:0.15; transition:opacity .25s; pointer-events:none; }
 .reading-list .constellation .core { fill:#ECDBAC; transition:fill .25s; pointer-events:none; }
-.reading-list .constellation .nlabel { fill:#E8DFD0; font-family:var(--font-rl-sans), system-ui, sans-serif; font-size:14px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.6; transition:opacity .25s, fill .25s; pointer-events:none; }
+.reading-list .constellation .nlabel { fill:#E8DFD0; font-family:var(--font-rl-sans), system-ui, sans-serif; font-size:18px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.72; transition:opacity .25s, fill .25s; pointer-events:none; }
 .reading-list .constellation .node.hub .core { fill:#F4E6BC; }
-.reading-list .constellation .node.hub .nlabel { opacity:0.78; font-size:15px; }
+.reading-list .constellation .node.hub .nlabel { opacity:0.78; font-size:19px; }
 .reading-list .constellation.focused .node.off .halo { opacity:0.04; }
 .reading-list .constellation.focused .node.off .core { fill:#5F594C; }
 .reading-list .constellation.focused .node.off .nlabel { opacity:0.16; }
@@ -497,7 +497,7 @@
 @media (min-width: 860px) {
   .reading-list .motif-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
     gap: 1.5rem;
     align-items: start;            /* required: lets the sticky cell move within the grid */
   }
