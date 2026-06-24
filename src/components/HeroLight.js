@@ -63,7 +63,6 @@ const CSS = `
   text-transform: uppercase;
   color: #4A7C6F;
   margin-bottom: 22px;
-  opacity: 0;
 }
 .hero-name {
   font-family: 'Playfair Display', serif;
@@ -72,8 +71,8 @@ const CSS = `
   line-height: 1.05;
   color: #3B2F2F;
 }
-.hero-name .line { display: block; overflow: hidden; padding-right: 0.15em; }
-.hero-name .line span { display: inline-block; opacity: 0; transform: translateY(106%); transition: opacity 1.1s ease, transform 0.9s cubic-bezier(.16,1,.3,1); }
+.hero-name .line { display: block; padding-right: 0.15em; }
+.hero-name .line span { display: inline-block; }
 .hero-name em { font-style: italic; color: #4A7C6F; }
 .hero-tagline {
   margin-top: 30px;
@@ -81,7 +80,6 @@ const CSS = `
   line-height: 1.82;
   color: #9B9187;
   max-width: 360px;
-  opacity: 0;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
 }
@@ -92,7 +90,6 @@ const CSS = `
   flex-wrap: wrap;
   gap: 22px;
   row-gap: 14px;
-  opacity: 0;
 }
 .btn-solid {
   background: #3B2F2F;
@@ -142,9 +139,8 @@ const CSS = `
   letter-spacing: .24em;
   text-transform: uppercase;
   color: #9B9187;
-  opacity: 0;
 }
-.hero-scroll { position: absolute; bottom: 42px; left: 56px; z-index: 3; opacity: 0; }
+.hero-scroll { position: absolute; bottom: 42px; left: 56px; z-index: 3; }
 .scroll-bar { width: 36px; height: 1px; background: rgba(155,145,135,.25); position: relative; overflow: hidden; }
 .scroll-bar::after {
   content: '';
@@ -244,44 +240,31 @@ export default function HeroLight() {
     function marchSquares(grid,gW,gH,cW,cH,oX,oY,thr){const segs=[];for(let r=0;r<gH-1;r++){for(let c=0;c<gW-1;c++){const bl=grid[r*gW+c],br=grid[r*gW+c+1],tr=grid[(r+1)*gW+c+1],tl=grid[(r+1)*gW+c];const x0=oX+c*cW,x1=oX+(c+1)*cW,y0=oY+(gH-1-r)*cH,y1=oY+(gH-1-(r+1))*cH;const idx=(bl>=thr?1:0)|(br>=thr?2:0)|(tr>=thr?4:0)|(tl>=thr?8:0);if(!idx||idx===15)continue;const bot=()=>edgePt(x0,y0,bl,x1,y0,br,thr);const rgt=()=>edgePt(x1,y0,br,x1,y1,tr,thr);const top=()=>edgePt(x0,y1,tl,x1,y1,tr,thr);const lft=()=>edgePt(x0,y0,bl,x0,y1,tl,thr);const T={1:[lft(),bot()],2:[bot(),rgt()],3:[lft(),rgt()],4:[rgt(),top()],6:[bot(),top()],7:[lft(),top()],8:[top(),lft()],9:[bot(),top()],11:[bot(),rgt()],12:[rgt(),lft()],13:[rgt(),bot()],14:[top(),lft()]};if(idx===5){segs.push([lft(),bot()]);segs.push([rgt(),top()]);}else if(idx===10){segs.push([lft(),top()]);segs.push([bot(),rgt()]);}else if(T[idx])segs.push(T[idx]);}}return segs}
     function chainSegs(segs){if(!segs.length)return[];const TOL=2,used=new Uint8Array(segs.length),chains=[];for(let i=0;i<segs.length;i++){if(used[i])continue;const ch=[...segs[i]];used[i]=1;let ext=true;while(ext){ext=false;for(let j=0;j<segs.length;j++){if(used[j])continue;const[a,b]=segs[j];const tl=ch[ch.length-1];if(Math.hypot(tl[0]-a[0],tl[1]-a[1])<TOL){ch.push(b);used[j]=1;ext=true;break;}if(Math.hypot(tl[0]-b[0],tl[1]-b[1])<TOL){ch.push(a);used[j]=1;ext=true;break;}}}if(ch.length>1)chains.push(ch)}return chains}
 
-    /* ── BACKGROUND ── */
-    let bgCanvas=null,shadeCanvas=null,revealCanvas=null,revealCtx=null
-    function buildBackground(){
-      bgCanvas=document.createElement('canvas');bgCanvas.width=W;bgCanvas.height=H
-      const bc=bgCanvas.getContext('2d')
-      const GW=160,GH=96,cellW=W/(GW-1),cellH=H/(GH-1)
-      const hm=new Float32Array(GW*GH),sideGrid=new Float32Array(GW*GH)
-      for(let r=0;r<GH;r++)for(let c=0;c<GW;c++){const px=c/(GW-1)*W,py=(1-r/(GH-1))*H;hm[r*GW+c]=sampleElev(px,py);sideGrid[r*GW+c]=signedRiverDistanceNorm(px,py)}
-      const hs=new Float32Array(GW*GH)
-      const Z=0.026,LA=40*Math.PI/180,LAZ=315*Math.PI/180
-      const lx=-Math.cos(LA)*Math.cos(LAZ-Math.PI),ly=-Math.cos(LA)*Math.sin(LAZ-Math.PI),lz=Math.sin(LA),lm=Math.sqrt(lx*lx+ly*ly+lz*lz)
-      for(let r=0;r<GH;r++)for(let c=0;c<GW;c++){const dzdC=(hm[r*GW+Math.min(GW-1,c+1)]-hm[r*GW+Math.max(0,c-1)])/2;const dzdR=(hm[Math.min(GH-1,r+1)*GW+c]-hm[Math.max(0,r-1)*GW+c])/2;const sx=dzdC*Z,sy=-dzdR*Z;const nm=Math.sqrt(sx*sx+sy*sy+1);hs[r*GW+c]=Math.max(0,(-sx*(lx/lm)+-sy*(ly/lm)+lz/lm)/nm)}
-      function sampleGrid(grid,nx,ny){const gx=nx*(GW-1),gy=(1-ny)*(GH-1);const c0=Math.floor(gx),r0=Math.floor(gy);const c1=Math.min(GW-1,c0+1),r1=Math.min(GH-1,r0+1);const tf=gx-c0,tr=gy-r0;return lerp(lerp(grid[r0*GW+c0],grid[r0*GW+c1],tf),lerp(grid[r1*GW+c0],grid[r1*GW+c1],tf),tr)}
-      const id=bc.createImageData(W,H),px=id.data,ELEV_MIN=670,ELEV_MAX=905,ELEV_RANGE=ELEV_MAX-ELEV_MIN
-      for(let y=0;y<H;y++){const ny=y/H;const fiberRow=lcg(y*3791+17)>.84;const fiberStr=fiberRow?lcg(y*1049+3)*.018:0;for(let x=0;x<W;x++){const nx=x/W,i=(y*W+x)*4;const coarse=(fbm2(nx*3.8,ny*2.9,3)-.5)*10;const fine=(lcg(x*7919+y*6271+(x*y|0))-.5)*9;const fib=fiberRow?(lcg(x*311+y*97)-.5)*fiberStr*62:0;const grain=coarse+fine+fib;const elev=sampleGrid(hm,nx,ny);const elevN=clamp((elev-ELEV_MIN)/ELEV_RANGE,0,1);const hval=sampleGrid(hs,nx,ny);const side=sampleGrid(sideGrid,nx,ny);const shade=canyonShadeProfile(side,nx,ny);const broadTerrain=Math.pow(1-elevN,1.55)*0.040;const bowlStr=shade*.22+broadTerrain;const lift=(side>0?clamp(1-Math.abs(side)/.075,0,1):0)*.018;const shadowR=Math.max(0,bowlStr-lift*.50)*34;const shadowG=Math.max(0,bowlStr-lift*.45)*28;const shadowB=Math.max(0,bowlStr-lift*.40)*20;const hsBase=0.62,hsShift=hval-hsBase;const plateauFade=1-Math.pow(elevN,1.8)*0.35;const hsLum=hsShift*34*plateauFade;const hsWarm=Math.max(0,-hsShift)*14*plateauFade;const warmTint=Math.max(0,1-elevN/.38)*0.072;const coolTint=Math.max(0,(elevN-.72)/.28)*0.022;const wR=warmTint*14,wG=warmTint*4,wB=-warmTint*6;const cR=-coolTint*2,cG=-coolTint*1,cB=coolTint*6;const bankLift=(side>0?clamp(1-Math.abs(side)/.085,0,1):0)*2.0;px[i]=clamp(Math.round(245+grain-shadowR+hsLum*.72+hsWarm+wR+cR+bankLift),214,255);px[i+1]=clamp(Math.round(239+grain*.97-shadowG+hsLum*.70+hsWarm*.7+wG+cG+bankLift*.92),208,255);px[i+2]=clamp(Math.round(230+grain*.93-shadowB+hsLum*.66+wB+cB+bankLift*.82),202,255);px[i+3]=255}}
-      bc.putImageData(id,0,0)
-      const riverCY=H*0.50;const northGrad=bc.createLinearGradient(0,riverCY-H*.18,0,riverCY);northGrad.addColorStop(0,'rgba(72,55,38,0.00)');northGrad.addColorStop(0.4,'rgba(72,55,38,0.06)');northGrad.addColorStop(0.75,'rgba(72,55,38,0.13)');northGrad.addColorStop(1,'rgba(72,55,38,0.08)');bc.fillStyle=northGrad;bc.fillRect(0,riverCY-H*.18,W,H*.18)
-      const southGrad=bc.createLinearGradient(0,riverCY,0,riverCY+H*.14);southGrad.addColorStop(0,'rgba(90,62,38,0.07)');southGrad.addColorStop(0.5,'rgba(90,62,38,0.04)');southGrad.addColorStop(1,'rgba(90,62,38,0.00)');bc.fillStyle=southGrad;bc.fillRect(0,riverCY,W,H*.14)
-      const notchGrad=bc.createLinearGradient(0,riverCY-H*.04,0,riverCY+H*.04);notchGrad.addColorStop(0,'rgba(55,40,28,0.00)');notchGrad.addColorStop(0.35,'rgba(55,40,28,0.10)');notchGrad.addColorStop(0.5,'rgba(55,40,28,0.14)');notchGrad.addColorStop(0.65,'rgba(55,40,28,0.08)');notchGrad.addColorStop(1,'rgba(55,40,28,0.00)');bc.fillStyle=notchGrad;bc.fillRect(0,riverCY-H*.04,W,H*.08)
-      const vig=bc.createRadialGradient(W*.5,H*.48,H*.3,W*.5,H*.5,H*.92);vig.addColorStop(0,'rgba(0,0,0,0)');vig.addColorStop(1,'rgba(59,47,47,.06)');bc.fillStyle=vig;bc.fillRect(0,0,W,H)
-      let minE=Infinity,maxE=-Infinity;for(let i=0;i<hm.length;i++){const v=hm[i];if(Number.isFinite(v)){if(v<minE)minE=v;if(v>maxE)maxE=v}}
-      const LEVELS=[684,697,710,722,734,748,762,776,789,802,815,826,837,848,858,868,878,888,898]
-      LEVELS.forEach((thr,li)=>{const tn=li/(LEVELS.length-1);const segs=marchSquares(hm,GW,GH,cellW,cellH,0,0,thr);const chains=chainSegs(segs);const isIdx=(li%5===0);const cr=Math.round(lerp(112,74,tn));const cg=Math.round(lerp(80,60,tn));const cb=Math.round(lerp(52,52,tn));const alpha=isIdx?lerp(.085,.024,tn):lerp(.028,.008,tn);const lw=isIdx?lerp(1.10,.38,tn):lerp(.68,.24,tn);bc.strokeStyle=`rgba(${cr},${cg},${cb},${alpha})`;bc.lineWidth=lw;bc.lineJoin='round';bc.lineCap='round';for(const chain of chains){if(chain.length<2)continue;bc.beginPath();let ip=false;for(let i=0;i<chain.length;i++){const[x,y]=chain[i];const eR=clamp((W-x)/(W*.03),0,1);const eT=clamp(y/(H*.055),0,1);const eB=clamp((H-y)/(H*.045),0,1);const eL=clamp(x/(W*.10),0,1);const collapse=collapseZone(x,y);const pigment=pigmentDeposit(x,y);if(Math.min(eR,eT,eB,eL)<.06||(collapse>.55&&vn2(x*.05+li,y*.05)>0.58)){if(ip){bc.stroke();bc.beginPath();ip=false;}continue;}const localAlpha=alpha*lerp(1,.42,collapse)*pigment*(1-silenceMask(x,y)*.45);bc.strokeStyle=`rgba(${cr},${cg},${cb},${localAlpha})`;if(!ip){bc.moveTo(x,y);ip=true;}else{const prev=chain[i-1];const jump=prev?Math.hypot(x-prev[0],y-prev[1]):0;if(jump>Math.max(18,W*.035)){bc.stroke();bc.beginPath();bc.moveTo(x,y);}else bc.lineTo(x,y);}}if(ip)bc.stroke()}})
-    }
-
-    function buildShadeCanvas(){if(!bgCanvas)return;shadeCanvas=document.createElement('canvas');shadeCanvas.width=W;shadeCanvas.height=H;const sc=shadeCanvas.getContext('2d');sc.drawImage(bgCanvas,0,0);const grad=sc.createLinearGradient(0,H*.28,0,H*.66);grad.addColorStop(0,'rgba(245,239,230,0)');grad.addColorStop(1,'rgba(245,239,230,1)');sc.fillStyle=grad;sc.fillRect(0,0,W,H)}
-    function buildRevealCanvas(){revealCanvas=document.createElement('canvas');revealCanvas.width=W;revealCanvas.height=H;revealCtx=revealCanvas.getContext('2d')}
-
     /* ── GEOMETRY / FLOW ── */
     const COFF_N=[.018,.052,.104],COFF_S=[.034,.092],POFF=[.170,.205,.245],NC=COFF_N.length
     const PERS=COFF_N.map((_,i)=>({seed:i*17.3+3.7,ds:i*23.1+11.4,da:lerp(.09,.018,i/(NC-1)),dsp:.13+[0,.07,.03,.09,.02,.06,.04,.08,.01,.05,.03][i],eA:lerp(.72,.90,i/(NC-1)),eB:lerp(.82,.94,i/(NC-1)),delay:.24+i*.12}))
     function computeMask(n,intensity,seed){const m=new Uint8Array(n);for(let i=0;i<n;i++)m[i]=(vn(i/n*8.4+seed)*.45+fbm(i/n*2.1+seed*.37,3)*.55)>intensity?1:0;return m}
     let riverPts=[],cA=[],cB=[],mA=[],mB=[],pA=[],pB=[],pmA=[],pmB=[]
+    let baseCanvas=null
     function updateTreeClip(){const el=treeRef.current;if(!el||!riverPts||riverPts.length<2)return;const pts=riverPts.map(([x,y])=>`${(x/W*100).toFixed(2)}% ${(y/H*100).toFixed(2)}%`);pts.push('100% 0%','0% 0%');el.style.clipPath=`polygon(${pts.join(', ')})`}
     function buildGeometry(){if(riverPts.length<2)return;buildArcLen(riverPts);cA=[];cB=[];mA=[];mB=[];COFF_N.forEach((off,i)=>{const px=off*W,p=PERS[i];const a=offsetPoly(riverPts,px*(1+0.08*vn(i*9.3)));cA.push(a);mA.push(computeMask(a.length,p.eA,p.seed))});COFF_S.forEach((off,i)=>{const px=off*W;const b=offsetPoly(riverPts,-px*(1+0.18*vn(i*11.7+3)));cB.push(b);mB.push(computeMask(b.length,lerp(.64,.90,i/Math.max(1,COFF_S.length-1)),100+i*31.2))});pA=[];pB=[];pmA=[];pmB=[];POFF.forEach((off,i)=>{const px=off*W;const a=offsetPoly(riverPts,px*(1+.05*vn(i+40)));const b=offsetPoly(riverPts,-px*(1+.20*vn(i+50)));pA.push(a);pB.push(b);pmA.push(computeMask(a.length,.84,300+i*47));pmB.push(computeMask(b.length,.90,350+i*47))});initFlow()}
 
     const DASHES=(()=>{const D=[];[[.09,18,64,6.2,.060,0],[.53,21,52,5.8,.050,0]].forEach(([ph,sp,ln,lw,a,lat])=>D.push({ph:ph*0,_ph:ph,sp,ln,lw,a,lat,rgb:[72,176,205]}));[.00,.21,.43,.64,.85].forEach((bp,i)=>{D.push({_ph:bp,sp:32+vn(i*3.7+1)*14,ln:16+vn(i*6.1+2)*14,lw:1.0+vn(i*2.1)*0.35,a:.085+vn(i*9.2)*0.045,lat:(vn(i*11.4+5)-.5)*1.6,rgb:[72,176,205]})});[.07,.26,.46,.67,.87].forEach((bp,i)=>{D.push({_ph:bp,sp:50+vn(i*4.9+50)*18,ln:5+vn(i*8.7+50)*7,lw:.72,a:.050+vn(i*7.3+50)*0.030,lat:(vn(i*10.3+100)-.5)*3.8,rgb:[72,176,205]})});return D})()
     let dashOffsets=[]
+    function strokePoly(c,pts,lw,style){if(!pts||pts.length<2)return;c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)c.lineTo(pts[i][0],pts[i][1]);c.lineWidth=lw;c.strokeStyle=style;c.lineCap='round';c.lineJoin='round';c.stroke()}
+    function buildBaseLayer(){
+      if(!W||!H||riverPts.length<2)return
+      baseCanvas=document.createElement('canvas');baseCanvas.width=W;baseCanvas.height=H
+      const b=baseCanvas.getContext('2d')
+      b.fillStyle='#F5EFE6';b.fillRect(0,0,W,H)
+      // —— TUNE: subtle canyon warmth + faint contour hints ——
+      strokePoly(b,riverPts,0.05*W,'rgba(120,96,60,0.016)')
+      ;[0.016,0.026,-0.016,-0.026].forEach((o,i)=>strokePoly(b,offsetPoly(riverPts,o*W),1,'rgba(112,80,52,'+(0.022-i*0.005)+')'))
+      // —— baked river, settled appearance (matches the intro's final strokes) ——
+      strokePoly(b,riverPts,30,'rgba(28,92,116,0.040)')
+      strokePoly(b,riverPts,14,'rgba(72,176,205,0.075)')
+      strokePoly(b,riverPts,3.2,'rgba(72,176,205,0.34)')
+    }
     function initFlow(){if(!riverTotalLen)return;dashOffsets=DASHES.map(d=>d._ph*riverTotalLen+(vn(d._ph*37.1)-.5)*riverTotalLen*.04)}
 
     const REDUCE_MOTION=window.matchMedia('(prefers-reduced-motion:reduce)').matches
@@ -307,25 +290,31 @@ export default function HeroLight() {
       if(!T0)T0=ts
       const elapsed=(ts-T0)/1000
       ctx.clearRect(0,0,W,H)
-      if(introStartTs===null||!riverPts.length||!bgCanvas){ctx.fillStyle='#F5EFE6';ctx.fillRect(0,0,W,H);frameRafId=requestAnimationFrame(frame);return}
+      if(introStartTs===null||!riverPts.length){ctx.fillStyle='#F5EFE6';ctx.fillRect(0,0,W,H);frameRafId=requestAnimationFrame(frame);return}
       const introMs=Math.max(0,ts-introStartTs)
       const rivP=REDUCE_MOTION?1:ease(introMs/RIV_DUR)
       const rivLen=rivP*riverTotalLen
       ctx.fillStyle='#F5EFE6';ctx.fillRect(0,0,W,H)
-      if(rivP<1){drawTerrainReveal(rivLen,rivP,elapsed);drawRiverToLen(riverPts,rivLen,.040,30,28,92,116);drawRiverToLen(riverPts,rivLen,.075,14,72,176,205);drawRiverToLen(riverPts,rivLen,.34,3.2,72,176,205);drawIntroFlow(rivLen,elapsed);drawRiverWindow(riverPts,Math.max(0,rivLen-80),rivLen,.12,3.2,168,224,235);}else{drawRiverToLen(riverPts,riverTotalLen,.040,30,28,92,116);drawRiverToLen(riverPts,riverTotalLen,.075,14,72,176,205);drawRiverToLen(riverPts,riverTotalLen,.34,3.2,72,176,205);const rD=distort(riverPts,999.7,.045,.065,elapsed);ctx.save();ctx.globalCompositeOperation='source-over';drawLine(rD,null,1,28,92,116,.040,30,true);drawLine(rD,null,1,72,176,205,.075,14,true);drawLine(rD,null,1,72,176,205,.34,3.2,true);ctx.restore();ctx.save();ctx.globalCompositeOperation='screen';drawLine(rD,null,1,72,176,205,.045,22,true);drawLine(rD,null,1,72,176,205,.020,38,true);ctx.restore();if(!REDUCE_MOTION&&riverTotalLen>10&&dashOffsets.length===DASHES.length){DASHES.forEach((d,i)=>{const pos=(elapsed*(d.sp*.38)+dashOffsets[i])%riverTotalLen;drawFlowDash(pos,d.ln*3.2,d.lat,72,176,205,d.a*1.15,d.lw*1.35)});for(let i=0;i<5;i++){const seed=i*29.3+8.1;const pos=(elapsed*(38+vn(seed)*28)+vn(seed+5)*riverTotalLen)%riverTotalLen;const len=90+vn(seed+2)*90;const lat=(vn(seed+7)-.5)*6.5;drawRiverWindowOffset(riverPts,Math.max(0,pos-len),pos,.035+vn(seed+9)*.040,1.4+vn(seed+3)*1.4,lat,168,224,235);}}}
+      if(rivP<1){drawTerrainReveal(rivLen,rivP,elapsed);drawRiverToLen(riverPts,rivLen,.040,30,28,92,116);drawRiverToLen(riverPts,rivLen,.075,14,72,176,205);drawRiverToLen(riverPts,rivLen,.34,3.2,72,176,205);drawIntroFlow(rivLen,elapsed);drawRiverWindow(riverPts,Math.max(0,rivLen-80),rivLen,.12,3.2,168,224,235);}else{
+      // —— Hybrid: blit the baked base, animate only the gentle flow ——
+      if(baseCanvas)ctx.drawImage(baseCanvas,0,0)
+      if(!REDUCE_MOTION){
+        const win=Math.min(riverTotalLen*0.5,220),head=(elapsed*46)%riverTotalLen
+        // head-weighted highlight; drawRiverWindowOffset clamps at the ends → no seam line
+        drawRiverWindowOffset(riverPts,head-win,head,.06,1.6,0,168,224,235)
+        drawRiverWindowOffset(riverPts,head-win*0.5,head,.12,1.4,0,168,224,235)
+        drawRiverWindowOffset(riverPts,head-win*0.18,head,.22,1.2,0,168,224,235)
+        for(let i=0;i<6;i++){const seed=i*29.3+8.1;const pos=(elapsed*(40+vn(seed)*22)+vn(seed+5)*riverTotalLen)%riverTotalLen;const len=70+vn(seed+2)*70;const lat=(vn(seed+7)-.5)*5;drawRiverWindowOffset(riverPts,pos-len,pos,.05+vn(seed+9)*.05,1.3+vn(seed+3)*1.2,lat,168,224,235)}
+      }
+    }
       frameRafId=requestAnimationFrame(frame)
     }
     frameRafId=requestAnimationFrame(frame)
 
     /* ── INIT ── */
     function revealUI(){
+      // Only the tree animates in; text/buttons/links render immediately (like dark mode)
       const tree=treeRef.current;if(tree)setTimeout(()=>{tree.style.opacity='.52'},3000)
-      const eyebrow=eyebrowRef.current;if(eyebrow)setTimeout(()=>{eyebrow.style.animation='fadeUp .35s ease forwards'},0)
-      nameSpansRef.current.forEach((s,i)=>setTimeout(()=>{if(s){s.style.opacity='1';s.style.transform='translateY(0)'}},i*80))
-      const tagline=taglineRef.current;if(tagline)setTimeout(()=>{tagline.style.animation='fadeUp .4s ease forwards'},180)
-      const ctas=ctasRef.current;if(ctas)setTimeout(()=>{ctas.style.animation='fadeUp .4s ease forwards'},320)
-      const label=labelRef.current;if(label)label.style.animation='fadeIn 1.8s ease 4s forwards'
-      const scroll=scrollRef.current;if(scroll)setTimeout(()=>{scroll.style.animation='fadeIn .8s ease forwards'},600)
     }
 
     async function init(){
@@ -333,11 +322,9 @@ export default function HeroLight() {
       _riverPixPts=catmullRom(normToCanvas(RIVER_NORM),100)
       riverPts=[..._riverPixPts]
       await new Promise(r=>setTimeout(r,0))
-      buildBackground()
       buildGeometry()
       updateTreeClip()
-      buildShadeCanvas()
-      buildRevealCanvas()
+      buildBaseLayer()
       if(document.fonts&&document.fonts.ready){try{await document.fonts.ready}catch(e){}}
       await new Promise(requestAnimationFrame)
       await new Promise(requestAnimationFrame)
@@ -356,11 +343,9 @@ export default function HeroLight() {
         resize()
         _riverPixPts=catmullRom(normToCanvas(RIVER_NORM),100)
         riverPts=[..._riverPixPts]
-        buildBackground()
         buildGeometry()
         updateTreeClip()
-        buildShadeCanvas()
-        buildRevealCanvas()
+        buildBaseLayer()
       },160)
     }
     window.addEventListener('resize',onResize)
