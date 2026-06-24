@@ -184,6 +184,11 @@ export default function HeroLight() {
     let rafId
     let frameRafId
     let resizeTimer
+    let paused = false
+    let pausedAt = 0
+    let inView = true
+    let tabVisible = true
+    let io = null
 
     /* ── HELPERS ── */
     const lerp = (a,b,t) => a+(b-a)*t
@@ -360,11 +365,38 @@ export default function HeroLight() {
     }
     window.addEventListener('resize',onResize)
 
+    /* ── PAUSE WHEN OFF-SCREEN OR TAB HIDDEN ── */
+    function startLoop(){
+      if(!paused) return
+      paused=false
+      if(pausedAt){
+        const dt=performance.now()-pausedAt
+        if(T0!=null)T0+=dt
+        if(introStartTs!=null)introStartTs+=dt
+        pausedAt=0
+      }
+      frameRafId=requestAnimationFrame(frame)
+    }
+    function stopLoop(){
+      if(paused) return
+      paused=true
+      pausedAt=performance.now()
+      cancelAnimationFrame(frameRafId)
+    }
+    function syncLoop(){ if(inView && tabVisible) startLoop(); else stopLoop() }
+    io=new IntersectionObserver(es=>{ inView=es[0].isIntersecting; syncLoop() },{threshold:0})
+    io.observe(canvas)
+    const onVisibility=()=>{ tabVisible=!document.hidden; syncLoop() }
+    document.addEventListener('visibilitychange',onVisibility)
+    tabVisible=!document.hidden; syncLoop()
+
     return () => {
       cancelAnimationFrame(rafId)
       cancelAnimationFrame(frameRafId)
       clearTimeout(resizeTimer)
       window.removeEventListener('resize',onResize)
+      document.removeEventListener('visibilitychange',onVisibility)
+      if(io)io.disconnect()
     }
   }, [])
 
