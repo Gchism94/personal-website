@@ -272,11 +272,26 @@ export default function HeroLight() {
     const PERS=COFF_N.map((_,i)=>({seed:i*17.3+3.7,ds:i*23.1+11.4,da:lerp(.09,.018,i/(NC-1)),dsp:.13+[0,.07,.03,.09,.02,.06,.04,.08,.01,.05,.03][i],eA:lerp(.72,.90,i/(NC-1)),eB:lerp(.82,.94,i/(NC-1)),delay:.24+i*.12}))
     function computeMask(n,intensity,seed){const m=new Uint8Array(n);for(let i=0;i<n;i++)m[i]=(vn(i/n*8.4+seed)*.45+fbm(i/n*2.1+seed*.37,3)*.55)>intensity?1:0;return m}
     let riverPts=[],cA=[],cB=[],mA=[],mB=[],pA=[],pB=[],pmA=[],pmB=[]
+    let baseCanvas=null
     function updateTreeClip(){const el=treeRef.current;if(!el||!riverPts||riverPts.length<2)return;const pts=riverPts.map(([x,y])=>`${(x/W*100).toFixed(2)}% ${(y/H*100).toFixed(2)}%`);pts.push('100% 0%','0% 0%');el.style.clipPath=`polygon(${pts.join(', ')})`}
     function buildGeometry(){if(riverPts.length<2)return;buildArcLen(riverPts);cA=[];cB=[];mA=[];mB=[];COFF_N.forEach((off,i)=>{const px=off*W,p=PERS[i];const a=offsetPoly(riverPts,px*(1+0.08*vn(i*9.3)));cA.push(a);mA.push(computeMask(a.length,p.eA,p.seed))});COFF_S.forEach((off,i)=>{const px=off*W;const b=offsetPoly(riverPts,-px*(1+0.18*vn(i*11.7+3)));cB.push(b);mB.push(computeMask(b.length,lerp(.64,.90,i/Math.max(1,COFF_S.length-1)),100+i*31.2))});pA=[];pB=[];pmA=[];pmB=[];POFF.forEach((off,i)=>{const px=off*W;const a=offsetPoly(riverPts,px*(1+.05*vn(i+40)));const b=offsetPoly(riverPts,-px*(1+.20*vn(i+50)));pA.push(a);pB.push(b);pmA.push(computeMask(a.length,.84,300+i*47));pmB.push(computeMask(b.length,.90,350+i*47))});initFlow()}
 
     const DASHES=(()=>{const D=[];[[.09,18,64,6.2,.060,0],[.53,21,52,5.8,.050,0]].forEach(([ph,sp,ln,lw,a,lat])=>D.push({ph:ph*0,_ph:ph,sp,ln,lw,a,lat,rgb:[72,176,205]}));[.00,.21,.43,.64,.85].forEach((bp,i)=>{D.push({_ph:bp,sp:32+vn(i*3.7+1)*14,ln:16+vn(i*6.1+2)*14,lw:1.0+vn(i*2.1)*0.35,a:.085+vn(i*9.2)*0.045,lat:(vn(i*11.4+5)-.5)*1.6,rgb:[72,176,205]})});[.07,.26,.46,.67,.87].forEach((bp,i)=>{D.push({_ph:bp,sp:50+vn(i*4.9+50)*18,ln:5+vn(i*8.7+50)*7,lw:.72,a:.050+vn(i*7.3+50)*0.030,lat:(vn(i*10.3+100)-.5)*3.8,rgb:[72,176,205]})});return D})()
     let dashOffsets=[]
+    function strokePoly(c,pts,lw,style){if(!pts||pts.length<2)return;c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)c.lineTo(pts[i][0],pts[i][1]);c.lineWidth=lw;c.strokeStyle=style;c.lineCap='round';c.lineJoin='round';c.stroke()}
+    function buildBaseLayer(){
+      if(!W||!H||riverPts.length<2)return
+      baseCanvas=document.createElement('canvas');baseCanvas.width=W;baseCanvas.height=H
+      const b=baseCanvas.getContext('2d')
+      b.fillStyle='#F5EFE6';b.fillRect(0,0,W,H)
+      // —— TUNE: subtle canyon warmth + faint contour hints ——
+      strokePoly(b,riverPts,0.05*W,'rgba(120,96,60,0.016)')
+      ;[0.016,0.026,-0.016,-0.026].forEach((o,i)=>strokePoly(b,offsetPoly(riverPts,o*W),1,'rgba(112,80,52,'+(0.022-i*0.005)+')'))
+      // —— baked river, settled appearance (matches the intro's final strokes) ——
+      strokePoly(b,riverPts,30,'rgba(28,92,116,0.040)')
+      strokePoly(b,riverPts,14,'rgba(72,176,205,0.075)')
+      strokePoly(b,riverPts,3.2,'rgba(72,176,205,0.34)')
+    }
     function initFlow(){if(!riverTotalLen)return;dashOffsets=DASHES.map(d=>d._ph*riverTotalLen+(vn(d._ph*37.1)-.5)*riverTotalLen*.04)}
 
     const REDUCE_MOTION=window.matchMedia('(prefers-reduced-motion:reduce)').matches
@@ -307,7 +322,16 @@ export default function HeroLight() {
       const rivP=REDUCE_MOTION?1:ease(introMs/RIV_DUR)
       const rivLen=rivP*riverTotalLen
       ctx.fillStyle='#F5EFE6';ctx.fillRect(0,0,W,H)
-      if(rivP<1){drawTerrainReveal(rivLen,rivP,elapsed);drawRiverToLen(riverPts,rivLen,.040,30,28,92,116);drawRiverToLen(riverPts,rivLen,.075,14,72,176,205);drawRiverToLen(riverPts,rivLen,.34,3.2,72,176,205);drawIntroFlow(rivLen,elapsed);drawRiverWindow(riverPts,Math.max(0,rivLen-80),rivLen,.12,3.2,168,224,235);}else{drawRiverToLen(riverPts,riverTotalLen,.040,30,28,92,116);drawRiverToLen(riverPts,riverTotalLen,.075,14,72,176,205);drawRiverToLen(riverPts,riverTotalLen,.34,3.2,72,176,205);const rD=distort(riverPts,999.7,.045,.065,elapsed);ctx.save();ctx.globalCompositeOperation='source-over';drawLine(rD,null,1,28,92,116,.040,30,true);drawLine(rD,null,1,72,176,205,.075,14,true);drawLine(rD,null,1,72,176,205,.34,3.2,true);ctx.restore();ctx.save();ctx.globalCompositeOperation='screen';drawLine(rD,null,1,72,176,205,.045,22,true);drawLine(rD,null,1,72,176,205,.020,38,true);ctx.restore();if(!REDUCE_MOTION&&riverTotalLen>10&&dashOffsets.length===DASHES.length){DASHES.forEach((d,i)=>{const pos=(elapsed*(d.sp*.38)+dashOffsets[i])%riverTotalLen;drawFlowDash(pos,d.ln*3.2,d.lat,72,176,205,d.a*1.15,d.lw*1.35)});for(let i=0;i<5;i++){const seed=i*29.3+8.1;const pos=(elapsed*(38+vn(seed)*28)+vn(seed+5)*riverTotalLen)%riverTotalLen;const len=90+vn(seed+2)*90;const lat=(vn(seed+7)-.5)*6.5;drawRiverWindowOffset(riverPts,Math.max(0,pos-len),pos,.035+vn(seed+9)*.040,1.4+vn(seed+3)*1.4,lat,168,224,235);}}}
+      if(rivP<1){drawTerrainReveal(rivLen,rivP,elapsed);drawRiverToLen(riverPts,rivLen,.040,30,28,92,116);drawRiverToLen(riverPts,rivLen,.075,14,72,176,205);drawRiverToLen(riverPts,rivLen,.34,3.2,72,176,205);drawIntroFlow(rivLen,elapsed);drawRiverWindow(riverPts,Math.max(0,rivLen-80),rivLen,.12,3.2,168,224,235);}else{
+      // —— Hybrid: blit the baked base, animate only the gentle flow ——
+      if(baseCanvas)ctx.drawImage(baseCanvas,0,0)
+      const win=Math.min(riverTotalLen*0.5,220),head=(elapsed*46)%riverTotalLen
+      // head-weighted highlight; drawRiverWindowOffset clamps at the ends → no seam line
+      drawRiverWindowOffset(riverPts,head-win,head,.06,1.6,0,168,224,235)
+      drawRiverWindowOffset(riverPts,head-win*0.5,head,.12,1.4,0,168,224,235)
+      drawRiverWindowOffset(riverPts,head-win*0.18,head,.22,1.2,0,168,224,235)
+      if(!REDUCE_MOTION){for(let i=0;i<6;i++){const seed=i*29.3+8.1;const pos=(elapsed*(40+vn(seed)*22)+vn(seed+5)*riverTotalLen)%riverTotalLen;const len=70+vn(seed+2)*70;const lat=(vn(seed+7)-.5)*5;drawRiverWindowOffset(riverPts,pos-len,pos,.05+vn(seed+9)*.05,1.3+vn(seed+3)*1.2,lat,168,224,235)}}
+    }
       frameRafId=requestAnimationFrame(frame)
     }
     frameRafId=requestAnimationFrame(frame)
@@ -331,6 +355,7 @@ export default function HeroLight() {
       buildBackground()
       buildGeometry()
       updateTreeClip()
+      buildBaseLayer()
       buildShadeCanvas()
       buildRevealCanvas()
       if(document.fonts&&document.fonts.ready){try{await document.fonts.ready}catch(e){}}
@@ -354,6 +379,7 @@ export default function HeroLight() {
         buildBackground()
         buildGeometry()
         updateTreeClip()
+        buildBaseLayer()
         buildShadeCanvas()
         buildRevealCanvas()
       },160)
