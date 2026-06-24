@@ -346,7 +346,7 @@ html body:has(.hd){background:#F5EFE6 !important;}
 }
 `
 
-export default function HighDesert() {
+export default function Steppe() {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
@@ -386,7 +386,7 @@ export default function HighDesert() {
         <div className="topbar">
           <div className="top-left">
             <Link href="/work" className="back">← Work</Link>
-            <div className="brand">High<span>·</span>Desert</div>
+            <div className="brand">Steppe</div>
           </div>
           <div className="top-right">An Overview · Central Oregon</div>
         </div>
@@ -395,13 +395,11 @@ export default function HighDesert() {
       {/* HERO */}
       <div className={`hero${loaded ? ' loaded' : ''}`}>
         <div className="hero-inner">
-          <div className="eyebrow fx">Community-owned · Central Oregon</div>
-          <h1 className="wordmark fx">High&nbsp;Desert</h1>
-          <p className="tagline fx">A place online that belongs to the people who live here.</p>
+          <div className="eyebrow fx">Member-owned · Central Oregon</div>
+          <h1 className="wordmark fx">Steppe</h1>
+          <p className="tagline fx">A place that belongs to the people in it.</p>
           <div className="towns fx">
-            Bend <span className="dot">/</span> Redmond <span className="dot">/</span> Sisters{' '}
-            <span className="dot">/</span> La&nbsp;Pine <span className="dot">/</span> Madras{' '}
-            <span className="dot">/</span> Prineville
+            The Commons, Redmond <span className="dot">/</span> Central Oregon <span className="dot">/</span> est. 2026
           </div>
         </div>
         <svg className="landscape" viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -424,7 +422,7 @@ export default function HighDesert() {
           <div className="col body">
             <div className="eyebrow reveal">01 — The premise</div>
             <h2 className="reveal">A town deserves a gathering place that belongs to the town.</h2>
-            <p className="reveal">The platforms most of us use every day were never built for us. They were built to gather our attention and sell it, and so they follow a familiar arc — more ads, more noise, more outrage, and steadily less of the people we actually came to find. Cory Doctorow has a name for that slow rot. High Desert begins by refusing it.</p>
+            <p className="reveal">The platforms most of us use every day were never built for us. They were built to gather our attention and sell it, and so they follow a familiar arc — more ads, more noise, more outrage, and steadily less of the people we actually came to find. Cory Doctorow has a name for that slow rot. Steppe begins by refusing it.</p>
             <p className="reveal">The question underneath the whole project is simple. What if the place where Central Oregon gathers online were owned by Central Oregon — not by shareholders, not by advertisers, but by the neighbors who use it every day?</p>
           </div>
         </div>
@@ -436,12 +434,12 @@ export default function HighDesert() {
           <div className="col body">
             <div className="eyebrow reveal">02 — What it is</div>
             <h2 className="reveal">Local civic infrastructure, owned in common.</h2>
-            <p className="reveal">High Desert is a set of local social spaces — one for each of six Central Oregon towns — built as shared community infrastructure rather than a product. It is small on purpose, honest by design, and accountable to its members instead of to a market.</p>
+            <p className="reveal">Steppe is a members&apos; commons for Central Oregon — built as shared community infrastructure rather than a product. It is small on purpose, honest by design, and accountable to its members instead of to a market.</p>
             <div className="facts reveal">
-              <div className="fact"><span className="k">Who owns it</span><span className="v">Residents do, collectively, with a real vote on how it runs.</span></div>
-              <div className="fact"><span className="k">Who&apos;s here</span><span className="v">Verified neighbors — you join by confirming you live in the region.</span></div>
-              <div className="fact"><span className="k">How it&apos;s funded</span><span className="v">No ads, ever. A flat $2 / month that can&apos;t rise without a vote.</span></div>
-              <div className="fact"><span className="k">Where it&apos;s headed</span><span className="v">A Public Benefit Corporation now, on a path to becoming a nonprofit.</span></div>
+              <div className="fact"><span className="k">Who owns it</span><span className="v">Members do, collectively — one member, one vote on how it runs.</span></div>
+              <div className="fact"><span className="k">Who&apos;s here</span><span className="v">Verified neighbors — you confirm you live here once, then the proof is deleted.</span></div>
+              <div className="fact"><span className="k">How it&apos;s funded</span><span className="v">No ads, ever. $4 / month, with a hardship waiver for anyone who needs it.</span></div>
+              <div className="fact"><span className="k">What it is</span><span className="v">A member-governed Oregon public benefit nonprofit. No owner; it can&apos;t be sold.</span></div>
             </div>
           </div>
         </div>
@@ -453,7 +451,7 @@ export default function HighDesert() {
           <div className="col-wide">
             <div className="eyebrow reveal">03 — The ideas underneath</div>
             <h2 className="reveal">It isn&apos;t a startup hunting a market. It&apos;s an argument.</h2>
-            <p className="lede reveal">High Desert is built from a small shelf of books — a belief that a healthier digital commons is genuinely possible, if you design for it from the very first decision. Five ideas do most of the work.</p>
+            <p className="lede reveal">Steppe is built from a small shelf of books — a belief that a healthier digital commons is genuinely possible, if you design for it from the very first decision. Five ideas do most of the work.</p>
 
             <div className="ideas">
               <div className="idea reveal">
@@ -464,8 +462,8 @@ export default function HighDesert() {
                 </div>
                 <p>Platforms rot when their incentive is to extract — first they&apos;re good to users, then they squeeze users to please advertisers, then they squeeze everyone to please themselves. The decline isn&apos;t a failure of the model; it <em>is</em> the model.</p>
                 <div className="consequence">
-                  <span className="lbl">In High Desert</span>
-                  <p>No advertising, ever, and a flat price that cannot climb without the community&apos;s consent. Remove the incentive to get worse, and the place is free to stay good.</p>
+                  <span className="lbl">In Steppe</span>
+                  <p>No advertising, ever — it&apos;s entrenched in the charter and can&apos;t be removed. Members set the budget, so the place answers to them, not to advertisers. Remove the incentive to get worse, and it&apos;s free to stay good.</p>
                 </div>
               </div>
 
@@ -477,7 +475,7 @@ export default function HighDesert() {
                 </div>
                 <p>You cannot improve a system you don&apos;t understand. Real change comes from finding a system&apos;s leverage points — not from chasing its symptoms or imposing a plan from outside.</p>
                 <div className="consequence">
-                  <span className="lbl">In High Desert</span>
+                  <span className="lbl">In Steppe</span>
                   <p>Before a single feature ships, we study the community as it actually is — who lives here, what&apos;s under strain (housing, water, wildfire), how people already find one another. We listen before we build.</p>
                 </div>
               </div>
@@ -490,8 +488,8 @@ export default function HighDesert() {
                 </div>
                 <p>Ostrom won a Nobel Prize for showing what economists had assumed impossible: ordinary communities can steward a shared resource well, for generations, without a corporation or a government in charge — provided a handful of design principles are in place.</p>
                 <div className="consequence">
-                  <span className="lbl">In High Desert</span>
-                  <p>Genuine self-governance. Members set the rules by vote; longer-tenured neighbors carry a little more weight; consequences are graduated and fair, always with a path back. The whole design is being audited against her eight principles, one by one.</p>
+                  <span className="lbl">In Steppe</span>
+                  <p>Genuine self-governance. One member, one vote — members set the budget, elect the board, and can recall it. Consequences are graduated and fair, always with a path back. The whole design is being audited against her eight principles, one by one.</p>
                 </div>
               </div>
 
@@ -503,7 +501,7 @@ export default function HighDesert() {
                 </div>
                 <p>When something you belong to begins to slip, you have two options: leave it, or speak up to mend it. Most platforms only ever let you leave. The capacity to stay and improve a thing has to be built deliberately.</p>
                 <div className="consequence">
-                  <span className="lbl">In High Desert</span>
+                  <span className="lbl">In Steppe</span>
                   <p>Voice is designed in from the start, so members shape the place rather than abandon it. Because they own it, staying and improving becomes the rational choice — not just the loyal one.</p>
                 </div>
               </div>
@@ -516,8 +514,8 @@ export default function HighDesert() {
                 </div>
                 <p>Who owns a thing — and how it is financed — quietly decides who it will ultimately serve. Values stated in a mission statement rarely survive an ownership structure that points the other way.</p>
                 <div className="consequence">
-                  <span className="lbl">In High Desert</span>
-                  <p>Ownership and economics are settled on day one: below-market founder pay, surplus that flows to local causes, and a built-in trigger to convert into a nonprofit. The structure isn&apos;t paperwork — it&apos;s the promise.</p>
+                  <span className="lbl">In Steppe</span>
+                  <p>Ownership and economics are settled on day one: a member-governed nonprofit that can&apos;t be sold, no founder with the last word, and your data yours to take and leave with. The structure isn&apos;t paperwork — it&apos;s the promise.</p>
                 </div>
               </div>
             </div>
@@ -537,7 +535,7 @@ export default function HighDesert() {
           <div className="col body">
             <div className="eyebrow reveal">04 — A community that supports one another</div>
             <h2 className="reveal">Built so people can actually show up for each other.</h2>
-            <p className="reveal">A platform can corrode a community or it can knit one together. The difference is almost entirely in the design choices. High Desert is shaped, end to end, around mutual support.</p>
+            <p className="reveal">A platform can corrode a community or it can knit one together. The difference is almost entirely in the design choices. Steppe is shaped, end to end, around mutual support.</p>
 
             <div className="pillars">
               <div className="pillar reveal">
@@ -565,7 +563,7 @@ export default function HighDesert() {
                 <div className="mark">—</div>
                 <div>
                   <h3>What it earns, it gives back</h3>
-                  <p>Once the work is sustainably paid for, the surplus goes to local causes the community itself chooses. The platform is a means to a stronger town — never an end in itself.</p>
+                  <p>Member dues pay for Steppe, so it answers to members, not advertisers. Anything beyond running it goes back to the community that owns it — never an end in itself.</p>
                 </div>
               </div>
             </div>
@@ -587,14 +585,14 @@ export default function HighDesert() {
             <p className="reveal">Principles are easy to state and easy to abandon. These are the decisions that are already locked — the ones that turn the ideas above into promises a member can hold us to.</p>
 
             <div className="commitments reveal">
-              <div className="commit"><span className="term">No ads</span><span className="desc"><strong>Ever.</strong> Attention is never the product, and never for sale.</span></div>
-              <div className="commit"><span className="term">$2 / month, flat</span><span className="desc">The price cannot rise without a community vote.</span></div>
-              <div className="commit"><span className="term">A real voice</span><span className="desc">Tenure-weighted voting (1× to 3×), with a 15% quorum to decide.</span></div>
-              <div className="commit"><span className="term">Fair consequences</span><span className="desc">Automated moderation with human review by volunteers; a three-month maximum ban, and a right to appeal.</span></div>
-              <div className="commit"><span className="term">Surplus to community</span><span className="desc">Donations to local charities once the operator earns a modest salary.</span></div>
-              <div className="commit"><span className="term">A path to nonprofit</span><span className="desc">Convert to a 501(c)3 once ≥30% of revenue has gone to charity for a full year — by 60% supermajority.</span></div>
-              <div className="commit"><span className="term">Founder pay, in public</span><span className="desc">Deliberately set <strong>below</strong> an academic salary, as a signal of good faith.</span></div>
-              <div className="commit"><span className="term">Bounded by design</span><span className="desc">Six towns to start; expansion only by resident petition; a hard cap of twelve.</span></div>
+              <div className="commit"><span className="term">No ads</span><span className="desc"><strong>Ever.</strong> It&apos;s entrenched in the charter and can&apos;t be removed.</span></div>
+              <div className="commit"><span className="term">$4 / month</span><span className="desc">With a hardship waiver, no questions asked. Members set the budget.</span></div>
+              <div className="commit"><span className="term">One member, one vote</span><span className="desc">Members set the budget, elect the board, and can recall it. Ballots are secret.</span></div>
+              <div className="commit"><span className="term">Verify, then forget</span><span className="desc">You prove you live here once; the proof is deleted. Membership stays local and private.</span></div>
+              <div className="commit"><span className="term">Your data is yours</span><span className="desc">Take everything you&apos;ve added and leave whenever you want. Never sold.</span></div>
+              <div className="commit"><span className="term">Fair consequences</span><span className="desc">Automated moderation with volunteer human review; a three-month maximum ban, and a right to appeal.</span></div>
+              <div className="commit"><span className="term">A nonprofit by structure</span><span className="desc">A member-governed Oregon public benefit nonprofit. No owner; it can&apos;t be sold.</span></div>
+              <div className="commit"><span className="term">Led, not owned</span><span className="desc">Founder pay is public and set <strong>below</strong> an academic salary. No founder gets the last word.</span></div>
             </div>
           </div>
         </div>
@@ -608,20 +606,20 @@ export default function HighDesert() {
             <h2 className="reveal">Slowly, in the open, and never bigger than it should be.</h2>
             <div className="timeline reveal">
               <div className="tl now">
-                <span className="when">Now → Fall 2026</span>
-                <div className="what">Listening and fieldwork across the six towns. <span>Understanding the community before building for it.</span></div>
+                <span className="when">Now</span>
+                <div className="what">Founding members. <span>Steppe runs once enough neighbors in Redmond join to sustain it — be counted.</span></div>
               </div>
               <div className="tl">
-                <span className="when">Fall 2026</span>
-                <div className="what">A closed beta. <span>Small, careful, and shaped by early members.</span></div>
+                <span className="when">2026</span>
+                <div className="what">The Commons opens. <span>Verified members start groups, post to the local exchange, and set the budget.</span></div>
               </div>
               <div className="tl">
-                <span className="when">End of 2026</span>
-                <div className="what">Public launch. <span>Open to verified residents of all six regions.</span></div>
+                <span className="when">Next</span>
+                <div className="what">Across Central Oregon. <span>New neighborhoods join as members are ready — by petition, never by growth targets.</span></div>
               </div>
               <div className="tl">
-                <span className="when">Beyond</span>
-                <div className="what">Community-gated growth. <span>Each new town by petition; never past the cap.</span></div>
+                <span className="when">Always</span>
+                <div className="what">Member-governed. <span>The charter&apos;s promises stay entrenched; the rest, members decide together.</span></div>
               </div>
             </div>
           </div>
@@ -634,12 +632,12 @@ export default function HighDesert() {
           <div className="col closing">
             <div className="eyebrow reveal">In closing</div>
             <h2 className="reveal">None of this works alone.</h2>
-            <p className="reveal">The web that holds a community together is woven by a lot of hands — the people highlighting local businesses, the ones organizing the markets and the meet-ups, the ones who simply keep showing up. High Desert is one thread among many. We would far rather build it alongside the others than apart from them.</p>
+            <p className="reveal">The web that holds a community together is woven by a lot of hands — the people highlighting local businesses, the ones organizing the markets and the meet-ups, the ones who simply keep showing up. Steppe is one thread among many. We would far rather build it alongside the others than apart from them.</p>
             <div className="signoff reveal">
               <div className="who">Greg Chism, Ph.D.
-                <small>Founder, High Desert · Asst. Professor of Practice, University of Arizona</small>
+                <small>Leads Steppe · Asst. Professor of Practice, University of Arizona</small>
               </div>
-              <div className="place">High Desert<br />Central Oregon</div>
+              <div className="place">Steppe<br />Redmond, Central Oregon</div>
             </div>
           </div>
         </div>
