@@ -257,10 +257,7 @@ export default function HeroLight() {
       baseCanvas=document.createElement('canvas');baseCanvas.width=W;baseCanvas.height=H
       const b=baseCanvas.getContext('2d')
       b.fillStyle='#F5EFE6';b.fillRect(0,0,W,H)
-      // —— TUNE: subtle canyon warmth + faint contour hints ——
-      strokePoly(b,riverPts,0.05*W,'rgba(120,96,60,0.016)')
-      ;[0.016,0.026,-0.016,-0.026].forEach((o,i)=>strokePoly(b,offsetPoly(riverPts,o*W),1,'rgba(112,80,52,'+(0.022-i*0.005)+')'))
-      // —— baked river, settled appearance (matches the intro's final strokes) ——
+      // baked river only — cream + the settled strokes (no canyon, no contours)
       strokePoly(b,riverPts,30,'rgba(28,92,116,0.040)')
       strokePoly(b,riverPts,14,'rgba(72,176,205,0.075)')
       strokePoly(b,riverPts,3.2,'rgba(72,176,205,0.34)')

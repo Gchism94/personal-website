@@ -1,6 +1,6 @@
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
-import { ConsultingAnim, HighDesertAnim, EduCloudAnim } from '@/components/WorkAnimations'
+import { ConsultingAnim, SteppeAnim, EduCloudAnim } from '@/components/WorkAnimations'
 
 export const metadata = {
   title: 'Work — Greg Chism',
@@ -169,44 +169,42 @@ export default function Work() {
 
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
 
-      {/* ── SECTION 2: HIGH DESERT ── */}
+      {/* ── SECTION 2: STEPPE ── */}
       <section className="mb-20">
         <div className="relative h-48 rounded-lg overflow-hidden border border-sand/60 dark:border-white/8 bg-linen dark:bg-midnight mb-10">
-          <HighDesertAnim className="absolute inset-0 w-full h-full" />
+          <SteppeAnim className="absolute inset-0 w-full h-full" />
         </div>
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Platform</p>
 
         <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
-          High Desert
+          Steppe
         </h2>
         <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal mb-8">
-          Launching soon · Central Oregon
+          Founding members welcome · Central Oregon
         </p>
 
         <div className="space-y-4 mb-8 max-w-2xl">
           <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            A community platform for Central Oregon built around a simple premise: technology
+            A member-owned civic commons for Central Oregon, built around a simple premise: technology
             should serve the people who live somewhere, not extract from them.
           </p>
           <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            No ads. No algorithmic feeds. Local residency required. Democratic governance.
-            Built as a public good for a place I live in and love.
+            No ads, ever. You verify you&apos;re local once, then that proof is deleted. Members own their
+            data and govern it one member, one vote — a public benefit nonprofit, not a startup.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-7">
-          {['Community Tech', 'Central Oregon', 'No Ads', 'Local Residency'].map((t) => (
+          {['Civic Infrastructure', 'Central Oregon', 'No Ads', 'Member-Governed'].map((t) => (
             <Tag key={t}>{t}</Tag>
           ))}
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          <Button href="/high-desert" variant="primary">Read the overview →</Button>
-          {/* ── FIX ONCE LIVE, ALSO UPDATE LINK TO OVERVIEW PAGE
-          <Button href="https://highdesert.community" variant="secondary" external>
-            highdesert.community →
+          <Button href="/steppe" variant="primary">Read the overview →</Button>
+          <Button href="https://steppe.community" variant="secondary" external>
+            steppe.community →
           </Button>
-          ── */}
         </div>
       </section>
 

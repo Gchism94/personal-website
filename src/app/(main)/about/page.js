@@ -72,7 +72,7 @@ export default function About() {
             <p>I&apos;m a data scientist, educator, and builder based in Bend, Oregon.</p>
             <p>My consulting practice, Three Canyon Consulting, works with universities, health systems, and mission-driven organizations to help them make better decisions with the data they already have. I focus on the full pipeline — from data infrastructure to the room where a decision actually gets made.</p>
             <p>I&apos;m also a researcher and instructor at the University of Arizona, where I teach graduate students data visualization and data mining, and publish on reproducible research methods in health and education contexts.</p>
-            <p>Alongside all of that, I&apos;m building High Desert — a community platform for Central Oregon that puts people before engagement metrics. No ads, no algorithmic amplification, local residency required.</p>
+            <p>Alongside all of that, I&apos;m building Steppe — member-owned civic infrastructure for Central Oregon that puts people before engagement metrics. No ads, no algorithmic amplification; neighbors verify they&apos;re local, then govern it together, one member, one vote.</p>
             <p>I grew up believing that data and technology should make communities stronger, not extract from them. That belief shows up in every project I take on.</p>
           </div>
           <Button href="/resume" variant="secondary">View Resume</Button>

@@ -148,13 +148,13 @@ export function ConsultingAnim({ className = '' }) {
 }
 
 /* ══════════════════════════════════════════════════════
-   2. HIGH DESERT
+   2. STEPPE
    A low mesa horizon (sand / bark silhouette) with a
    bounded lattice of community nodes (juniper / teal)
    above; routing pulses travel edge-to-edge; warm
    ember/star accents in the sky.
    ══════════════════════════════════════════════════════ */
-export function HighDesertAnim({ className = '' }) {
+export function SteppeAnim({ className = '' }) {
   const ref = useRef(null)
 
   useEffect(() => {

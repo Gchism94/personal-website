@@ -7,7 +7,7 @@ import HeroDark from '@/components/HeroDark'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Button from '@/components/ui/Button'
 import Link from 'next/link'
-import { ConsultingAnim, HighDesertAnim, EduCloudAnim } from '@/components/WorkAnimations'
+import { ConsultingAnim, SteppeAnim, EduCloudAnim } from '@/components/WorkAnimations'
 
 const recentWork = [
   {
@@ -19,10 +19,10 @@ const recentWork = [
     label: 'Consulting',
   },
   {
-    Anim: HighDesertAnim,
-    title: 'High Desert',
-    desc: 'A community platform for Central Oregon — no ads, no algorithmic feeds, local residency required.',
-    href: '/high-desert',
+    Anim: SteppeAnim,
+    title: 'Steppe',
+    desc: 'Member-owned civic infrastructure for Central Oregon — no ads, governed one member, one vote.',
+    href: '/steppe',
     external: false,
     label: 'Platform',
   },
@@ -75,10 +75,10 @@ function HomeContent() {
           <div>
             <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-juniper dark:text-teal mb-4">Community &amp; Technology</p>
             <p className="font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed mb-5">
-              I&apos;m building High Desert, a community platform for Central Oregon — no ads, no algorithmic feeds, local residency required. Technology should serve the communities it&apos;s embedded in.
+              I&apos;m building Steppe — member-owned civic infrastructure for Central Oregon. No ads, no algorithmic feeds; it&apos;s owned by the neighbors who use it and governed one member, one vote. Technology should serve the communities it&apos;s embedded in.
             </p>
-            <Button href="https://highdesert.community" variant="ghost" external>
-              High Desert →
+            <Button href="https://steppe.community" variant="ghost" external>
+              Steppe →
             </Button>
           </div>
         </div>
