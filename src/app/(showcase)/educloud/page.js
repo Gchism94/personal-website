@@ -1,13 +1,13 @@
 import EduCloud from './EduCloud'
 
 export const metadata = {
-  title: 'EduCloud — Federated System Architecture',
+  title: 'EduCloud — an open platform for teaching with code',
   description:
-    'A modular, federated architecture for educational research computing: two planes joined at a single seam — a self-hostable, privacy-minimal coursework plane (Quad) and a pluggable resource plane (EduCloud) that routes, meters, and runs compute across ACCESS, HPC, and cloud backends.',
+    'An open-source, self-hostable platform for teaching with code: assignment distribution to per-student Git repositories, sandboxed autograding, a peer AI tutor that cannot hand out solutions, and model routing that keeps student data on infrastructure your institution controls.',
   openGraph: {
-    title: 'EduCloud — Federated System Architecture',
+    title: 'EduCloud — an open platform for teaching with code',
     description:
-      'Two planes, one seam · pluggable resources · free → paid → donations. An interactive map of a modular educational computing platform.',
+      'Five modules you can adopt one at a time, starting with the GitHub Classroom replacement. Community-owned, self-hostable, vendor-neutral.',
   },
 }
 
