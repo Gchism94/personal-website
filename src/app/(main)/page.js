@@ -28,7 +28,7 @@ const recentWork = [
   },
   {
     Anim: EduCloudAnim,
-    title: 'EduCloud × Quad',
+    title: 'EduCloud',
     desc: 'A modular, federated architecture for educational research computing — free-by-default and governed as a commons.',
     href: '/educloud',
     external: false,

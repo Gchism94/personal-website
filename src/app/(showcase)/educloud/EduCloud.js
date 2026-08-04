@@ -160,7 +160,7 @@ const TIERS = {
   coursework:{ accent:'gold', cards:[
     {id:'adapters',icon:'adapters',title:'Git-host adapters',meta:'GitHub · Forgejo/Gitea · GitLab',
       kicker:'Coursework · Seam (pkg/adapter)',
-      summary:'Everything host-specific lives behind one interface, so the platform is host-agnostic. v1 ships GitHub and self-hosted Forgejo/Gitea, both live-validated; GitLab is additive, not a rewrite. This is the quadrant nobody else owns: open-source and working against self-hosted Git.',
+      summary:'Everything host-specific lives behind one interface, so the platform is host-agnostic. v1 ships GitHub and self-hosted Forgejo/Gitea, both live-validated; GitLab is additive, not a rewrite. This is the Cairnrant nobody else owns: open-source and working against self-hosted Git.',
       points:['One contract per host: ensureNamespace, createRepoFromTemplate, lock/unlock, webhook','Idempotent provisioning — EnsureNamespace first; retries never double-create','Self-host on your own Forgejo, or point at github.com — your call','Apache-2.0 SDK, so a new host is added without touching the core'],
       chips:['host-agnostic','accent|standalone','one adapter SDK']},
     {id:'roster',icon:'roster',title:'Roster & identity',accent:'green',meta:'usernames only · no PII',
@@ -242,7 +242,7 @@ const DIAGRAM_HTML = `
 </div>
 
 <div class="diagram-title">
-  <p class="diagram-kicker">EduCloud × Quad</p>
+  <p class="diagram-kicker">EduCloud</p>
   <h1>Federated System Architecture</h1>
   <p>two planes, one seam · pluggable resources · free → paid → donations</p>
 </div>
@@ -254,12 +254,12 @@ const DIAGRAM_HTML = `
 
 <div class="stance modular">
   <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></span>
-  <span class="tx"><b>Modular by design — use the pieces that work for you.</b> Nothing here needs anything else to exist. Two planes: the <b>Coursework plane (Quad)</b> distributes, collects, and grades Git-backed assignments — privately, as one self-hostable binary, with no EduCloud. The <b>Resource plane (EduCloud)</b> routes, meters, and runs compute for any task source, with no Quad. They connect at a single seam only when you want both, and the AI / pedagogy and interactive-workspace blocks stay optional and off by default.</span>
+  <span class="tx"><b>Modular by design — use the pieces that work for you.</b> Nothing here needs anything else to exist. Two planes: the <b>Coursework plane (Cairn)</b> distributes, collects, and grades Git-backed assignments — privately, as one self-hostable binary, with no EduCloud. The <b>Resource plane (EduCloud)</b> routes, meters, and runs compute for any task source, with no Cairn. They connect at a single seam only when you want both, and the AI / pedagogy and interactive-workspace blocks stay optional and off by default.</span>
 </div>
 
 <div class="tier" data-tier="coursework">
   <div class="tier-head" data-toggle>
-    <span class="tier-badge">Plane A</span><span class="tier-name">Coursework — Quad</span>
+    <span class="tier-badge">Plane A</span><span class="tier-name">Coursework — Cairn</span>
     <span class="tier-desc">self-hostable · privacy-minimal · standalone</span><span class="tier-chevron">▾</span>
   </div>
   <div class="tier-cards"></div>
@@ -290,7 +290,7 @@ const DIAGRAM_HTML = `
 
 <div class="seam">
   <span class="sic"><svg viewBox="0 0 24 24"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></svg></span>
-  <span class="stx"><b>One seam joins the two planes.</b> Quad's <code>pkg/workspace</code> → EduCloud's provisioner (interactive sessions); the autograder runs as a routed compute job; the tutor / generator / AI-grading call EduCloud's inference layer <b>through the <code>pkg/governance</code> gate</b>; the roster meters cost by <code>host_username</code>, never by identity. Everything below is the resource plane — omit the seam and each plane still stands alone.</span>
+  <span class="stx"><b>One seam joins the two planes.</b> Cairn's <code>pkg/workspace</code> → EduCloud's provisioner (interactive sessions); the autograder runs as a routed compute job; the tutor / generator / AI-grading call EduCloud's inference layer <b>through the <code>pkg/governance</code> gate</b>; the roster meters cost by <code>host_username</code>, never by identity. Everything below is the resource plane — omit the seam and each plane still stands alone.</span>
 </div>
 
 <div class="tier planning" data-tier="planning">

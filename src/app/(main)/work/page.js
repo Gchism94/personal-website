@@ -210,7 +210,7 @@ export default function Work() {
 
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
 
-      {/* ── SECTION 3: EDUCLOUD × QUAD ── */}
+      {/* ── SECTION 3: EDUCLOUD ── */}
       <section className="mb-20">
         <div className="relative h-48 rounded-lg overflow-hidden border border-sand/60 dark:border-white/8 bg-linen dark:bg-midnight mb-10">
           <EduCloudAnim className="absolute inset-0 w-full h-full" />
@@ -218,7 +218,7 @@ export default function Work() {
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Education Infrastructure</p>
 
         <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
-          EduCloud × Quad
+          EduCloud
         </h2>
         <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal mb-8">
           Federated system architecture · ACCESS · NAIRR · JS2
@@ -226,10 +226,7 @@ export default function Work() {
 
         <div className="space-y-4 mb-8 max-w-2xl">
           <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            A modular, federated architecture for educational research computing: two planes joined
-            at a single seam — a self-hostable, privacy-minimal coursework plane (Quad) and a
-            pluggable resource plane (EduCloud) that routes, meters, and runs compute across ACCESS,
-            HPC, and cloud backends.
+            An open-source, self-hostable platform for teaching with code — assignment distribution, sandboxed autograding, an AI tutor that cannot hand out solutions, and model routing that keeps student data on infrastructure your institution controls.
           </p>
           <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
             Free-by-default, governed as a commons, and designed so the people inside the system
@@ -269,7 +266,10 @@ export default function Work() {
         <div className="mb-8">
           <PubList pubs={publications} />
         </div>
-        <Button href="/resume" variant="secondary">Full Resume</Button>
+        <div className="flex flex-wrap gap-4">
+          <Button href="/resume" variant="secondary">Full Resume</Button>
+          <Button href="/portfolio" variant="secondary">Learning Portfolio</Button>
+        </div>
       </section>
     </div>
   )

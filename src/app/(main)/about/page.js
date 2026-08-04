@@ -75,7 +75,10 @@ export default function About() {
             <p>Alongside all of that, I&apos;m building Steppe — member-owned civic infrastructure for Central Oregon that puts people before engagement metrics. No ads, no algorithmic amplification; neighbors verify they&apos;re local, then govern it together, one member, one vote.</p>
             <p>I grew up believing that data and technology should make communities stronger, not extract from them. That belief shows up in every project I take on.</p>
           </div>
-          <Button href="/resume" variant="secondary">View Resume</Button>
+          <div className="flex flex-wrap gap-4">
+            <Button href="/resume" variant="secondary">View Resume</Button>
+            <Button href="/portfolio" variant="secondary">Learning Portfolio</Button>
+          </div>
         </div>
         <div className="w-64 flex-shrink-0 lg:w-full lg:max-w-xs">
           <Image

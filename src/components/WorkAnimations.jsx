@@ -311,7 +311,7 @@ export function SteppeAnim({ className = '' }) {
 }
 
 /* ══════════════════════════════════════════════════════
-   3. EDUCLOUD × QUAD
+   3. EDUCLOUD
    Two horizontal planes of nodes (top = Quad, juniper;
    bottom = EduCloud, sand) joined by a teal dashed seam
    at the center. Pulses travel left→right on top,
