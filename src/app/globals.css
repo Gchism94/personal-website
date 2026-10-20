@@ -393,3 +393,12 @@ html.dark .hd .hero { background: linear-gradient(180deg,#02040a 0%,#172b29 65%,
 
 body { --font-sans: var(--font-body); --font-rl-serif: var(--font-display); --font-rl-sans: var(--font-body); }
 html .hd .top { background: var(--paper); }
+
+.landscape-caption .moon-status { font: 400 10px/1.6 var(--font-mono), monospace; color: var(--muted); }
+@media (max-width: 760px) {
+  .landscape-caption .moon-status { font-size: 9px; }
+}
+
+@media (max-width: 760px) {
+  .dark .river-hero { min-height: calc(740px + min(86vw, 440px)); }
+}
