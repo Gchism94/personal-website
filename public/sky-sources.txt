@@ -9,7 +9,9 @@ The displayed time is always Bend time (America/Los_Angeles, including DST).
 One stereographic projection is shared by all stars, constellation lines,
 the Moon and the ecliptic. Zenith is at the centre; north is up, east left,
 south down and west right, as on a chart held overhead. The circular edge
-is the geometric horizon. The map changes size, not orientation, on mobile.
+is the geometric horizon. The enlarged map fills the hero and its edges are intentionally cropped.
+The viewport may omit stars or the Moon that are above the horizon.
+The map changes size and framing, not orientation, on mobile.
 Stars below the horizon are omitted; constellation segments with an endpoint
 below the horizon are omitted rather than extended through the hidden sky.
 

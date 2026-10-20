@@ -15,9 +15,10 @@ export function project(vector) {
 }
 
 export function skyLayout(width, height) {
+  // One shared, enlarged projection fills the hero; the viewport crops its edges.
   return width <= 760
-    ? { x: width / 2, y: 100 + Math.min(width * .43, 220), radius: Math.min(width * .43, 220) }
-    : { x: width * .68, y: height * .42, radius: Math.min(width * .29, height * .33) }
+    ? { x: width * .65, y: height * .32, radius: Math.max(width * .85, height * .6) }
+    : { x: width * .6, y: height * .4, radius: Math.max(width * .6, height * .7) }
 }
 
 export function createBendSky(date = new Date()) {

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import {createBendSky, project, skyLayout} from '../src/lib/bendSky.mjs'
+import {createBendSky, project} from '../src/lib/bendSky.mjs'
 
 test('overhead map places the cardinal directions correctly', () => {
   assert.deepEqual(project({x:0,y:0,z:1}),{x:0,y:-0,altitude:90})
@@ -53,8 +53,4 @@ test('daylight, horizon visibility, and Bend daylight-saving time remain explici
   assert.match(winter.clock,/10:00 PM PST/)
   const daily=Array.from({length:24},(_,h)=>createBendSky(new Date(Date.UTC(2026,9,20,h))).moon.altitude)
   assert.ok(daily.some(a=>a<0) && daily.some(a=>a>0))
-  for(const width of [320,390,760,1440]) {
-    const layout=skyLayout(width,900)
-    assert.ok(layout.x-layout.radius>=0 && layout.x+layout.radius<=width)
-  }
 })
