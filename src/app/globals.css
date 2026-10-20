@@ -206,8 +206,26 @@ html.dark body { background: var(--paper); color: var(--ink); }
 
 .river-hero { position: relative; isolation: isolate; min-height: 850px; height: 100svh; max-height: 1100px; overflow: hidden; background: var(--paper); }
 .river-landscape { position: absolute; inset: 0; width: 100%; height: 100%; }
-.forest-watercolor { mix-blend-mode: multiply; opacity: .72; }
-.dark .forest-watercolor { filter: grayscale(1) invert(1); mix-blend-mode: screen; opacity: .4; }
+.forest-watercolor { mix-blend-mode: multiply; opacity: .72; animation: forest-arrive 3.8s cubic-bezier(.4,0,.2,1) 3s both; }
+.river-draw { stroke-dasharray: 1; animation: river-arrive 5.6s ease-in-out both; }
+.river-flow-arrival { animation: flow-arrive 1.5s ease 5.6s both; }
+.river-flow { stroke: #a8e0eb; stroke-dasharray: 24 130 9 240 16 160; animation: river-flow 38s linear infinite; opacity: .7; }
+@keyframes forest-arrive { from { opacity: 0; } to { opacity: .72; } }
+@keyframes river-arrive { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes flow-arrive { from { opacity: 0; } to { opacity: 1; } }
+@keyframes river-flow { to { stroke-dashoffset: -1158; } }
+.night-sky { display: none; position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.night-sky > svg { width: 100%; height: 100%; }
+.dark .night-sky { display: block; }
+.dark .river-landscape { display: none; }
+.sky-twinkle { animation: sky-twinkle var(--star-duration) ease-in-out var(--star-delay) infinite alternate; }
+@keyframes sky-twinkle { from { opacity: .12; } to { opacity: var(--star-opacity); } }
+.sky-meteor { position: absolute; width: clamp(70px, 12vw, 190px); height: 1px; transform-origin: right center; opacity: 0; background: linear-gradient(90deg, transparent, #dceef48c 76%, #fff); filter: drop-shadow(0 0 5px #cde6ee73); animation: sky-meteor var(--meteor-duration) ease-in-out var(--meteor-delay) infinite; }
+.sky-meteor::after { content: ''; position: absolute; right: -1px; top: -1px; width: 3px; height: 3px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px #d2eef8; }
+@keyframes sky-meteor { 0%, 65%, 100% { opacity: 0; transform: translate(0,0) rotate(141deg) scaleX(.58); } 68% { opacity: .8; } 75% { opacity: 0; transform: translate(calc(var(--meteor-distance) * -.78), calc(var(--meteor-distance) * .63)) rotate(141deg) scaleX(1.1); } }
+.river-hero[data-visible="false"] *, .river-hero[data-motion="paused"] * { animation-play-state: paused !important; }
+.landscape-controls { display: flex; align-items: center; gap: 24px; }
+.landscape-controls .motion-control { color: var(--muted); border-bottom-color: transparent; font-size: 11px; }
 .river-wash { stroke: #4a7c6f; opacity: .04; }
 .river-bank { stroke: #48b0cd; opacity: .09; }
 .river-current { stroke: #48b0cd; opacity: .55; }
@@ -218,6 +236,7 @@ html.dark body { background: var(--paper); color: var(--ink); }
 .systems-reveal canvas { width: 100%; height: 100%; display: block; }
 .river-copy { position: absolute; z-index: 2; left: clamp(24px, 4.5vw, 80px); bottom: 90px; max-width: 560px; pointer-events: none; }
 .river-copy::before { content: ''; position: absolute; inset: -40px -90px -25px -70px; z-index: -1; background: radial-gradient(ellipse at 35% 65%, var(--paper) 15%, transparent 74%); pointer-events: none; }
+.dark .river-copy::before { inset: -90px -100px -80px -80px; background: radial-gradient(ellipse at 35% 55%, rgba(2,4,10,.94) 20%, transparent 72%); }
 .river-copy > .editorial-label { color: var(--accent); font-size: 10px; letter-spacing: .16em; margin-bottom: 24px; }
 .river-copy h1 { font-family: var(--font-display), Georgia, serif; font-weight: 600; font-size: clamp(70px, 7vw, 105px); letter-spacing: -.05em; line-height: .98; color: var(--ink); }
 .river-copy h1 em { color: var(--accent); }
@@ -260,6 +279,13 @@ html.dark body { background: var(--paper); color: var(--ink); }
 .mobile-navigation > a { border-color: var(--line); }
 @media (max-width: 760px) {
   .river-landscape, .systems-reveal { top: 88px; height: 330px; }
+  .dark .systems-reveal { top: 0; height: 100%; }
+  .dark .river-copy::before { inset: -80px -30px -65px; background: radial-gradient(ellipse at 25% 55%, rgba(2,4,10,.94) 20%, transparent 75%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .river-draw { animation: none !important; stroke-dashoffset: 0; }
+  .forest-watercolor, .river-flow-arrival, .river-flow, .sky-twinkle { animation: none !important; }
+  .sky-meteor, .motion-control { display: none !important; }
 }
 
 .midniht-brand { display: flex; align-items: center; flex-direction: column; color: #f3eadf; gap: 10px; }
