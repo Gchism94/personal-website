@@ -4,17 +4,17 @@ import Link from 'next/link'
 
 const CSS = `
 .nn {
-  position:fixed; inset:0;
+  position:relative; height:calc(100svh - 106px); min-height:600px;
   display:flex; flex-direction:column;
   background:#02040a;
   font-family:var(--font-mono),'DM Mono',ui-monospace,monospace;
   -webkit-font-smoothing:antialiased;
 }
-html body:has(.nn){ overflow:hidden; background:#02040a !important; }
+
 .nn *{ box-sizing:border-box; margin:0; padding:0; }
 .nn .topbar {
   flex-shrink:0;
-  display:flex; align-items:center; gap:14px;
+  display:flex; flex-wrap:wrap; align-items:center; gap:14px;
   padding:13px 22px;
   background:#02040a;
   border-bottom:1px solid #222838;
@@ -28,7 +28,7 @@ html body:has(.nn){ overflow:hidden; background:#02040a !important; }
 }
 .nn .back-link:hover { color:#9fd0c2; border-color:#9fd0c2; }
 .nn .sep { width:1px; height:16px; background:#222838; flex-shrink:0; }
-.nn .label { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#74715f; }
+.nn .label { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#bdb5ac; }
 .nn iframe { flex:1; border:0; background:#fff; display:block; width:100%; }
 `
 
@@ -39,7 +39,7 @@ export default function NeuralNetworks() {
       <header className="topbar">
         <Link href="/research" className="back-link">&#8592; Research</Link>
         <div className="sep" aria-hidden="true" />
-        <span className="label">INFO 557 · Neural Networks · Visualization</span>
+        <h1 className="label">INFO 557 · Neural Networks · Visualization</h1>
       </header>
       <iframe
         src="https://gchism94.github.io/uofa-neural-networks/"

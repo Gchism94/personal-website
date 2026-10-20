@@ -1,3 +1,4 @@
+import PageHeading from '@/components/PageHeading'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
@@ -154,7 +155,7 @@ function PubListWithAbstracts({ pubs }) {
                 </a>
                 <p className="font-mono text-[9px] tracking-[0.1em] uppercase text-stone/50 dark:text-cream/35 mb-3">{venue}</p>
                 {abstract && (
-                  <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed">{abstract}</p>
+                  <p className="font-dm-sans font-normal text-sm text-stone dark:text-cream/60 leading-relaxed">{abstract}</p>
                 )}
               </div>
             ))}
@@ -167,17 +168,21 @@ function PubListWithAbstracts({ pubs }) {
 
 export default function Research() {
   return (
-    <div className="max-w-5xl mx-auto px-8 py-20">
-      <SectionHeader heading="Research &amp; Teaching" className="mb-16" />
+    <div className="editorial-wrap content-page research-page">
+      <PageHeading label="Research & teaching" description="Questions worth asking. Tools worth sharing. Learning experiences that connect the two.">Make room for<br /><em>discovery.</em></PageHeading>
+      <div className="research-feature">
+        <div><p className="editorial-label">Education & training</p><h2>From infrastructure<br />to understanding.</h2></div>
+        <div><p>I lead education and training for MESA, helping researchers put shared computing tools to work. My talks and workshops bring the same hands-on approach to data, AI, and scientific practice.</p><div className="inline-links"><a className="text-link" href="https://idss-mesa.github.io/docs/" target="_blank" rel="noopener noreferrer">Explore MESA ↗</a><a className="text-link" href="https://gchism94.github.io/talks/" target="_blank" rel="noopener noreferrer">Talks & workshops ↗</a></div></div>
+      </div>
 
       {/* Courses */}
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/55 dark:text-cream/40 mb-2">Current Courses</p>
-        <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/55 mb-8">University of Arizona · iSchool</p>
+        <p className="font-dm-sans font-normal text-sm text-stone dark:text-cream/55 mb-8">University of Arizona · iSchool</p>
 
         <div className="grid grid-cols-3 gap-6 xl:grid-cols-2 md:grid-cols-1">
           {courses.map(({ Anim, num, title, desc, href, viz }) => (
-            <div key={num} className="border border-sand/60 dark:border-white/8 rounded-lg overflow-hidden">
+            <div key={num} className="course-card">
               {/* Animation thumbnail */}
               <div className="relative h-44 bg-linen dark:bg-midnight overflow-hidden">
                 <Anim className="absolute inset-0 w-full h-full" />
@@ -185,7 +190,7 @@ export default function Research() {
               <div className="p-6 border-t border-sand/40 dark:border-white/6">
                 <Tag className="mb-3">{num}</Tag>
                 <h3 className="font-serif text-lg font-bold text-bark dark:text-cream mb-3">{title}</h3>
-                <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed mb-4">{desc}</p>
+                <p className="font-dm-sans font-normal text-sm text-stone dark:text-cream/60 leading-relaxed mb-4">{desc}</p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                   {href && (
                     <a href={href} target="_blank" rel="noopener noreferrer"
@@ -209,7 +214,7 @@ export default function Research() {
       {/* Research Interests */}
       <section className="mb-20">
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/55 dark:text-cream/40 mb-8">Research Interests</p>
-        <p className="font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed max-w-2xl">
+        <p className="font-dm-sans font-normal text-base text-stone dark:text-cream/70 leading-relaxed max-w-2xl">
           My research sits at the intersection of reproducible data science, health informatics, and data science education. I&apos;m interested in how communities — whether research groups or neighborhoods — interact with data systems and how technology can be designed to serve the people most affected by its conclusions. This includes questions about AI evaluation, uncertainty communication, and the social infrastructure that makes evidence-based decisions possible.
         </p>
       </section>
@@ -223,7 +228,7 @@ export default function Research() {
       {/* Workshop Materials */}
       <section>
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/55 dark:text-cream/40 mb-4">Workshop Materials</p>
-        <p className="font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed mb-5">
+        <p className="font-dm-sans font-normal text-base text-stone dark:text-cream/70 leading-relaxed mb-5">
           Workshop materials from DSI and previous teaching roles — covering EDA in R and Python, reproducible research workflows, SQL, and Unix shell — are available on GitHub.
         </p>
         <Button href="https://github.com/Gchism94" variant="ghost" external>View on GitHub →</Button>

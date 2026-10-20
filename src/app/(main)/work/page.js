@@ -1,6 +1,7 @@
+import ProjectGallery from '@/components/ProjectGallery'
 import Tag from '@/components/ui/Tag'
 import Button from '@/components/ui/Button'
-import { ConsultingAnim, SteppeAnim, EduCloudAnim } from '@/components/WorkAnimations'
+import { ConsultingAnim, SteppeAnim } from '@/components/WorkAnimations'
 
 export const metadata = {
   title: 'Work — Greg Chism',
@@ -92,7 +93,7 @@ function PubList({ pubs }) {
             {byYear[year].map(({ title, venue, href, boldChism }) => (
               <li key={title} className="py-5">
                 <a href={href} target="_blank" rel="noopener noreferrer"
-                  className="font-dm-sans font-light text-base text-bark dark:text-cream hover:text-juniper dark:hover:text-teal transition-colors block mb-1">
+                  className="font-dm-sans font-normal text-base text-bark dark:text-cream hover:text-juniper dark:hover:text-teal transition-colors block mb-1">
                   <PubTitle title={title} boldChism={boldChism} />
                 </a>
                 <p className="font-mono text-[9px] tracking-[0.1em] uppercase text-stone/45 dark:text-cream/35">
@@ -109,10 +110,11 @@ function PubList({ pubs }) {
 
 export default function Work() {
   return (
-    <div className="max-w-5xl mx-auto px-8 py-20">
+    <div className="work-page editorial-wrap">
 
-      <h1 className="font-serif text-4xl xl:text-3xl font-bold text-bark dark:text-cream mb-3 leading-tight">Work</h1>
-      <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-stone/50 dark:text-cream/35 mb-20">Selected projects &amp; consulting</p>
+      <div className="work-page-heading"><p className="editorial-label">Selected projects / 2026</p><h1>Curiosity takes<br /><em>different forms.</em></h1><p>Independent products, open infrastructure, and education. A closer look at what I’m building and contributing to.</p></div>
+      <ProjectGallery full />
+      <div className="section-heading work-archive-heading"><div><p className="editorial-label">The wider practice</p><h2>Consulting &amp; ongoing work.</h2></div></div>
 
       {/* ── SECTION 1: THREE CANYON ── */}
       <section className="mb-20">
@@ -130,7 +132,7 @@ export default function Work() {
 
         <div className="grid grid-cols-2 gap-16 mb-8 lg:grid-cols-1 lg:gap-10">
           <div>
-            <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
+            <p className="font-dm-sans font-normal text-base text-stone dark:text-cream/75 leading-relaxed">
               AI and data strategy consulting for universities, health systems, and mission-driven
               organizations. I help teams design better data systems, evaluate AI applications
               thoughtfully, and build decision-relevant insight pipelines that actually get used
@@ -141,7 +143,7 @@ export default function Work() {
             <p className="font-mono text-[9px] tracking-[0.18em] uppercase text-stone/45 dark:text-cream/35 mb-5">Services</p>
             <ul className="space-y-3">
               {['Data Systems Design', 'AI Application Evaluation', 'Insight Pipeline Development', 'Research &amp; Analytics Strategy'].map((s) => (
-                <li key={s} className="font-dm-sans font-light text-sm text-stone dark:text-cream/75 border-b border-sand/40 dark:border-white/8 pb-3 last:border-0"
+                <li key={s} className="font-dm-sans font-normal text-sm text-stone dark:text-cream/75 border-b border-sand/40 dark:border-white/8 pb-3 last:border-0"
                   dangerouslySetInnerHTML={{ __html: s }}
                 />
               ))}
@@ -180,17 +182,17 @@ export default function Work() {
           Steppe
         </h2>
         <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal mb-8">
-          Founding members welcome · Central Oregon
+          Live site · Founding beta in development · Central Oregon
         </p>
 
         <div className="space-y-4 mb-8 max-w-2xl">
-          <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            A member-owned civic commons for Central Oregon, built around a simple premise: technology
+          <p className="font-dm-sans font-normal text-base text-stone dark:text-cream/75 leading-relaxed">
+            A fiscally sponsored civic project building toward a member-governed commons for Central Oregon. The premise: technology
             should serve the people who live somewhere, not extract from them.
           </p>
-          <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            No ads, ever. You verify you&apos;re local once, then that proof is deleted. Members own their
-            data and govern it one member, one vote — a public benefit nonprofit, not a startup.
+          <p className="font-dm-sans font-normal text-base text-stone dark:text-cream/75 leading-relaxed">
+            The founding beta is being developed around an ad-free model, local membership, and community
+            governance. The live site explains the proposed charter, beta plans, and ways to get involved.
           </p>
         </div>
 
@@ -201,46 +203,10 @@ export default function Work() {
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          <Button href="/steppe" variant="primary">Read the overview →</Button>
-          <Button href="https://steppe.community" variant="secondary" external>
-            steppe.community →
+          <Button href="https://steppe.community" variant="primary" external>
+            Visit Steppe ↗
           </Button>
         </div>
-      </section>
-
-      <hr className="border-sand/40 dark:border-white/8 mb-20" />
-
-      {/* ── SECTION 3: EDUCLOUD ── */}
-      <section className="mb-20">
-        <div className="relative h-48 rounded-lg overflow-hidden border border-sand/60 dark:border-white/8 bg-linen dark:bg-midnight mb-10">
-          <EduCloudAnim className="absolute inset-0 w-full h-full" />
-        </div>
-        <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-10">Education Infrastructure</p>
-
-        <h2 className="font-serif text-3xl font-bold text-bark dark:text-cream mb-2 leading-snug">
-          EduCloud
-        </h2>
-        <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-juniper dark:text-teal mb-8">
-          Federated system architecture · ACCESS · NAIRR · JS2
-        </p>
-
-        <div className="space-y-4 mb-8 max-w-2xl">
-          <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            An open-source, self-hostable platform for teaching with code — assignment distribution, sandboxed autograding, an AI tutor that cannot hand out solutions, and model routing that keeps student data on infrastructure your institution controls.
-          </p>
-          <p className="font-dm-sans font-light text-base text-stone dark:text-cream/75 leading-relaxed">
-            Free-by-default, governed as a commons, and designed so the people inside the system
-            always keep the final word over the machine.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-2 mb-7">
-          {['Systems Design', 'Federated Compute', 'ACCESS / NAIRR', 'Privacy by Design'].map((t) => (
-            <Tag key={t}>{t}</Tag>
-          ))}
-        </div>
-
-        <Button href="/educloud" variant="primary">Explore the architecture →</Button>
       </section>
 
       <hr className="border-sand/40 dark:border-white/8 mb-20" />
@@ -250,7 +216,7 @@ export default function Work() {
         <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone/50 dark:text-cream/35 mb-8">Open Source</p>
         <ul className="divide-y divide-sand/40 dark:divide-white/8">
           <li className="py-5 flex items-baseline justify-between gap-6 sm:flex-col sm:gap-1">
-            <p className="font-dm-sans font-light text-base text-bark dark:text-cream">
+            <p className="font-dm-sans font-normal text-base text-bark dark:text-cream">
               <a href="https://github.com/Gchism94/jupyterquest" target="_blank" rel="noopener noreferrer"
                 className="hover:text-juniper dark:hover:text-teal transition-colors">JupyterQuest</a>
               <span className="text-stone/70 dark:text-cream/50"> — gamified, interactive Jupyter environment for teaching reproducible data science.</span>

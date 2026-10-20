@@ -1,3 +1,4 @@
+import PageHeading from '@/components/PageHeading'
 import Image from 'next/image'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Tag from '@/components/ui/Tag'
@@ -6,10 +7,11 @@ import profilePic from '../../../../public/images/profile/developer-pic-2.jpg'
 
 export const metadata = {
   title: 'About — Greg Chism',
-  description: 'Data scientist, educator, and builder based in Bend, Oregon. Co-founder of Three Canyon Consulting and instructor at the University of Arizona.',
+  description: 'Greg Chism is an Assistant Professor of Practice and Faculty Director of Instructional Computing at the University of Arizona, advancing AI-native classrooms and equitable infrastructure.',
 }
 
 const skills = [
+  { label: 'Teaching & Infrastructure', tags: ['AI-native Classrooms', 'Learning Design', 'Research Computing', 'Open Infrastructure', 'AI Evaluation'], variant: 'accent' },
   { label: 'Languages & Tools', tags: ['R', 'Python', 'SQL', 'JavaScript', 'Docker', 'GitHub'], variant: 'default' },
   { label: 'AI & LLMs', tags: ['Prompt Engineering', 'Claude API', 'OpenAI API', 'RAG', 'Agentic Workflows', 'MCP'], variant: 'accent' },
   { label: 'Methods', tags: ['Machine Learning', 'Data Visualization', 'EDA', 'Reproducible Research', 'AI Evaluation'], variant: 'default' },
@@ -18,18 +20,18 @@ const skills = [
 
 const experience = [
   {
+    title: 'Assistant Professor of Practice',
+    org: 'University of Arizona',
+    period: '2023–Present',
+    location: 'Remote',
+    desc: 'Graduate teaching in data science, machine learning, and AI. Faculty Director of Instructional Computing and lead for education and training in MESA, connecting learning design with research infrastructure.',
+  },
+  {
     title: 'Co-Founder & Principal Consultant',
     org: 'Three Canyon Consulting',
     period: '2024–Present',
     location: 'Bend, OR',
-    desc: 'AI and data strategy consulting. Works with organizations to design better data systems, evaluate AI applications, and build decision-relevant insight pipelines.',
-  },
-  {
-    title: 'Instructor & Researcher',
-    org: 'University of Arizona',
-    period: '2023–Present',
-    location: 'Remote',
-    desc: 'Teaches graduate courses in data analysis, visualization, and data mining. Research focuses on reproducible methods in health and education contexts.',
+    desc: 'Applied data and AI work with universities, health systems, and mission-driven organizations.',
   },
   {
     title: 'Data Science Educator',
@@ -62,31 +64,26 @@ const education = [
 
 export default function About() {
   return (
-    <div className="max-w-5xl mx-auto px-8 py-20">
-      <h1 className="font-serif text-4xl xl:text-3xl font-bold text-bark dark:text-cream mb-14 leading-tight">About</h1>
+    <div className="editorial-wrap content-page about-page">
+      <PageHeading label="About / Greg T. Chism" description="Assistant Professor of Practice and Faculty Director of Instructional Computing at the University of Arizona. Based in Bend, Oregon.">Curiosity, put<br /> <em>into practice.</em></PageHeading>
 
       {/* Bio + Photo */}
-      <div className="flex gap-14 mb-24 lg:flex-col">
+      <div className="about-bio">
         <div className="flex-1">
-          <div className="space-y-5 font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed mb-8">
-            <p>I&apos;m a data scientist, educator, and builder based in Bend, Oregon.</p>
-            <p>My consulting practice, Three Canyon Consulting, works with universities, health systems, and mission-driven organizations to help them make better decisions with the data they already have. I focus on the full pipeline — from data infrastructure to the room where a decision actually gets made.</p>
-            <p>I&apos;m also a researcher and instructor at the University of Arizona, where I teach graduate students data visualization and data mining, and publish on reproducible research methods in health and education contexts.</p>
-            <p>Alongside all of that, I&apos;m building Steppe — member-owned civic infrastructure for Central Oregon that puts people before engagement metrics. No ads, no algorithmic amplification; neighbors verify they&apos;re local, then govern it together, one member, one vote.</p>
-            <p>I grew up believing that data and technology should make communities stronger, not extract from them. That belief shows up in every project I take on.</p>
+          <div className="space-y-5 font-dm-sans font-normal text-base text-stone dark:text-cream/70 leading-relaxed mb-8">
+            <p>My work brings teaching, AI, and research computing together so that more people can learn by doing, with access to the tools their questions require. I&apos;m focused on advancing AI-native classrooms and equitable access to the infrastructure that supports them.</p>
+            <p>I teach graduate courses in data science, machine learning, and AI, and help connect instructional computing with the needs of educators and learners. I also lead education and training for <a href="https://idss-mesa.github.io/docs/" target="_blank" rel="noopener noreferrer">MESA</a>, helping researchers turn shared computing resources into practical skills and workflows.</p>
+            <p>I&apos;m advancing AI-native classrooms: learning environments where assignments, feedback, AI support, and computing resources are designed together. Through <a href="/educloud">EduCloud</a>, I&apos;m building the infrastructure for that approach. Cairn supports classroom workflows; Belay brings peer tutoring into the learning environment; the wider ecosystem connects hosting, model access, and compute.</p>
+            <p>Equitable access is central to this work. A student&apos;s ability to experiment should not depend on an expensive laptop or a personal AI subscription. I work toward shared, adaptable infrastructure that helps educators use institutional and public research resources, make costs visible, and keep meaningful choices in their hands.</p>
+            <p>My path here began with studying collective behavior in social insects. That interest in how local interactions shape larger systems still informs how I think about classrooms, communities, and technology. It also runs through <a href="https://steppe.community" target="_blank" rel="noopener noreferrer">Steppe</a>, the civic commons I&apos;m building for Central Oregon, and <a href="https://midniht.app" target="_blank" rel="noopener noreferrer">Midniht</a>, a personal book library.</p>
           </div>
           <div className="flex flex-wrap gap-4">
             <Button href="/resume" variant="secondary">View Resume</Button>
             <Button href="/portfolio" variant="secondary">Learning Portfolio</Button>
           </div>
         </div>
-        <div className="w-64 flex-shrink-0 lg:w-full lg:max-w-xs">
-          <Image
-            src={profilePic}
-            alt="Greg Chism"
-            className="rounded-lg border border-sand/60 dark:border-white/8 w-full h-auto"
-            sizes="(max-width: 1023px) 320px, 256px"
-          />
+        <div className="about-portrait">
+          <Image src={profilePic} alt="Greg Chism" priority className="w-full h-auto" sizes="(max-width: 760px) 90vw, 36vw" />
         </div>
       </div>
 
@@ -98,7 +95,7 @@ export default function About() {
             <div className="absolute -left-[2.35rem] top-1.5 w-2.5 h-2.5 rounded-full bg-rust dark:bg-teal ring-2 ring-linen dark:ring-midnight" />
             <h3 className="font-serif text-lg font-bold text-bark dark:text-cream leading-snug">{e.title}</h3>
             <p className="font-mono text-[9px] tracking-[0.14em] uppercase text-stone/55 dark:text-cream/40 mt-1 mb-2">{e.org} · {e.period} · {e.location}</p>
-            <p className="font-dm-sans font-light text-sm text-stone dark:text-cream/60 leading-relaxed">{e.desc}</p>
+            <p className="font-dm-sans font-normal text-sm text-stone dark:text-cream/60 leading-relaxed">{e.desc}</p>
           </div>
         ))}
       </div>
@@ -131,7 +128,7 @@ export default function About() {
       {/* Reading List */}
       <SectionHeader label="Beyond the work" heading="A Working Library" className="mt-24 mb-10" />
       <div className="rounded-lg border border-sand/60 dark:border-white/8 border-l-2 border-l-rust dark:border-l-teal bg-linen dark:bg-white/[0.04] p-7">
-        <p className="font-dm-sans font-light text-base text-stone dark:text-cream/70 leading-relaxed mb-5 max-w-2xl">
+        <p className="font-dm-sans font-normal text-base text-stone dark:text-cream/70 leading-relaxed mb-5 max-w-2xl">
           A reading list on tacit and formal knowledge, the craft of building humane tools, and the systems and commons they live in — forty books across three movements, mapped by the motifs that thread through them.
         </p>
         <Button href="/reading" variant="ghost">Open the reading list →</Button>

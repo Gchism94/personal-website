@@ -7,7 +7,7 @@ const styles = {
 }
 
 export default function Button({ children, variant = 'primary', href, external, className = '', type = 'button', ...props }) {
-  const cls = `inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.16em] uppercase transition-colors duration-150 ${styles[variant]} ${className}`
+  const cls = `site-button inline-flex items-center gap-3 transition-colors duration-150 ${styles[variant]} ${className}`
   if (href) {
     if (external) return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
     return <Link href={href} className={cls}>{children}</Link>

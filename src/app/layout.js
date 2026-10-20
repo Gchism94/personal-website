@@ -1,12 +1,14 @@
-import { Playfair_Display, DM_Mono, DM_Sans, Inter } from 'next/font/google'
+import { Cormorant_Garamond, DM_Mono, Manrope } from 'next/font/google'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import './globals.css'
+import NavBar from '@/components/NavBar'
+import Footer from '@/components/Footer'
 
-const playfair = Playfair_Display({
+const display = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['700', '900'],
+  weight: ['600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-playfair',
+  variable: '--font-display',
   display: 'swap',
 })
 
@@ -17,19 +19,13 @@ const dmMono = DM_Mono({
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const body = Manrope({
   subsets: ['latin'],
-  weight: ['300', '400'],
-  variable: '--font-dm-sans',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-body',
   display: 'swap',
 })
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-sans',
-  display: 'swap',
-})
 
 export const metadata = {
   metadataBase: new URL('https://gregtchism.com'),
@@ -55,11 +51,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${playfair.variable} ${dmMono.variable} ${dmSans.variable} ${inter.variable}`}
-        style={{ fontFamily: 'var(--font-dm-sans), system-ui, sans-serif', fontWeight: 300 }}
+        className={`${display.variable} ${dmMono.variable} ${body.variable}`}
+        style={{ fontFamily: 'var(--font-body), system-ui, sans-serif', fontWeight: 400 }}
       >
         <ThemeProvider>
-          {children}
+          <NavBar />
+          <main id="main-content" tabIndex={-1}>{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
