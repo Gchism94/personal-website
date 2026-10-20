@@ -399,6 +399,8 @@ html .hd .top { background: var(--paper); }
   .landscape-caption .moon-status { font-size: 9px; }
 }
 
-@media (max-width: 760px) {
-  .dark .river-hero { min-height: calc(740px + min(86vw, 440px)); }
+/* Let the sky fill the frame while keeping the navigation and copy quiet. */
+.dark .river-hero::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(2,4,10,.8), transparent 160px), linear-gradient(to top, rgba(2,4,10,.9), transparent 60%);
 }

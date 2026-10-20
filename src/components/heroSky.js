@@ -67,10 +67,14 @@ export function drawSkyGeometry(ctx, sky, width, height) {
   paintMoon(ctx,sky,layout)
   ctx.font='10px ui-monospace, monospace'; ctx.fillStyle='#c0cbd9'
   for (const [label,x,y] of [['N',cx,cy-radius-10],['S',cx,cy+radius+18],['E',cx-radius-12,cy+3],['W',cx+radius+12,cy+3]]) ctx.fillText(label,x,y)
+  // Keep the key in the viewport even when the horizon extends off-screen.
+  const keyX = width - (width<=760 ? 24 : 65)
+  ctx.textAlign='right'
+  ctx.fillStyle='rgba(4,8,21,.85)'; ctx.fillRect(keyX-155,105,163,38)
   ctx.fillStyle='#efcd99'
-  ctx.fillText('MOON · NEXT 24 HOURS',cx,cy+radius+39)
+  ctx.fillText('MOON · NEXT 24 HOURS',keyX,119)
   ctx.fillStyle='#9bafc7'; ctx.font='9px ui-monospace, monospace'
-  ctx.fillText('DOTTED · ECLIPTIC',cx,cy+radius+55)
+  ctx.fillText('DOTTED · ECLIPTIC',keyX,135)
   ctx.textAlign='start'
 }
 
