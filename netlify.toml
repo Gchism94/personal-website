@@ -1,0 +1,36 @@
+# Archived static files otherwise take precedence over Next.js redirects.
+[[redirects]]
+  from = "/educloud.html"
+  to = "/educloud"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/high-desert.html"
+  to = "https://steppe.community"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Form/contact.html"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/form/contact.html"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Form/contact"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/form/contact"
+  to = "/contact"
+  status = 301
+  force = true
