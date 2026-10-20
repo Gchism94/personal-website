@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from './ThemeProvider'
+import NightSky, { drawSkyGeometry } from './heroSky'
 
 // The river follows the same centerline as the original landscape hero.
 const RIVER = [[-.12,.355],[-.06,.355],[0,.355],[.03,.355],[.0326,.3869],[.0714,.4116],[.1024,.4452],[.1307,.4871],[.1688,.5122],[.2218,.5349],[.2891,.5399],[.3558,.5296],[.3979,.5431],[.4271,.5679],[.4679,.5802],[.5065,.6025],[.5467,.6031],[.6046,.5940],[.6651,.5945],[.7157,.604],[.7676,.635],[.8056,.6336],[.8418,.6141],[.8658,.5899],[.8927,.5717],[.9306,.5856],[.97,.5901],[1.02,.595],[1.1,.602]]
@@ -39,6 +40,18 @@ export default function LandscapeHero() {
   const canvasRef = useRef(null)
   const pointerFrame = useRef(null)
   const [revealed, setRevealed] = useState(false)
+  const [paused, setPaused] = useState(false)
+
+  useEffect(() => {
+    const scene = sceneRef.current
+    let inView = true
+    const sync = () => { scene.dataset.visible = String(inView && !document.hidden) }
+    const observer = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; sync() })
+    observer.observe(scene)
+    document.addEventListener('visibilitychange', sync)
+    sync()
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync) }
+  }, [])
 
   useEffect(() => {
     const scene = sceneRef.current
@@ -61,6 +74,7 @@ export default function LandscapeHero() {
         dpr * (width - SCENE_WIDTH * scale) / 2,
         dpr * (height - SCENE_HEIGHT * scale) / 2)
       const dark = document.documentElement.classList.contains('dark')
+      if (dark) { drawSkyGeometry(ctx); return }
       const paper = dark ? '#02040a' : '#F5EFE6'
       const line = dark ? '159,208,194' : '74,124,111'
       const annotation = dark ? '#D4B896' : '#B5532A'
@@ -181,9 +195,10 @@ export default function LandscapeHero() {
   }
 
   return (
-    <section ref={sceneRef} className="river-hero" aria-labelledby="hero-heading"
+    <section ref={sceneRef} className="river-hero" data-motion={paused ? 'paused' : 'running'} aria-labelledby="hero-heading"
       onPointerMove={moveLens} onPointerLeave={hideLens}>
-      <svg className="river-landscape" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <NightSky />
+      <svg key={String(isDark)} className="river-landscape" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <clipPath id="forest-bank"><path d={FOREST_CLIP} /></clipPath>
           <linearGradient id="forest-fade" x2="0" y2="1"><stop offset="0" stopColor="white" stopOpacity=".9" /><stop offset=".8" stopColor="white" stopOpacity=".8" /><stop offset="1" stopColor="white" stopOpacity=".2" /></linearGradient>
@@ -192,9 +207,10 @@ export default function LandscapeHero() {
         <g clipPath="url(#forest-bank)" mask="url(#forest-paper)">
           <image className="forest-watercolor" href="/images/tree-sketch.png" {...FOREST} preserveAspectRatio="none" />
         </g>
-        <path className="river-wash" d={RIVER_PATH} fill="none" strokeWidth="30" />
-        <path className="river-bank" d={RIVER_PATH} fill="none" strokeWidth="12" />
-        <path className="river-current" d={RIVER_PATH} fill="none" strokeWidth="2" />
+        <path className="river-wash river-draw" pathLength="1" d={RIVER_PATH} fill="none" strokeWidth="30" />
+        <path className="river-bank river-draw" pathLength="1" d={RIVER_PATH} fill="none" strokeWidth="12" />
+        <path className="river-current river-draw" pathLength="1" d={RIVER_PATH} fill="none" strokeWidth="2" />
+        <g className="river-flow-arrival"><path className="river-flow" pathLength="1000" d={RIVER_PATH} fill="none" strokeWidth="2" /></g>
       </svg>
       <div ref={revealRef} className="systems-reveal" data-pinned={revealed} aria-hidden="true"><canvas ref={canvasRef} /></div>
       <div className="river-copy">
@@ -203,8 +219,8 @@ export default function LandscapeHero() {
         <p className="river-tagline">Building AI-native classrooms and shared computing infrastructure that give more people room to learn, experiment, and create.</p>
         <div className="river-links"><Link className="river-work-link" href="#selected-work">Explore my work <span aria-hidden="true">↗</span></Link><Link className="river-about-link" href="/about">About me</Link></div>
       </div>
-      <div className="landscape-caption"><span>Deschutes River · Central Oregon</span><span className="pointer-hint">Move your cursor to find the patterns beneath.</span><button type="button" aria-pressed={revealed} onClick={() => setRevealed(!revealed)}>{revealed ? 'Return to the landscape' : 'Reveal the patterns'} <span aria-hidden="true">{revealed ? '−' : '+'}</span></button></div>
-      <p className="sr-only">A watercolor forest above the river becomes a connected mathematical landscape. The illustration explores branching and flow; it is not measured geographic data. Use Reveal the patterns to view the full illustration without a mouse.</p>
+      <div className="landscape-caption"><span>{isDark ? 'Under the Central Oregon sky' : 'Deschutes River · Central Oregon'}</span><span className="pointer-hint">Move your cursor to find the patterns {isDark ? 'in the sky' : 'beneath'}.</span><div className="landscape-controls"><button type="button" aria-pressed={revealed} onClick={() => setRevealed(!revealed)}>{revealed ? (isDark ? 'Return to the stars' : 'Return to the landscape') : 'Reveal the patterns'} <span aria-hidden="true">{revealed ? '−' : '+'}</span></button><button className="motion-control" type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume motion' : 'Pause motion'}</button></div></div>
+      <p className="sr-only">{isDark ? 'A twinkling night sky with shooting stars reveals imagined constellations, orbital paths, and gravitational relationships. This is an artistic illustration, not an astronomical chart.' : 'A watercolor forest fades in as the river flows into view. The cursor reveals a mathematical landscape exploring branching and flow, not measured geographic data.'} Use Reveal the patterns to view the full illustration without a mouse.</p>
     </section>
   )
 }
