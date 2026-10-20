@@ -1,0 +1,31 @@
+ABOUT THIS SKY
+
+Cassiopeia, Cygnus, and Lyra are drawn from real star positions.
+Each figure uses a local gnomonic projection of J2000 coordinates, then a
+uniform scale and translation to fit the page. The same positions are used
+for the visible stars and their cursor-revealed connections.
+
+These are separately arranged constellation studies, not a live sky map
+or a simulation for a particular time and location. Background stars are
+decorative. Orbital ellipses illustrate geometry and are not measured orbits.
+
+STAR POSITIONS
+Hoffleit, D. & Warren, W. H., Jr. (1991), The Bright Star Catalogue,
+5th Revised Edition (preliminary version), Yale University Observatory.
+CDS catalogue V/50: https://cdsarc.cds.unistra.fr/ftp/V/50/ReadMe
+Coordinates and visual magnitudes for 18 selected stars, retrieved 2026-10-20.
+
+CONSTELLATION LINE FIGURES
+Adapted from ConstellationLines by Marc van der Sluys.
+Copyright (c) 2005-2026 Marc van der Sluys, hemel.waarnemen.com.
+https://github.com/MarcvdSluys/ConstellationLines
+https://doi.org/10.5281/zenodo.10397192
+Licensed under Creative Commons Attribution 4.0 International:
+https://creativecommons.org/licenses/by/4.0/
+Changes: selected three figures, removed duplicated edges, projected and
+rescaled the star positions, and added labels and visual styling.
+The source is provided without warranties under that license.
+
+Constellation figures vary between traditions; they are not official IAU
+boundaries or physical connections between stars.
+https://www.iau.org/IAU/Astronomy-FAQs/Constellations.aspx
