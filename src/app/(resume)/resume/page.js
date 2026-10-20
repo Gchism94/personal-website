@@ -1,7 +1,7 @@
 'use client'
 
 const CSS = `
-:root {
+.resume-sheet {
   --linen:   #F5EFE6;
   --bark:    #3B2F2F;
   --juniper: #4A7C6F;
@@ -11,51 +11,28 @@ const CSS = `
   --rust:    #B5532A;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 16px; }
 
-.page * { box-sizing: border-box; }
-.page h1, .page h2, .page h3, .page h4 { text-align: left; margin: 0; }
-.page h1, .page h2, .page h3 { font-family: inherit; font-weight: inherit; text-align: left; }
 
-body {
+
+.resume-sheet .page * { box-sizing: border-box; }
+.resume-sheet .page h1, .resume-sheet .page h2, .resume-sheet .page h3, .resume-sheet .page h4 { text-align: left; margin: 0; }
+.resume-sheet .page h1, .resume-sheet .page h2, .resume-sheet .page h3 { font-family: inherit; font-weight: inherit; text-align: left; }
+
+.resume-sheet {
   background: var(--linen);
   color: var(--bark);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
   min-height: 100vh;
   position: relative;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 300px 300px;
-  mix-blend-mode: multiply;
-  opacity: 0.14;
-}
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 14% 18%, rgba(255,255,255,.38), transparent 30%),
-    radial-gradient(circle at 82% 76%, rgba(94,75,52,.03), transparent 44%),
-    repeating-linear-gradient(0deg, rgba(59,47,47,.018) 0px, rgba(59,47,47,.018) 1px, transparent 1px, transparent 4px);
-  mix-blend-mode: multiply;
-  opacity: .28;
-}
 
-.page {
+
+
+.resume-sheet .page {
   position: relative;
   z-index: 1;
   max-width: 860px;
@@ -63,12 +40,12 @@ body::after {
   padding: 80px 72px 100px;
 }
 
-.print-btn {
-  position: fixed;
-  top: 28px;
-  right: 28px;
+.resume-sheet .print-btn {
+  position: relative;
+  top: auto;
+  right: auto;
   z-index: 100;
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 9px;
   letter-spacing: .18em;
   text-transform: uppercase;
@@ -79,17 +56,17 @@ body::after {
   cursor: pointer;
   transition: color .2s, border-color .2s;
 }
-.print-btn:hover { color: var(--juniper); border-color: var(--juniper); }
+.resume-sheet .print-btn:hover { color: var(--juniper); border-color: var(--juniper); }
 
-.cv-header {
+.resume-sheet .cv-header {
   border-bottom: 1px solid var(--sand);
   padding-bottom: 36px;
   margin-bottom: 52px;
 }
 
-h1.cv-name, .cv-name {
-  font-family: 'Playfair Display', serif !important;
-  font-weight: 900 !important;
+.resume-sheet h1.cv-name, .resume-sheet .cv-name {
+  font-family: var(--font-display), Georgia, serif !important;
+  font-weight: 600 !important;
   font-size: clamp(44px, 5.6vw, 72px) !important;
   line-height: 1.05 !important;
   letter-spacing: -.02em;
@@ -98,15 +75,15 @@ h1.cv-name, .cv-name {
   text-align: left;
 }
 
-h1.cv-name em, .cv-name em {
+.resume-sheet h1.cv-name em, .resume-sheet .cv-name em {
   font-style: italic !important;
   color: var(--juniper) !important;
-  font-family: 'Playfair Display', serif !important;
-  font-weight: 900 !important;
+  font-family: var(--font-display), Georgia, serif !important;
+  font-weight: 600 !important;
 }
 
-.cv-degree {
-  font-family: 'DM Mono', monospace;
+.resume-sheet .cv-degree {
+  font-family: var(--font-mono), monospace;
   font-size: 10px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -114,12 +91,12 @@ h1.cv-name em, .cv-name em {
   margin-bottom: 22px;
 }
 
-.cv-header { text-align: left; }
-.cv-name   { text-align: left; }
-.cv-links  { display: flex; gap: 28px; flex-wrap: wrap; justify-content: flex-start; }
+.resume-sheet .cv-header { text-align: left; }
+.resume-sheet .cv-name   { text-align: left; }
+.resume-sheet .cv-links  { display: flex; gap: 28px; flex-wrap: wrap; justify-content: flex-start; }
 
-.cv-links a {
-  font-family: 'DM Mono', monospace;
+.resume-sheet .cv-links a {
+  font-family: var(--font-mono), monospace;
   font-size: 9.5px;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -129,13 +106,13 @@ h1.cv-name em, .cv-name em {
   padding-bottom: 1px;
   transition: color .2s, border-color .2s;
 }
-.cv-links a:hover { color: var(--juniper); border-color: var(--juniper); }
-.cv-links .divider { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--ash-lt); }
+.resume-sheet .cv-links a:hover { color: var(--juniper); border-color: var(--juniper); }
+.resume-sheet .cv-links .divider { font-family: var(--font-mono), monospace; font-size: 9.5px; color: var(--ash-lt); }
 
-.cv-body { display: grid; grid-template-columns: 168px 1fr; gap: 0 52px; }
+.resume-sheet .cv-body { display: grid; grid-template-columns: 168px 1fr; gap: 0 52px; }
 
-.section-label {
-  font-family: 'DM Mono', monospace;
+.resume-sheet .section-label {
+  font-family: var(--font-mono), monospace;
   font-size: 8.5px;
   letter-spacing: .26em;
   text-transform: uppercase;
@@ -145,11 +122,11 @@ h1.cv-name em, .cv-name em {
   line-height: 1.6;
 }
 
-.section { display: contents; }
+.resume-sheet .section { display: contents; }
 
-.section-content { border-top: 1px solid var(--sand); padding: 32px 0 40px; }
+.resume-sheet .section-content { border-top: 1px solid var(--sand); padding: 32px 0 40px; }
 
-.section-label-cell {
+.resume-sheet .section-label-cell {
   border-top: 1px solid var(--sand);
   padding: 32px 0 40px;
   display: flex;
@@ -157,21 +134,21 @@ h1.cv-name em, .cv-name em {
   align-items: flex-start;
 }
 
-.entry { margin-bottom: 26px; }
-.entry:last-child { margin-bottom: 0; }
+.resume-sheet .entry { margin-bottom: 26px; }
+.resume-sheet .entry:last-child { margin-bottom: 0; }
 
-.entry-title {
-  font-family: 'Playfair Display', serif;
+.resume-sheet .entry-title {
+  font-family: var(--font-display), Georgia, serif;
   font-weight: 700;
   font-size: 15px;
   color: var(--bark);
   line-height: 1.3;
   margin-bottom: 3px;
 }
-.entry-title em { font-style: italic; color: var(--juniper); }
+.resume-sheet .entry-title em { font-style: italic; color: var(--juniper); }
 
-.entry-meta {
-  font-family: 'DM Mono', monospace;
+.resume-sheet .entry-meta {
+  font-family: var(--font-mono), monospace;
   font-size: 8.5px;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -179,22 +156,22 @@ h1.cv-name em, .cv-name em {
   margin-bottom: 8px;
 }
 
-.entry-body { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 13.5px; line-height: 1.72; color: var(--bark); }
-.entry-body p { margin-bottom: 4px; }
+.resume-sheet .entry-body { font-family: var(--font-body), sans-serif; font-weight: 400; font-size: 13.5px; line-height: 1.72; color: var(--bark); }
+.resume-sheet .entry-body p { margin-bottom: 4px; }
 
-.cv-bullets { list-style: none; padding: 0; margin: 6px 0 0; }
-.cv-bullets li { font-size: 13px; line-height: 1.68; color: #5A4F4A; padding-left: 14px; position: relative; margin-bottom: 3px; }
-.cv-bullets li::before { content: "—"; position: absolute; left: 0; color: var(--ash-lt); font-size: 11px; top: 1px; }
+.resume-sheet .cv-bullets { list-style: none; padding: 0; margin: 6px 0 0; }
+.resume-sheet .cv-bullets li { font-size: 13px; line-height: 1.68; color: #5A4F4A; padding-left: 14px; position: relative; margin-bottom: 3px; }
+.resume-sheet .cv-bullets li::before { content: "—"; position: absolute; left: 0; color: var(--ash-lt); font-size: 11px; top: 1px; }
 
-.pub-entry { margin-bottom: 18px; padding-left: 22px; position: relative; }
-.pub-entry::before { content: attr(data-n); position: absolute; left: 0; font-family: 'DM Mono', monospace; font-size: 8.5px; color: var(--ash-lt); top: 3px; }
-.pub-entry .pub-title { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: var(--bark); line-height: 1.6; }
-.pub-entry .pub-venue { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .10em; text-transform: uppercase; color: var(--ash); margin-top: 3px; }
-.pub-entry .pub-title a, .pub-entry .pub-venue a { color: var(--juniper); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
-.pub-entry .pub-title a:hover, .pub-entry .pub-venue a:hover { border-color: var(--juniper); }
+.resume-sheet .pub-entry { margin-bottom: 18px; padding-left: 22px; position: relative; }
+.resume-sheet .pub-entry::before { content: attr(data-n); position: absolute; left: 0; font-family: var(--font-mono), monospace; font-size: 8.5px; color: var(--ash-lt); top: 3px; }
+.resume-sheet .pub-entry .pub-title { font-family: var(--font-body), sans-serif; font-size: 13px; font-weight: 400; color: var(--bark); line-height: 1.6; }
+.resume-sheet .pub-entry .pub-venue { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .10em; text-transform: uppercase; color: var(--ash); margin-top: 3px; }
+.resume-sheet .pub-entry .pub-title a, .resume-sheet .pub-entry .pub-venue a { color: var(--juniper); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.resume-sheet .pub-entry .pub-title a:hover, .resume-sheet .pub-entry .pub-venue a:hover { border-color: var(--juniper); }
 
-.subsection-head {
-  font-family: 'Playfair Display', serif;
+.resume-sheet .subsection-head {
+  font-family: var(--font-display), Georgia, serif;
   font-style: italic;
   font-weight: 400;
   font-size: 13px;
@@ -203,52 +180,52 @@ h1.cv-name em, .cv-name em {
   padding-bottom: 6px;
   border-bottom: 1px solid rgba(196,188,179,.45);
 }
-.subsection-head:first-child { margin-top: 0; }
+.resume-sheet .subsection-head:first-child { margin-top: 0; }
 
-.award-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 12px; }
-.award-name { font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--bark); }
-.award-year { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .12em; color: var(--ash); white-space: nowrap; flex-shrink: 0; }
+.resume-sheet .award-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 12px; }
+.resume-sheet .award-name { font-size: 13px; font-family: var(--font-body), sans-serif; color: var(--bark); }
+.resume-sheet .award-year { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .12em; color: var(--ash); white-space: nowrap; flex-shrink: 0; }
 
-.grant-entry { margin-bottom: 20px; padding: 16px 18px; border-left: 2px solid var(--sand); background: rgba(212,184,150,.07); }
-.grant-title { font-family: 'Playfair Display', serif; font-size: 13.5px; font-weight: 700; color: var(--bark); margin-bottom: 4px; line-height: 1.4; }
-.grant-meta { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .10em; text-transform: uppercase; color: var(--ash); line-height: 1.8; }
-.grant-meta .awarded { color: var(--juniper); font-weight: 400; }
-.grant-meta .award-pending { color: var(--juniper); font-weight: 400; }
-.grant-meta .pending { color: var(--rust); font-weight: 400; }
-.grant-meta .not-awarded { color: var(--ash-lt); }
+.resume-sheet .grant-entry { margin-bottom: 20px; padding: 16px 18px; border-left: 2px solid var(--sand); background: rgba(212,184,150,.07); }
+.resume-sheet .grant-title { font-family: var(--font-display), Georgia, serif; font-size: 13.5px; font-weight: 700; color: var(--bark); margin-bottom: 4px; line-height: 1.4; }
+.resume-sheet .grant-meta { font-family: var(--font-mono), monospace; font-size: 8px; letter-spacing: .10em; text-transform: uppercase; color: var(--ash); line-height: 1.8; }
+.resume-sheet .grant-meta .awarded { color: var(--juniper); font-weight: 400; }
+.resume-sheet .grant-meta .award-pending { color: var(--juniper); font-weight: 400; }
+.resume-sheet .grant-meta .pending { color: var(--rust); font-weight: 400; }
+.resume-sheet .grant-meta .not-awarded { color: var(--ash-lt); }
 
-.cert-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash); border: 1px solid var(--ash-lt); padding: 5px 11px; }
+.resume-sheet .cert-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.resume-sheet .chip { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash); border: 1px solid var(--ash-lt); padding: 5px 11px; }
 
-.plain-list { list-style: none; padding: 0; }
-.plain-list li { font-size: 13px; line-height: 1.68; color: var(--bark); padding: 7px 0; border-bottom: 1px solid rgba(196,188,179,.3); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.plain-list li:last-child { border-bottom: none; }
-.plain-list .item-year { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .10em; color: var(--ash); white-space: nowrap; flex-shrink: 0; }
+.resume-sheet .plain-list { list-style: none; padding: 0; }
+.resume-sheet .plain-list li { font-size: 13px; line-height: 1.68; color: var(--bark); padding: 7px 0; border-bottom: 1px solid rgba(196,188,179,.3); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.resume-sheet .plain-list li:last-child { border-bottom: none; }
+.resume-sheet .plain-list .item-year { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .10em; color: var(--ash); white-space: nowrap; flex-shrink: 0; }
 
-.watermark { position: fixed; bottom: 32px; right: 36px; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .20em; text-transform: uppercase; color: var(--ash-lt); z-index: 1; }
+.resume-sheet .watermark { position: relative; bottom: 32px; right: 36px; font-family: var(--font-mono), monospace; font-size: 8px; letter-spacing: .20em; text-transform: uppercase; color: var(--ash-lt); z-index: 1; }
 
 @media print {
-  body::before, body::after { display: none; }
-  .print-btn, .watermark { display: none; }
-  .page { padding: 40px 52px 60px; max-width: 100%; }
-  .cv-name { font-size: 42px; }
-  a { color: inherit !important; }
-  .grant-entry { break-inside: avoid; }
-  .pub-entry { break-inside: avoid; }
-  .entry { break-inside: avoid; }
+  .resume-sheet .print-btn,
+  .resume-sheet .watermark { display: none; }
+  .resume-sheet .page { padding: 40px 52px 60px; max-width: 100%; }
+  .resume-sheet .cv-name { font-size: 42px; }
+  .resume-sheet a { color: inherit !important; }
+  .resume-sheet .grant-entry { break-inside: avoid; }
+  .resume-sheet .pub-entry { break-inside: avoid; }
+  .resume-sheet .entry { break-inside: avoid; }
 }
 
 @media (max-width: 680px) {
-  .page { padding: 48px 28px 72px; }
-  .cv-body { grid-template-columns: 1fr; gap: 0; }
-  .section-label-cell { justify-content: flex-start; padding-bottom: 10px; border-top: none; padding-top: 32px; }
-  .section-content { border-top: none; padding-top: 0; }
-  .print-btn { top: 16px; right: 16px; }
+  .resume-sheet .page { padding: 48px 28px 72px; }
+  .resume-sheet .cv-body { grid-template-columns: 1fr; gap: 0; }
+  .resume-sheet .section-label-cell { justify-content: flex-start; padding-bottom: 10px; border-top: none; padding-top: 32px; }
+  .resume-sheet .section-content { border-top: none; padding-top: 0; }
+  .resume-sheet .print-btn { top: auto; right: auto; }
 }
 
 /* ─── Dark mode — screen only (print stays light for PDF/paper) ─── */
 @media screen {
-  html.dark {
+  html.dark .resume-sheet {
     --linen:   #02040a;
     --bark:    #F3EADF;
     --juniper: #9FD0C2;
@@ -257,13 +234,13 @@ h1.cv-name em, .cv-name em {
     --sand:    rgba(243,234,223,0.20);
     --rust:    #DE7A50;
   }
-  html.dark .cv-bullets li { color: #D8D0C4; }
+  html.dark .resume-sheet .cv-bullets li { color: #D8D0C4; }
 }
 `
 
 export default function Resume() {
   return (
-    <>
+    <div className="resume-sheet document-sheet">
       <style suppressHydrationWarning>{CSS}</style>
 
       <button className="print-btn" onClick={() => window.print()}>Print / Save PDF</button>
@@ -618,6 +595,6 @@ export default function Resume() {
       </div>
 
       <div className="watermark">gregtchism.com</div>
-    </>
+    </div>
   )
 }

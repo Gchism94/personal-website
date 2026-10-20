@@ -1,7 +1,7 @@
 'use client'
 
 const CSS = `
-:root {
+.portfolio-sheet {
   --linen:   #F5EFE6;
   --bark:    #3B2F2F;
   --juniper: #4A7C6F;
@@ -15,33 +15,22 @@ const CSS = `
   --ink-soft:#5A4F4A;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 16px; }
 
-body {
+
+
+.portfolio-sheet {
   background: var(--linen);
   color: var(--bark);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
   min-height: 100vh;
   position: relative;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 300px 300px;
-  mix-blend-mode: multiply;
-  opacity: 0.14;
-}
 
-.page {
+
+.portfolio-sheet .page {
   position: relative;
   z-index: 1;
   max-width: 860px;
@@ -49,14 +38,14 @@ body::before {
   padding: 80px 64px 80px;
 }
 
-.page a { color: inherit; text-decoration: none; }
+.portfolio-sheet .page a { color: inherit; text-decoration: none; }
 
-.print-btn {
-  position: fixed;
-  top: 28px;
-  right: 28px;
+.portfolio-sheet .print-btn {
+  position: relative;
+  top: auto;
+  right: auto;
   z-index: 100;
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 9px;
   letter-spacing: .18em;
   text-transform: uppercase;
@@ -67,14 +56,14 @@ body::before {
   cursor: pointer;
   transition: color .2s, border-color .2s;
 }
-.print-btn:hover { color: var(--juniper); border-color: var(--juniper); }
+.portfolio-sheet .print-btn:hover { color: var(--juniper); border-color: var(--juniper); }
 
 /* ── Header ── */
-.pf-header { border-bottom: 1px solid var(--sand); padding-bottom: 26px; margin-bottom: 32px; }
+.portfolio-sheet .pf-header { border-bottom: 1px solid var(--sand); padding-bottom: 26px; margin-bottom: 32px; }
 
-h1.pf-name {
-  font-family: 'Playfair Display', serif !important;
-  font-weight: 900 !important;
+.portfolio-sheet h1.pf-name {
+  font-family: var(--font-display), Georgia, serif !important;
+  font-weight: 600 !important;
   font-size: clamp(40px, 5.2vw, 54px) !important;
   line-height: 1.05 !important;
   letter-spacing: -.02em;
@@ -82,10 +71,10 @@ h1.pf-name {
   margin-bottom: 6px;
   text-align: left;
 }
-h1.pf-name em { font-style: italic !important; color: var(--juniper) !important; font-family: 'Playfair Display', serif !important; font-weight: 900 !important; }
+.portfolio-sheet h1.pf-name em { font-style: italic !important; color: var(--juniper) !important; font-family: var(--font-display), Georgia, serif !important; font-weight: 600 !important; }
 
-.pf-degree {
-  font-family: 'DM Mono', monospace;
+.portfolio-sheet .pf-degree {
+  font-family: var(--font-mono), monospace;
   font-size: 10px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -93,9 +82,9 @@ h1.pf-name em { font-style: italic !important; color: var(--juniper) !important;
   margin-bottom: 20px;
 }
 
-.pf-links { display: flex; gap: 24px; flex-wrap: wrap; }
-.pf-links a {
-  font-family: 'DM Mono', monospace;
+.portfolio-sheet .pf-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.portfolio-sheet .pf-links a {
+  font-family: var(--font-mono), monospace;
   font-size: 9.5px;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -104,55 +93,55 @@ h1.pf-name em { font-style: italic !important; color: var(--juniper) !important;
   padding-bottom: 1px;
   transition: color .2s, border-color .2s;
 }
-.pf-links a:hover { color: var(--juniper); border-color: var(--juniper); }
-.pf-links .divider { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--ash-lt); }
+.portfolio-sheet .pf-links a:hover { color: var(--juniper); border-color: var(--juniper); }
+.portfolio-sheet .pf-links .divider { font-family: var(--font-mono), monospace; font-size: 9.5px; color: var(--ash-lt); }
 
 /* ── Intro ── */
-.pf-intro {
+.portfolio-sheet .pf-intro {
   font-size: 15px;
   line-height: 1.75;
   color: var(--bark);
   max-width: 700px;
   margin-bottom: 30px;
 }
-.pf-intro strong { font-weight: 400; color: var(--juniper); }
+.portfolio-sheet .pf-intro strong { font-weight: 400; color: var(--juniper); }
 
 /* ── Stat strip ── */
-.stat-strip {
+.portfolio-sheet .stat-strip {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   border-top: 1px solid var(--sand);
   border-bottom: 1px solid var(--sand);
   margin-bottom: 44px;
 }
-.stat { padding: 16px 10px 14px; text-align: center; border-left: 1px solid rgba(212,184,150,.45); }
-.stat:first-child { border-left: none; }
-.stat-num { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 24px; color: var(--bark); line-height: 1; margin-bottom: 7px; }
-.stat-num em { font-style: italic; color: var(--juniper); }
-.stat-label { font-family: 'DM Mono', monospace; font-size: 7.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ash); line-height: 1.6; }
+.portfolio-sheet .stat { padding: 16px 10px 14px; text-align: center; border-left: 1px solid rgba(212,184,150,.45); }
+.portfolio-sheet .stat:first-child { border-left: none; }
+.portfolio-sheet .stat-num { font-family: var(--font-display), Georgia, serif; font-weight: 700; font-size: 24px; color: var(--bark); line-height: 1; margin-bottom: 7px; }
+.portfolio-sheet .stat-num em { font-style: italic; color: var(--juniper); }
+.portfolio-sheet .stat-label { font-family: var(--font-mono), monospace; font-size: 7.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ash); line-height: 1.6; }
 
 /* ── Sections ── */
-.section-label {
-  font-family: 'DM Mono', monospace;
+.portfolio-sheet .section-label {
+  font-family: var(--font-mono), monospace;
   font-size: 9px;
   letter-spacing: .26em;
   text-transform: uppercase;
   color: var(--ash);
   margin-bottom: 6px;
 }
-.section-head {
-  font-family: 'Playfair Display', serif;
+.portfolio-sheet .section-head {
+  font-family: var(--font-display), Georgia, serif;
   font-weight: 700;
   font-size: 24px;
   color: var(--bark);
   margin-bottom: 8px;
   text-align: left;
 }
-.section-intro { font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); max-width: 660px; margin-bottom: 18px; }
-.pf-section { margin-bottom: 44px; }
+.portfolio-sheet .section-intro { font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); max-width: 660px; margin-bottom: 18px; }
+.portfolio-sheet .pf-section { margin-bottom: 44px; }
 
 /* ── Case studies ── */
-.case {
+.portfolio-sheet .case {
   border: 1px solid var(--card-bd);
   border-left: 2px solid var(--juniper);
   background: var(--card);
@@ -160,84 +149,84 @@ h1.pf-name em { font-style: italic !important; color: var(--juniper) !important;
   margin-bottom: 16px;
   break-inside: avoid;
 }
-.case-n { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .22em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
-.case-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 17px; color: var(--bark); margin-bottom: 3px; text-align: left; }
-.case-meta { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash); margin-bottom: 12px; }
-.case-meta a { color: var(--juniper); }
-.case-meta a:hover { text-decoration: underline; }
-.case-row { margin-bottom: 9px; font-size: 13px; line-height: 1.65; color: var(--ink-soft); }
-.case-row:last-child { margin-bottom: 0; }
-.case-row .k { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--juniper); display: block; margin-bottom: 2px; }
+.portfolio-sheet .case-n { font-family: var(--font-mono), monospace; font-size: 8px; letter-spacing: .22em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+.portfolio-sheet .case-title { font-family: var(--font-display), Georgia, serif; font-weight: 700; font-size: 17px; color: var(--bark); margin-bottom: 3px; text-align: left; }
+.portfolio-sheet .case-meta { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash); margin-bottom: 12px; }
+.portfolio-sheet .case-meta a { color: var(--juniper); }
+.portfolio-sheet .case-meta a:hover { text-decoration: underline; }
+.portfolio-sheet .case-row { margin-bottom: 9px; font-size: 13px; line-height: 1.65; color: var(--ink-soft); }
+.portfolio-sheet .case-row:last-child { margin-bottom: 0; }
+.portfolio-sheet .case-row .k { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--juniper); display: block; margin-bottom: 2px; }
 
-.also-list { list-style: none; margin-top: 6px; }
-.also-list li { font-size: 13px; line-height: 1.6; color: var(--ink-soft); padding: 8px 0; border-bottom: 1px solid rgba(196,188,179,.35); display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
-.also-list li:last-child { border-bottom: none; }
-.also-list .crs { color: var(--bark); }
-.also-list .crs strong { font-weight: 400; }
-.also-list a { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--juniper); white-space: nowrap; flex-shrink: 0; }
-.also-list a:hover { text-decoration: underline; }
+.portfolio-sheet .also-list { list-style: none; margin-top: 6px; }
+.portfolio-sheet .also-list li { font-size: 13px; line-height: 1.6; color: var(--ink-soft); padding: 8px 0; border-bottom: 1px solid rgba(196,188,179,.35); display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
+.portfolio-sheet .also-list li:last-child { border-bottom: none; }
+.portfolio-sheet .also-list .crs { color: var(--bark); }
+.portfolio-sheet .also-list .crs strong { font-weight: 400; }
+.portfolio-sheet .also-list a { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--juniper); white-space: nowrap; flex-shrink: 0; }
+.portfolio-sheet .also-list a:hover { text-decoration: underline; }
 
 /* ── Platform grid ── */
-.plat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
-.plat {
+.portfolio-sheet .plat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.portfolio-sheet .plat {
   border: 1px solid var(--card-bd);
   background: var(--card);
   padding: 16px 18px 14px;
   break-inside: avoid;
 }
-.plat-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 14.5px; color: var(--bark); margin-bottom: 2px; text-align: left; }
-.plat-meta { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash); margin-bottom: 8px; }
-.plat-meta .hl { color: var(--juniper); }
-.plat p { font-size: 12.5px; line-height: 1.58; color: var(--ink-soft); }
-.plat a { color: var(--juniper); }
-.plat a:hover { text-decoration: underline; }
+.portfolio-sheet .plat-title { font-family: var(--font-display), Georgia, serif; font-weight: 700; font-size: 14.5px; color: var(--bark); margin-bottom: 2px; text-align: left; }
+.portfolio-sheet .plat-meta { font-family: var(--font-mono), monospace; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--ash); margin-bottom: 8px; }
+.portfolio-sheet .plat-meta .hl { color: var(--juniper); }
+.portfolio-sheet .plat p { font-size: 12.5px; line-height: 1.58; color: var(--ink-soft); }
+.portfolio-sheet .plat a { color: var(--juniper); }
+.portfolio-sheet .plat a:hover { text-decoration: underline; }
 
 /* ── Two-column evidence rows ── */
-.ev-row { display: grid; grid-template-columns: 168px 1fr; gap: 26px; padding: 13px 0; border-top: 1px solid var(--hair); break-inside: avoid; }
-.ev-row:last-of-type { border-bottom: 1px solid var(--hair); }
-.ev-k { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ash); text-align: right; padding-top: 3px; line-height: 1.7; }
-.ev-body { font-size: 13px; line-height: 1.65; color: var(--ink-soft); }
-.ev-body strong { font-weight: 400; color: var(--bark); }
-.ev-body a { color: var(--juniper); }
-.ev-body a:hover { text-decoration: underline; }
+.portfolio-sheet .ev-row { display: grid; grid-template-columns: 168px 1fr; gap: 26px; padding: 13px 0; border-top: 1px solid var(--hair); break-inside: avoid; }
+.portfolio-sheet .ev-row:last-of-type { border-bottom: 1px solid var(--hair); }
+.portfolio-sheet .ev-k { font-family: var(--font-mono), monospace; font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ash); text-align: right; padding-top: 3px; line-height: 1.7; }
+.portfolio-sheet .ev-body { font-size: 13px; line-height: 1.65; color: var(--ink-soft); }
+.portfolio-sheet .ev-body strong { font-weight: 400; color: var(--bark); }
+.portfolio-sheet .ev-body a { color: var(--juniper); }
+.portfolio-sheet .ev-body a:hover { text-decoration: underline; }
 
 /* ── Footer ── */
-.pf-footer { border-top: 1px solid var(--sand); padding-top: 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
-.pf-footer p { font-size: 12px; line-height: 1.6; color: var(--ash); }
-.pf-footer a { color: var(--juniper); }
-.pf-footer a:hover { text-decoration: underline; }
-.pf-footer .wm { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: var(--ash-lt); white-space: nowrap; }
+.portfolio-sheet .pf-footer { border-top: 1px solid var(--sand); padding-top: 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.portfolio-sheet .pf-footer p { font-size: 12px; line-height: 1.6; color: var(--ash); }
+.portfolio-sheet .pf-footer a { color: var(--juniper); }
+.portfolio-sheet .pf-footer a:hover { text-decoration: underline; }
+.portfolio-sheet .pf-footer .wm { font-family: var(--font-mono), monospace; font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: var(--ash-lt); white-space: nowrap; }
 
 @media print {
-  body::before { display: none; }
-  .print-btn { display: none; }
-  .page { padding: 34px 48px 24px; max-width: 100%; }
-  h1.pf-name { font-size: 46px !important; }
-  .section-head { font-size: 22px; }
-  .pf-intro { font-size: 14.5px; line-height: 1.7; margin-bottom: 26px; }
-  .pf-section { margin-bottom: 20px; }
-  .case, .plat, .ev-row { break-inside: avoid; }
-  .page a { color: inherit !important; }
-  .case-meta a, .also-list a, .plat a, .ev-body a, .pf-footer a { color: var(--juniper) !important; }
+
+  .portfolio-sheet .print-btn { display: none; }
+  .portfolio-sheet .page { padding: 34px 48px 24px; max-width: 100%; }
+  .portfolio-sheet h1.pf-name { font-size: 46px !important; }
+  .portfolio-sheet .section-head { font-size: 22px; }
+  .portfolio-sheet .pf-intro { font-size: 14.5px; line-height: 1.7; margin-bottom: 26px; }
+  .portfolio-sheet .pf-section { margin-bottom: 20px; }
+  .portfolio-sheet .case, .portfolio-sheet .plat, .portfolio-sheet .ev-row { break-inside: avoid; }
+  .portfolio-sheet .page a { color: inherit !important; }
+  .portfolio-sheet .case-meta a, .portfolio-sheet .also-list a, .portfolio-sheet .plat a, .portfolio-sheet .ev-body a, .portfolio-sheet .pf-footer a { color: var(--juniper) !important; }
 }
 @page { size: letter; margin: 0; }
 
 @media (max-width: 680px) {
-  .page { padding: 56px 24px 64px; }
-  .stat-strip { grid-template-columns: repeat(3, 1fr); }
-  .stat { border-left: none; border-top: 1px solid rgba(212,184,150,.3); }
-  .stat:nth-child(-n+3) { border-top: none; }
-  .plat-grid { grid-template-columns: 1fr; }
-  .ev-row { grid-template-columns: 1fr; gap: 6px; }
-  .ev-k { text-align: left; }
-  .also-list li { flex-direction: column; gap: 4px; }
-  .pf-footer { flex-direction: column; gap: 8px; }
-  .print-btn { top: 14px; right: 14px; }
+  .portfolio-sheet .page { padding: 56px 24px 64px; }
+  .portfolio-sheet .stat-strip { grid-template-columns: repeat(3, 1fr); }
+  .portfolio-sheet .stat { border-left: none; border-top: 1px solid rgba(212,184,150,.3); }
+  .portfolio-sheet .stat:nth-child(-n+3) { border-top: none; }
+  .portfolio-sheet .plat-grid { grid-template-columns: 1fr; }
+  .portfolio-sheet .ev-row { grid-template-columns: 1fr; gap: 6px; }
+  .portfolio-sheet .ev-k { text-align: left; }
+  .portfolio-sheet .also-list li { flex-direction: column; gap: 4px; }
+  .portfolio-sheet .pf-footer { flex-direction: column; gap: 8px; }
+  .portfolio-sheet .print-btn { top: 14px; right: 14px; }
 }
 
 /* ─── Dark mode — screen only (print stays light for PDF/paper) ─── */
 @media screen {
-  html.dark {
+  html.dark .portfolio-sheet {
     --linen:   #02040a;
     --bark:    #F3EADF;
     --juniper: #9FD0C2;
@@ -250,13 +239,12 @@ h1.pf-name em { font-style: italic !important; color: var(--juniper) !important;
     --hair:    rgba(255,255,255,0.10);
     --ink-soft:#D8D0C4;
   }
-  html.dark body::before { mix-blend-mode: screen; opacity: 0.05; }
-}
+  }
 `
 
 export default function Portfolio() {
   return (
-    <>
+    <div className="portfolio-sheet document-sheet">
       <style suppressHydrationWarning>{CSS}</style>
 
       <button className="print-btn" onClick={() => window.print()}>Print / Save PDF</button>
@@ -364,11 +352,12 @@ export default function Portfolio() {
 
         {/* AI-FIRST */}
         <section className="pf-section">
-          <p className="section-label">02 · AI-First Learning Engineering</p>
-          <h2 className="section-head">The platforms behind the courses</h2>
+          <p className="section-label">02 · AI-Native Classrooms</p>
+          <h2 className="section-head">Learning and infrastructure, designed together</h2>
           <p className="section-intro">
-            I use AI throughout my design work. Prompt engineering, the Claude and OpenAI APIs, RAG, and
-            agentic workflows are everyday tools for research, prototyping, content production, and feedback.
+            I design classroom experiences with their infrastructure built in: shared computing, model access,
+            assignments, and feedback. The goal is to make meaningful experimentation available to students
+            without requiring each learner to supply their own hardware or subscriptions.
           </p>
           <div className="plat-grid">
             <div className="plat">
@@ -378,10 +367,11 @@ export default function Portfolio() {
               on real GPUs. I designed the sandbox and won the award as Lead-PI.</p>
             </div>
             <div className="plat">
-              <h3 className="plat-title">Sol — Agentic Tutoring &amp; Feedback</h3>
-              <p className="plat-meta"><span className="hl">University of Arizona iSchool · 2023–Present</span></p>
-              <p>Sol is an open-source agentic AI with modular tutoring and feedback components, built from my
-              research and piloted across my courses to scale support beyond instructor hours.</p>
+              <h3 className="plat-title">Belay — Tutoring Embedded in the Classroom</h3>
+              <p className="plat-meta"><span className="hl">EduCloud ecosystem · In development</span></p>
+              <p>Belay brings peer tutoring into the classroom&apos;s learning environment, with domain-specific
+              materials and checks on generated responses. As part of EduCloud, it connects learning support
+              with model policy and shared infrastructure while keeping tutoring separate from grades.</p>
             </div>
             <div className="plat">
               <h3 className="plat-title">JupyterQuest</h3>
@@ -392,7 +382,7 @@ export default function Portfolio() {
             <div className="plat">
               <h3 className="plat-title">MESA, AI Core &amp; EduCloud</h3>
               <p className="plat-meta"><span className="hl">NSF education lead · Faculty Director · 2025–Present</span></p>
-              <p>Lead education &amp; outreach for MESA, a $4.6M NSF cyberinfrastructure project; supervise an
+              <p>Lead education &amp; training for MESA, a $4.6M NSF cyberinfrastructure project; supervise an
               AI + XR/VR experiential program; building EduCloud, provider-agnostic educational computing.</p>
             </div>
           </div>
@@ -449,6 +439,6 @@ export default function Portfolio() {
         </footer>
 
       </div>
-    </>
+    </div>
   )
 }

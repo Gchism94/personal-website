@@ -14,10 +14,10 @@ export function ThemeProvider({ children }) {
     const next = !isDark
     if (next) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
+      try { localStorage.setItem('theme', 'dark') } catch (_) {}
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      try { localStorage.setItem('theme', 'light') } catch (_) {}
     }
     document.documentElement.style.colorScheme = next ? 'dark' : 'light'
     setIsDark(next)

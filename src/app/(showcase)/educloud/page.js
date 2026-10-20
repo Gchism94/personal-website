@@ -1,16 +1,12 @@
 import EduCloud from './EduCloud'
 
 export const metadata = {
-  title: 'EduCloud — an open platform for teaching with code',
-  description:
-    'An open-source, self-hostable platform for teaching with code: assignment distribution to per-student Git repositories, sandboxed autograding, a peer AI tutor that cannot hand out solutions, and model routing that keeps student data on infrastructure your institution controls.',
+  title: 'EduCloud — More room for learning',
+  description: 'An open educational computing ecosystem in development: Cairn for the classroom, Belay for tutoring, Waypoint for hosting and identity, Portage for models, and Outfitter for compute.',
   openGraph: {
-    title: 'EduCloud — an open platform for teaching with code',
-    description:
-      'Five modules you can adopt one at a time, starting with the GitHub Classroom replacement. Community-owned, self-hostable, vendor-neutral.',
+    title: 'EduCloud — More room for learning',
+    description: 'Five connected modules. Start small and build around your course.',
   },
 }
 
-export default function EduCloudPage() {
-  return <EduCloud />
-}
+export default function EduCloudPage() { return <EduCloud /> }

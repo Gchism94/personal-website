@@ -29,8 +29,8 @@ const CSS = `
   --ridge-mid:#7A9E87;
   --ridge-near:#4A7C6F;
   --ridge-fore:#22302A;
-  --ff-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
-  --ff-body: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+  --ff-display: var(--font-display), 'Playfair Display', Georgia, serif;
+  --ff-body: var(--font-body), 'DM Sans', system-ui, sans-serif;
   --ff-mono: var(--font-mono), 'DM Mono', ui-monospace, monospace;
 
   position:relative;
@@ -39,14 +39,14 @@ const CSS = `
   font-family:var(--ff-body);
   font-size:19px;
   line-height:1.68;
-  font-weight:300;
+  font-weight:400;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
   overflow-x:hidden;
   min-height:100vh;
 }
 /* keep the page self-contained regardless of the site's global theme */
-html body:has(.hd){background:#F5EFE6 !important;}
+
 
 .hd *{box-sizing:border-box;}
 .hd p{margin:0;}
@@ -56,7 +56,7 @@ html body:has(.hd){background:#F5EFE6 !important;}
 
 /* paper grain */
 .hd-grain{
-  position:fixed;inset:0;z-index:60;pointer-events:none;
+  position:absolute;inset:0;z-index:1;pointer-events:none;
   opacity:.05;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -91,7 +91,7 @@ html body:has(.hd){background:#F5EFE6 !important;}
   font-size:clamp(1.18rem,2.1vw,1.42rem);
   line-height:1.5;
   color:var(--ink-2);
-  font-weight:300;
+  font-weight:400;
 }
 .hd p + p{margin-top:1.05em;}
 .hd .body p{color:var(--ink-2);}
@@ -171,13 +171,13 @@ html body:has(.hd){background:#F5EFE6 !important;}
 }
 
 /* hero load animation */
-.hd .fx{opacity:0;transform:translateY(20px);}
+.hd .fx{opacity:1;transform:none;}
 .hd .hero.loaded .fx{animation:hd-rise .9s cubic-bezier(.2,.7,.2,1) forwards;}
 .hd .hero.loaded .fx:nth-child(1){animation-delay:.05s;}
 .hd .hero.loaded .fx:nth-child(2){animation-delay:.18s;}
 .hd .hero.loaded .fx:nth-child(3){animation-delay:.32s;}
 .hd .hero.loaded .fx:nth-child(4){animation-delay:.46s;}
-@keyframes hd-rise{to{opacity:1;transform:translateY(0);}}
+@keyframes hd-rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
 /* quick facts grid */
 .hd .facts{
@@ -192,7 +192,7 @@ html body:has(.hd){background:#F5EFE6 !important;}
   letter-spacing:.2em;text-transform:uppercase;color:var(--rust-deep);
   display:block;margin-bottom:9px;
 }
-.hd .fact .v{font-size:1.05rem;line-height:1.4;color:var(--ink);font-weight:300;}
+.hd .fact .v{font-size:1.05rem;line-height:1.4;color:var(--ink);font-weight:400;}
 
 /* dark philosophy section */
 .hd .dark{background:var(--dark);color:var(--paper);}
@@ -231,7 +231,7 @@ html body:has(.hd){background:#F5EFE6 !important;}
   font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--rust-light);display:block;margin-bottom:.4em;
 }
-.hd .consequence p{color:var(--paper);margin-top:0;font-weight:300;}
+.hd .consequence p{color:var(--paper);margin-top:0;font-weight:400;}
 .hd .idea:hover .idx{color:var(--sage-light);}
 
 /* support / community section */
@@ -326,7 +326,7 @@ html body:has(.hd){background:#F5EFE6 !important;}
   text-transform:uppercase;color:var(--paper-dim);text-align:right;}
 
 /* scroll reveal */
-.hd .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);}
+.hd .reveal{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);}
 .hd .reveal.in{opacity:1;transform:none;}
 
 @media (max-width:640px){
@@ -382,7 +382,7 @@ export default function Steppe() {
       <style suppressHydrationWarning>{CSS}</style>
       <div className="hd-grain" aria-hidden="true" />
 
-      <header className="top">
+      <div className="top">
         <div className="topbar">
           <div className="top-left">
             <Link href="/work" className="back">← Work</Link>
@@ -390,7 +390,7 @@ export default function Steppe() {
           </div>
           <div className="top-right">An Overview · Central Oregon</div>
         </div>
-      </header>
+      </div>
 
       {/* HERO */}
       <div className={`hero${loaded ? ' loaded' : ''}`}>

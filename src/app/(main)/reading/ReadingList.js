@@ -113,9 +113,9 @@ export default function ReadingList() {
           <p className="masthead-sub">A working library on tacit and formal knowledge, the craft of building humane tools, and the systems and commons they live in — organized by motif and ordered to read top to bottom.</p>
         </div>
         <nav className="tab-strip">
-          <button className={`tab ${tab === 'list' ? 'active' : ''}`} onClick={() => setTab('list')}>Reading List</button>
-          <button className={`tab ${tab === 'motifs' ? 'active' : ''}`} onClick={() => setTab('motifs')}>Motifs</button>
-          <button className={`tab ${tab === 'read' ? 'active' : ''}`} onClick={() => setTab('read')}>Finished</button>
+          <button className={`tab ${tab === 'list' ? 'active' : ''}`} aria-pressed={tab === 'list'} onClick={() => setTab('list')}>Reading List</button>
+          <button className={`tab ${tab === 'motifs' ? 'active' : ''}`} aria-pressed={tab === 'motifs'} onClick={() => setTab('motifs')}>Motifs</button>
+          <button className={`tab ${tab === 'read' ? 'active' : ''}`} aria-pressed={tab === 'read'} onClick={() => setTab('read')}>Finished</button>
         </nav>
       </header>
 

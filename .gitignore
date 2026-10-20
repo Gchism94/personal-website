@@ -45,3 +45,7 @@ yarn-error.log*
 .claude
 node_modules/
 .next/
+
+# Local browser review artifacts
+/output/playwright/
+/.playwright-cli/

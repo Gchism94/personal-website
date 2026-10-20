@@ -81,7 +81,7 @@ const CSS = `
   color: #9B9187;
   max-width: 360px;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 .hero-ctas {
   margin-top: 42px;

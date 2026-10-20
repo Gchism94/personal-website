@@ -575,3 +575,23 @@ html.dark .reading-list .defcard .dconn { border-top-color: rgba(255,255,255,0.0
 /* motif chips + dashed separator on dark */
 html.dark .reading-list .tag.mo { background: rgba(232,223,208,0.10); color: #C9BFA8; }
 html.dark .reading-list .audiobar { border-top-color: rgba(255,255,255,0.10); }
+
+/* Shared visual language; retain the library's tabs and motif explorer. */
+.reading-list { --ink:#3B2F2F; --charcoal:#3B2F2F; --muted:#6B6560; --cream:#F5EFE6; --pale:#faf7f1; --sand:#D4B896; --sage:#4A7C6F; --gold:#8b6330; font-family:var(--font-body),sans-serif; }
+.reading-list .masthead { padding:75px clamp(24px,4.5vw,80px) 0; background:#3B2F2F; }
+.reading-list .masthead-inner, .reading-list .body { max-width:1280px; }
+.reading-list .body { padding:0 clamp(24px,4.5vw,80px) 90px; }
+.reading-list .eyebrow { font:400 11px/1.6 var(--font-mono),monospace; color:#9fd0c2; letter-spacing:.14em; margin-bottom:26px; }
+.reading-list h1 { font:400 clamp(48px,6.6vw,90px)/1.05 var(--font-body),sans-serif; letter-spacing:-.055em; color:#F5EFE6; }
+.reading-list .masthead-sub { font-style:normal; font-size:17px; line-height:1.8; color:#e0d5c8; opacity:1; max-width:580px; padding-block:22px 40px; }
+.reading-list .tab { min-height:58px; font-size:13px; }
+.reading-list .book, .reading-list .defcard { box-shadow:none; border:1px solid #D4B89670; border-radius:0; }
+.reading-list .book:hover { box-shadow:none; }
+html.dark .reading-list { --cream:#02040a; --pale:#101719; --charcoal:#f3eadf; --muted:#bdb5ac; --sage:#9fd0c2; --gold:#d4b896; }
+html.dark .reading-list .book, html.dark .reading-list .revision-box, html.dark .reading-list .canon-thesis, html.dark .reading-list .defcard { background:#101719; box-shadow:none; }
+html.dark .reading-list .altbody { background:#101719; }
+@media(max-width:760px) { .reading-list .masthead { padding-top:50px; } .reading-list .tab { font-size:11px; } }
+@media(max-width:480px) {
+ .reading-list .divider-label { white-space:normal; text-align:center; min-width:0; line-height:1.6; }
+ .reading-list .divider-line { min-width:12px; }
+}

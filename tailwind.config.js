@@ -17,10 +17,10 @@ module.exports = {
         stone:    '#6B6560',
       },
       fontFamily: {
-        serif:    ['Playfair Display', 'Georgia', 'serif'],
-        sans:     ['Inter', 'system-ui', 'sans-serif'],
-        mono:     ['DM Mono', 'ui-monospace', 'monospace'],
-        'dm-sans':['DM Sans', 'system-ui', 'sans-serif'],
+        serif:    ['var(--font-display)', 'Georgia', 'serif'],
+        sans:     ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono:     ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        'dm-sans':['var(--font-body)', 'system-ui', 'sans-serif'],
       },
     },
     screens: {

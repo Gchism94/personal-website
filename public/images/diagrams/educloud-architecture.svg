@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+<title id="title">EduCloud — independent parts, common ground</title>
+<desc id="desc">A conceptual map of five optional, composable modules. Cairn owns classroom workflows and Git integration; it can use Outfitter for compute placement and lifecycle. Belay owns peer tutoring; it can use Portage for policy-controlled model routing. Waypoint offers shared hosting, identity, and publishing. Dashed lines show optional connections, not mandatory dependencies. Cairn can run alone.</desc>
+<defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#4a7c6f" opacity=".15"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 8 5 1 9" fill="none" stroke="#4a7c6f" stroke-width="1.4"/></marker></defs>
+<rect width="1200" height="850" fill="#f5efe6"/><rect width="1200" height="850" fill="url(#grid)"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#3b2f2f">
+<text x="60" y="60" font-size="29" letter-spacing="-1">EduCloud</text><text x="1140" y="57" text-anchor="end" font-size="11" letter-spacing="1.8" fill="#4a7c6f">INDEPENDENT PARTS. COMMON GROUND.</text>
+<path d="M60 84H1140" stroke="#d4b896"/>
+<text x="80" y="125" font-size="11" letter-spacing="2" fill="#6b6560">TEACHING &amp; ASSESSMENT</text><text x="660" y="125" font-size="11" letter-spacing="2" fill="#6b6560">LEARNING SUPPORT</text>
+<!-- Learning-facing modules -->
+<rect x="80" y="148" width="460" height="170" fill="#4a7c6f"/><rect x="660" y="148" width="460" height="170" fill="#3b2f2f"/>
+<g fill="#f5efe6"><text x="108" y="182" font-size="11" letter-spacing="1.5">01 / CLASSROOM</text><text x="108" y="226" font-size="36" letter-spacing="-1">Cairn</text><text x="108" y="258" font-size="16">Assignments · submissions · grading</text><text x="108" y="291" font-size="12" opacity=".8">Connects to your Git host</text>
+<text x="688" y="182" font-size="11" letter-spacing="1.5">02 / PEER TUTOR</text><text x="688" y="226" font-size="36" letter-spacing="-1">Belay</text><text x="688" y="258" font-size="16">Guided practice · domain-specific checks</text><text x="688" y="291" font-size="12" opacity=".8">Tutoring without access to grades</text></g>
+<!-- Optional connections -->
+<path d="M310 318V401M890 318V401" fill="none" stroke="#4a7c6f" stroke-width="1.5" stroke-dasharray="4 5" marker-end="url(#arrow)"/>
+<rect x="326" y="346" width="148" height="25" fill="#f5efe6"/><text x="334" y="363" font-size="12" fill="#6b6560">Compute workloads</text>
+<rect x="906" y="346" width="120" height="25" fill="#f5efe6"/><text x="914" y="363" font-size="12" fill="#6b6560">AI requests</text>
+<!-- Infrastructure modules -->
+<rect x="80" y="410" width="460" height="165" fill="#f9f5ef" stroke="#d4b896"/><rect x="660" y="410" width="460" height="165" fill="#f9f5ef" stroke="#d4b896"/>
+<text x="108" y="444" font-size="11" letter-spacing="1.5" fill="#4a7c6f">05 / COMPUTE</text><text x="108" y="486" font-size="32" letter-spacing="-1">Outfitter</text><text x="108" y="517" font-size="16">Placement · budgets · lifecycle</text><text x="108" y="549" font-size="12" fill="#6b6560">Connects to campus, local, or cloud compute</text>
+<text x="688" y="444" font-size="11" letter-spacing="1.5" fill="#4a7c6f">04 / MODEL ROUTING</text><text x="688" y="486" font-size="32" letter-spacing="-1">Portage</text><text x="688" y="517" font-size="16">Policy · model selection · evaluation</text><text x="688" y="549" font-size="12" fill="#6b6560">Connects to permitted model endpoints</text>
+<!-- Shared services are optional across modules -->
+<path d="M60 232H40V700H80M1140 232H1160V700H1120M40 493H60M1140 493H1160" fill="none" stroke="#4a7c6f" stroke-width="1.2" stroke-dasharray="4 5"/>
+<text x="600" y="626" text-anchor="middle" font-size="11" letter-spacing="1.5" fill="#6b6560">OPTIONAL SHARED SERVICES ACROSS THE ECOSYSTEM</text>
+<rect x="80" y="650" width="1040" height="108" fill="#d4b896" fill-opacity=".35" stroke="#d4b896"/>
+<text x="108" y="685" font-size="11" letter-spacing="1.5" fill="#4a7c6f">03 / SHARED HOME</text><text x="108" y="727" font-size="32" letter-spacing="-1">Waypoint</text>
+<text x="560" y="700" font-size="19">Hosting · identity · publishing</text><text x="560" y="727" font-size="13" fill="#6b6560">A common home when you choose to connect the parts.</text>
+<path d="M60 806H100" stroke="#4a7c6f" stroke-dasharray="4 5"/><text x="114" y="810" font-size="11" fill="#6b6560">Optional connection</text><text x="1140" y="810" text-anchor="end" font-size="11" fill="#6b6560">CONCEPTUAL ARCHITECTURE · CAIRN CAN RUN ALONE</text>
+</g></svg>
