@@ -1,19 +1,56 @@
-ABOUT THIS SKY
+LIVE SKY OVER BEND
 
-Cassiopeia, Cygnus, and Lyra are drawn from real star positions.
-Each figure uses a local gnomonic projection of J2000 coordinates, then a
-uniform scale and translation to fit the page. The same positions are used
-for the visible stars and their cursor-revealed connections.
+This is a live overhead star chart for central Bend, Oregon:
+44.058 degrees north, 121.315 degrees west; elevation 1,100 metres.
+Positions update each minute using the visitor's device clock, and refresh
+when the tab becomes visible. Pause motion also freezes the sky's timestamp.
+The displayed time is always Bend time (America/Los_Angeles, including DST).
 
-These are separately arranged constellation studies, not a live sky map
-or a simulation for a particular time and location. Background stars are
-decorative. Orbital ellipses illustrate geometry and are not measured orbits.
+One stereographic projection is shared by all stars, constellation lines,
+the Moon and the ecliptic. Zenith is at the centre; north is up, east left,
+south down and west right, as on a chart held overhead. The circular edge
+is the geometric horizon. The map changes size, not orientation, on mobile.
+Stars below the horizon are omitted; constellation segments with an endpoint
+below the horizon are omitted rather than extended through the hidden sky.
+
+MOON AND PATHS
+The Moon is positioned topocentrically, including observer parallax and
+light travel time. Its disc is shown only when its centre is above the
+geometric horizon. The illuminated fraction is calculated from the Sun-Moon
+geometry; the bright limb faces the Sun in this projection. The Moon's disc
+is enlarged for legibility. The phase fraction uses a geocentric calculation.
+
+The GOLD DASHED line is the Moon's apparent path over the NEXT 24 HOURS,
+sampled every 10 minutes, including both lunar orbital motion and Earth's
+rotation. It is not an ellipse in space or the Moon's orbit relative to the
+fixed stars. Only the above-horizon portions of this future path are drawn.
+The BLUE DOTTED line is the J2000 ecliptic: Earth's mean orbital plane.
+Faint concentric rings mark altitude 0, 30 and 60 degrees.
+
+This remains a dark star chart during daylight, with a daylight/twilight
+label. It does not simulate local weather, terrain, atmospheric refraction,
+light pollution or the actual visibility of stars. Twilight is Sun altitude
+between 0 and -18 degrees. Twinkling and shooting stars are decorative
+animations, not predictions of meteor events. Stars are rendered through
+visual magnitude 5.5, plus fainter constellation anchors; sizes and colours
+are stylized. This is an educational illustration, not a navigation tool.
+
+CALCULATIONS
+Astronomy Engine 2.1.19 by Don Cross, MIT license:
+https://github.com/cosinekitty/astronomy
+https://github.com/cosinekitty/astronomy/blob/master/LICENSE
+J2000 coordinates are advanced by catalogue proper motion and transformed
+to the observer's horizon with precession, nutation and Earth rotation.
+Stellar annual aberration/parallax and radial-velocity perspective changes
+are omitted at this illustration's scale.
 
 STAR POSITIONS
 Hoffleit, D. & Warren, W. H., Jr. (1991), The Bright Star Catalogue,
 5th Revised Edition (preliminary version), Yale University Observatory.
 CDS catalogue V/50: https://cdsarc.cds.unistra.fr/ftp/V/50/ReadMe
-Coordinates and visual magnitudes for 18 selected stars, retrieved 2026-10-20.
+2,887 stars, retrieved 2026-10-20. Source data are bundled with the site;
+no external astronomy service or visitor geolocation is needed at runtime.
+Rebuild with scripts/build-sky-catalog.py in the source repository.
 
 CONSTELLATION LINE FIGURES
 Adapted from ConstellationLines by Marc van der Sluys.
@@ -22,9 +59,9 @@ https://github.com/MarcvdSluys/ConstellationLines
 https://doi.org/10.5281/zenodo.10397192
 Licensed under Creative Commons Attribution 4.0 International:
 https://creativecommons.org/licenses/by/4.0/
-Changes: selected three figures, removed duplicated edges, projected and
-rescaled the star positions, and added labels and visual styling.
-The source is provided without warranties under that license.
+Changes: removed duplicated edges, projected the catalogue positions into
+a shared live horizon chart, filtered hidden segments, added selective
+labels and visual styling. The source is provided without warranties.
 
 Constellation figures vary between traditions; they are not official IAU
 boundaries or physical connections between stars.

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from './ThemeProvider'
 import NightSky, { drawSkyGeometry } from './heroSky'
+import { createBendSky } from '@/lib/bendSky.mjs'
 
 // The river follows the same centerline as the original landscape hero.
 const RIVER = [[-.12,.355],[-.06,.355],[0,.355],[.03,.355],[.0326,.3869],[.0714,.4116],[.1024,.4452],[.1307,.4871],[.1688,.5122],[.2218,.5349],[.2891,.5399],[.3558,.5296],[.3979,.5431],[.4271,.5679],[.4679,.5802],[.5065,.6025],[.5467,.6031],[.6046,.5940],[.6651,.5945],[.7157,.604],[.7676,.635],[.8056,.6336],[.8418,.6141],[.8658,.5899],[.8927,.5717],[.9306,.5856],[.97,.5901],[1.02,.595],[1.1,.602]]
@@ -42,6 +43,25 @@ export default function LandscapeHero() {
   const [revealed, setRevealed] = useState(false)
   const [paused, setPaused] = useState(false)
 
+  const [sky, setSky] = useState(null)
+  const [size, setSize] = useState({width:1440,height:900})
+
+  useEffect(() => {
+    if (!isDark) return
+    const refresh = () => { if (!document.hidden) setSky(previous => paused && previous ? previous : createBendSky()) }
+    refresh()
+    if (paused) return
+    const timer = setInterval(refresh, 60000)
+    document.addEventListener('visibilitychange', refresh)
+    return () => { clearInterval(timer); document.removeEventListener('visibilitychange', refresh) }
+  }, [isDark, paused])
+
+  useEffect(() => {
+    const observer = new ResizeObserver(([entry]) => setSize({width:entry.contentRect.width,height:entry.contentRect.height}))
+    observer.observe(sceneRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   useEffect(() => {
     const scene = sceneRef.current
     let inView = true
@@ -74,7 +94,7 @@ export default function LandscapeHero() {
         dpr * (width - SCENE_WIDTH * scale) / 2,
         dpr * (height - SCENE_HEIGHT * scale) / 2)
       const dark = document.documentElement.classList.contains('dark')
-      if (dark) { drawSkyGeometry(ctx); return }
+      if (dark) { ctx.setTransform(dpr,0,0,dpr,0,0); drawSkyGeometry(ctx, sky, width, height); return }
       const paper = dark ? '#02040a' : '#F5EFE6'
       const line = dark ? '159,208,194' : '74,124,111'
       const annotation = dark ? '#D4B896' : '#B5532A'
@@ -159,7 +179,7 @@ export default function LandscapeHero() {
       samples = { pixels: samplingContext.getImageData(0, 0, 180, 120).data, width: 180, height: 120 }
       draw()
     }
-    forestImage.src = '/images/tree-sketch.png'
+    if (!isDark) forestImage.src = '/images/tree-sketch.png'
     draw()
     const observer = new ResizeObserver(() => {
       cancelAnimationFrame(resizeFrame)
@@ -173,7 +193,7 @@ export default function LandscapeHero() {
       cancelAnimationFrame(resizeFrame)
       cancelAnimationFrame(pointerFrame.current)
     }
-  }, [isDark])
+  }, [isDark, sky])
 
   function moveLens(event) {
     // Touch scrolling stays native; the button provides the same reveal on touch.
@@ -197,7 +217,7 @@ export default function LandscapeHero() {
   return (
     <section ref={sceneRef} className="river-hero" data-motion={paused ? 'paused' : 'running'} aria-labelledby="hero-heading"
       onPointerMove={moveLens} onPointerLeave={hideLens}>
-      <NightSky />
+      <NightSky sky={sky} size={size} />
       <svg key={String(isDark)} className="river-landscape" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <clipPath id="forest-bank"><path d={FOREST_CLIP} /></clipPath>
@@ -219,8 +239,8 @@ export default function LandscapeHero() {
         <p className="river-tagline">Building AI-native classrooms and shared computing infrastructure that give more people room to learn, experiment, and create.</p>
         <div className="river-links"><Link className="river-work-link" href="#selected-work">Explore my work <span aria-hidden="true">↗</span></Link><Link className="river-about-link" href="/about">About me</Link></div>
       </div>
-      <div className="landscape-caption"><span>{isDark ? 'Under the Central Oregon sky' : 'Deschutes River · Central Oregon'}</span><span className="pointer-hint">Move your cursor to find the patterns {isDark ? 'in the sky' : 'beneath'}.</span><div className="landscape-controls"><button type="button" aria-pressed={revealed} onClick={() => setRevealed(!revealed)}>{revealed ? (isDark ? 'Return to the stars' : 'Return to the landscape') : 'Reveal the patterns'} <span aria-hidden="true">{revealed ? '−' : '+'}</span></button><button className="motion-control" type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume motion' : 'Pause motion'}</button></div>{isDark && <a className="sky-credit" href="/sky-sources.txt" target="_blank" rel="noopener noreferrer">About this sky ↗</a>}</div>
-      <p className="sr-only">{isDark ? 'A twinkling sky reveals Cassiopeia, Cygnus, and Lyra, projected from catalogued star positions. The constellations are arranged separately for this composition, not as a live sky map. The orbital paths are illustrative.' : 'A watercolor forest fades in as the river flows into view. The cursor reveals a mathematical landscape exploring branching and flow, not measured geographic data.'} Use Reveal the patterns to view the full illustration without a mouse.</p>
+      <div className="landscape-caption"><span>{isDark ? (sky ? `${paused ? 'Paused' : 'Live'} Bend sky · ${sky.clock} · ${sky.light}` : 'Bend sky · Locating the stars') : 'Deschutes River · Central Oregon'}</span>{isDark && sky && <span className="moon-status">{sky.moon.phaseName} · {Math.round(sky.moon.fraction*100)}% lit · {sky.moon.altitude>=0 ? 'Above the horizon' : 'Below the horizon'}</span>}<span className="pointer-hint">Move your cursor to find the patterns {isDark ? 'in the sky' : 'beneath'}.</span><div className="landscape-controls"><button type="button" aria-pressed={revealed} onClick={() => setRevealed(!revealed)}>{revealed ? (isDark ? 'Return to the stars' : 'Return to the landscape') : 'Reveal the patterns'} <span aria-hidden="true">{revealed ? '−' : '+'}</span></button><button className="motion-control" type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume motion' : 'Pause motion'}</button></div>{isDark && <a className="sky-credit" href="/sky-sources.txt" target="_blank" rel="noopener noreferrer">About this sky ↗</a>}</div>
+      <p className="sr-only">{isDark ? 'A live overhead sky chart for Bend, Oregon, updated every minute. North is up and east is left. Real stars and constellations share one projection. The Moon appears only above the geometric horizon, with its current phase and illuminated side toward the Sun. The gold dashed line shows its calculated apparent path over the next 24 hours. The dark chart also shows stars during daylight; it does not simulate weather or visibility.' : 'A watercolor forest fades in as the river flows into view. The cursor reveals a mathematical landscape exploring branching and flow, not measured geographic data.'} Use Reveal the patterns to view the full illustration without a mouse.</p>
     </section>
   )
 }
