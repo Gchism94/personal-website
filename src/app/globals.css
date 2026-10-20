@@ -214,7 +214,7 @@ html.dark body { background: var(--paper); color: var(--ink); }
 @keyframes river-arrive { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes flow-arrive { from { opacity: 0; } to { opacity: 1; } }
 @keyframes river-flow { to { stroke-dashoffset: -1158; } }
-.night-sky { display: none; position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.night-sky { display: none; position: absolute; inset: 0; overflow: hidden; pointer-events: none; contain: paint; }
 .night-sky > svg { width: 100%; height: 100%; }
 .dark .night-sky { display: block; }
 .dark .river-landscape { display: none; }
@@ -237,6 +237,8 @@ html.dark body { background: var(--paper); color: var(--ink); }
 .river-copy { position: absolute; z-index: 2; left: clamp(24px, 4.5vw, 80px); bottom: 90px; max-width: 560px; pointer-events: none; }
 .river-copy::before { content: ''; position: absolute; inset: -40px -90px -25px -70px; z-index: -1; background: radial-gradient(ellipse at 35% 65%, var(--paper) 15%, transparent 74%); pointer-events: none; }
 .dark .river-copy::before { inset: -90px -100px -80px -80px; background: radial-gradient(ellipse at 35% 55%, rgba(2,4,10,.94) 20%, transparent 72%); }
+/* Keep text on stable layers while the sky repaints behind it. */
+.site-header--home, .river-copy, .landscape-caption { transform: translateZ(0); }
 .river-copy > .editorial-label { color: var(--accent); font-size: 10px; letter-spacing: .16em; margin-bottom: 24px; }
 .river-copy h1 { font-family: var(--font-display), Georgia, serif; font-weight: 600; font-size: clamp(70px, 7vw, 105px); letter-spacing: -.05em; line-height: .98; color: var(--ink); }
 .river-copy h1 em { color: var(--accent); }
