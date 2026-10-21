@@ -30,8 +30,9 @@ export function drawSkyGeometry(ctx, sky, width, height) {
     ctx.beginPath(); ctx.arc(...xy(star),star.radius,0,Math.PI*2); ctx.fill()
   })
   ctx.globalAlpha = 1
-  ctx.strokeStyle = 'rgba(180,236,220,.88)'; ctx.lineWidth = width<=760 ? 1 : 1.4
-  ctx.shadowColor = 'rgba(159,208,194,.55)'; ctx.shadowBlur = 5
+  ctx.strokeStyle = 'rgba(180,236,220,.88)'; ctx.lineWidth = 1.4
+  // Mobile lines stay crisp instead of glowing into adjacent pixels.
+  ctx.shadowColor = 'rgba(159,208,194,.55)'; ctx.shadowBlur = width<=760 ? 0 : 5
   for (const figure of sky.constellations) {
     for (const [a,b] of figure.edges) {
       ctx.beginPath(); ctx.moveTo(...xy(a)); ctx.lineTo(...xy(b)); ctx.stroke()
@@ -54,11 +55,14 @@ export function drawSkyGeometry(ctx, sky, width, height) {
   ctx.restore()
   // Keep names legible and avoid stacking neighboring labels on smaller screens.
   const labels=[]
-  ctx.font = `${width<=760 ? 9 : 11}px ui-monospace, monospace`
+  const keyX = width - (width<=760 ? 24 : 65)
+  ctx.font = '11px ui-monospace, monospace'
   ctx.textAlign='center'; ctx.fillStyle='#c8f1e3'
   for (const figure of sky.constellations) {
     if (!figure.label) continue
     const [x,y]=xy(figure.label), w=ctx.measureText(figure.name.toUpperCase()).width
+    if (x-w/2<12 || x+w/2>width-12 || y<110 || y>height-30) continue
+    if (y-19<143 && y-5>105 && x+w/2>keyX-155 && x-w/2<keyX+8) continue
     if (labels.some(b => Math.abs(x-b.x)<(w+b.w)/2+10 && Math.abs(y-b.y)<23)) continue
     labels.push({x,y,w})
     ctx.fillStyle='#040815'; ctx.fillRect(x-w/2-3,y-19,w+6,14)
@@ -68,7 +72,6 @@ export function drawSkyGeometry(ctx, sky, width, height) {
   ctx.font='10px ui-monospace, monospace'; ctx.fillStyle='#c0cbd9'
   for (const [label,x,y] of [['N',cx,cy-radius-10],['S',cx,cy+radius+18],['E',cx-radius-12,cy+3],['W',cx+radius+12,cy+3]]) ctx.fillText(label,x,y)
   // Keep the key in the viewport even when the horizon extends off-screen.
-  const keyX = width - (width<=760 ? 24 : 65)
   ctx.textAlign='right'
   ctx.fillStyle='rgba(4,8,21,.85)'; ctx.fillRect(keyX-155,105,163,38)
   ctx.fillStyle='#efcd99'
