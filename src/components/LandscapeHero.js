@@ -86,7 +86,9 @@ export default function LandscapeHero() {
     function draw() {
       if (disposed) return
       const { width, height } = canvas.getBoundingClientRect()
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+      // These layers redraw on resize or sky updates, not every animation frame.
+      // Match the display density so mobile browsers never upscale the bitmap.
+      const dpr = window.devicePixelRatio || 1
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
       const scale = Math.max(width / SCENE_WIDTH, height / SCENE_HEIGHT)
@@ -95,6 +97,8 @@ export default function LandscapeHero() {
         dpr * (height - SCENE_HEIGHT * scale) / 2)
       const dark = document.documentElement.classList.contains('dark')
       if (dark) { ctx.setTransform(dpr,0,0,dpr,0,0); drawSkyGeometry(ctx, sky, width, height); return }
+      const mobile = width <= 760
+      const stroke = value => mobile ? Math.max(value, .7 / scale) : value
       const paper = dark ? '#02040a' : '#F5EFE6'
       const line = dark ? '159,208,194' : '74,124,111'
       const annotation = dark ? '#D4B896' : '#B5532A'
@@ -102,7 +106,7 @@ export default function LandscapeHero() {
       ctx.fillRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT)
 
       // A coordinate field, rather than an unrelated decorative graphic.
-      ctx.lineWidth = .6
+      ctx.lineWidth = stroke(.6)
       ctx.strokeStyle = `rgba(${line},.13)`
       for (let x = 0; x <= SCENE_WIDTH; x += 40) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, SCENE_HEIGHT); ctx.stroke()
@@ -116,8 +120,9 @@ export default function LandscapeHero() {
       if (samples) {
         const { pixels, width: sw, height: sh } = samples
         const points = new Map()
-        for (let row = 0; row < sh; row++) {
-          for (let col = 0; col < sw; col++) {
+        const step = mobile ? 2 : 1
+        for (let row = 0; row < sh; row += step) {
+          for (let col = 0; col < sw; col += step) {
             const index = (row * sw + col) * 4
             const red = pixels[index], green = pixels[index + 1], blue = pixels[index + 2]
             const density = Math.min(1, Math.max(0, (green - red + green - blue - 16) / 100))
@@ -130,14 +135,14 @@ export default function LandscapeHero() {
         for (const [key, point] of points) {
           const [col, row] = key.split(',').map(Number)
           ctx.strokeStyle = `rgba(${line},${.2 + point.density * .5})`
-          ctx.lineWidth = .65
-          for (const [dx, dy] of [[1, 0], [0, 1], [1, 1]]) {
+          ctx.lineWidth = stroke(.65)
+          for (const [dx, dy] of [[step, 0], [0, step], [step, step]]) {
             const next = points.get(`${col + dx},${row + dy}`)
             if (!next) continue
             ctx.beginPath(); ctx.moveTo(point.x, point.y); ctx.lineTo(next.x, next.y); ctx.stroke()
           }
           ctx.fillStyle = `rgba(${line},${.4 + point.density * .6})`
-          ctx.beginPath(); ctx.arc(point.x, point.y, .7 + point.density, 0, Math.PI * 2); ctx.fill()
+          ctx.beginPath(); ctx.arc(point.x, point.y, mobile ? .8 / scale : .7 + point.density, 0, Math.PI * 2); ctx.fill()
         }
       }
 
@@ -146,25 +151,32 @@ export default function LandscapeHero() {
       for (let i = -7; i <= 7; i++) {
         ctx.save(); ctx.translate(0, i * 9)
         ctx.strokeStyle = i === 0 ? `rgb(${line})` : `rgba(${line},${.4 - Math.abs(i) * .03})`
-        ctx.lineWidth = i === 0 ? 2 : .8
+        ctx.lineWidth = stroke(i === 0 ? 2 : .8)
         ctx.stroke(path); ctx.restore()
       }
       for (let x = 55; x < SCENE_WIDTH; x += 75) {
         const y = riverY(x)
         const angle = Math.atan2(riverY(x + 12) - riverY(x - 12), 24)
         ctx.save(); ctx.translate(x, y); ctx.rotate(angle)
-        ctx.strokeStyle = annotation; ctx.lineWidth = 1.2
+        ctx.strokeStyle = annotation; ctx.lineWidth = stroke(1.2)
         ctx.beginPath(); ctx.moveTo(-10, 0); ctx.lineTo(10, 0); ctx.lineTo(5, -4); ctx.moveTo(10, 0); ctx.lineTo(5, 4); ctx.stroke(); ctx.restore()
       }
-      ctx.font = '12px ui-monospace, monospace'
-      ctx.fillStyle = annotation
-      for (const [label, x, y] of [
+      const fontSize = mobile ? 11 / scale : 12
+      ctx.font = `${fontSize}px ui-monospace, monospace`
+      const visibleLeft = (SCENE_WIDTH - width / scale) / 2
+      const visibleTop = (SCENE_HEIGHT - height / scale) / 2
+      const labels = mobile ? [
+        ['BRANCHING / SELF-SIMILARITY', visibleLeft + 20 / scale, visibleTop + 28 / scale],
+        ['FLOW FIELD · dx/dt = v(x)', visibleLeft + 20 / scale, visibleTop + height * .58 / scale],
+      ] : [
         ['BRANCHING / SELF-SIMILARITY', 255, 190],
         ['LOCAL CONNECTIONS → COLLECTIVE PATTERNS', 760, 350],
         ['FLOW FIELD  ·  dx/dt = v(x)', 750, 680],
         ['G = (V, E)', 1120, 180],
-      ]) {
-        ctx.fillStyle = paper; ctx.fillRect(x - 7, y - 15, ctx.measureText(label).width + 14, 23)
+      ]
+      ctx.fillStyle = annotation
+      for (const [label, x, y] of labels) {
+        ctx.fillStyle = paper; ctx.fillRect(x - fontSize * .6, y - fontSize * 1.25, ctx.measureText(label).width + fontSize * 1.2, fontSize * 1.9)
         ctx.fillStyle = annotation; ctx.fillText(label, x, y)
       }
     }
@@ -181,14 +193,17 @@ export default function LandscapeHero() {
     }
     if (!isDark) forestImage.src = '/images/tree-sketch.png'
     draw()
-    const observer = new ResizeObserver(() => {
+    const scheduleDraw = () => {
       cancelAnimationFrame(resizeFrame)
       resizeFrame = requestAnimationFrame(draw)
-    })
+    }
+    const observer = new ResizeObserver(scheduleDraw)
+    window.addEventListener('resize', scheduleDraw)
     observer.observe(scene)
     return () => {
       disposed = true
       forestImage.onload = null
+      window.removeEventListener('resize', scheduleDraw)
       observer.disconnect()
       cancelAnimationFrame(resizeFrame)
       cancelAnimationFrame(pointerFrame.current)
